@@ -12,18 +12,20 @@ class DefaultButton extends StatelessWidget {
   final TextStyle? textStyle;
   final ButtonType buttonType;
   final void Function()? onPressed;
+  final bool forceEnabling;
 
   const DefaultButton({
     Key? key,
     this.color,
     this.onPressed,
     this.textStyle,
-    this.height = 50,
+    this.height = 55,
     this.elevation = 2,
     required this.child,
     this.borderRadius = 16,
     this.isExpanded = false,
     this.buttonType = ButtonType.primary,
+    this.forceEnabling = false,
   }) : super(key: key);
 
   bool get _isPrimary => buttonType == ButtonType.primary;
@@ -36,7 +38,7 @@ class DefaultButton extends StatelessWidget {
     final textStyle = TextStyle(color: _isPrimary ? Colors.white : buttonColor).merge(this.textStyle);
 
     return Opacity(
-      opacity: onPressed == null ? 0.25 : 1,
+      opacity: (onPressed == null && forceEnabling == false) ? 0.25 : 1,
       child: SizedBox(
         height: height,
         width: isExpanded ? double.infinity : null,
