@@ -21,7 +21,6 @@ class _LoginState extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = context.watch<LoginProvider>();
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
