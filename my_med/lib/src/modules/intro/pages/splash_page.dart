@@ -14,9 +14,11 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     //TODO Check token here
     if (true) {
-      context.router.replaceAll(const [
-        OnboardingRoute(),
-      ]);
+      Future.delayed(const Duration(seconds: 2)).then((_) {
+        context.router.replaceAll(const [
+          OnboardingRoute(),
+        ]);
+      });
     }
     super.initState();
   }
@@ -24,8 +26,20 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.blue.shade300,
+      backgroundColor: Theme.of(context).primaryColor,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: const [
+          Padding(
+            padding: EdgeInsets.all(24.0),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
