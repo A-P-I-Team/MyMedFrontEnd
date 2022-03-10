@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/core/test_page.dart';
+import 'package:my_med/src/modules/intro/pages/login.dart';
+import 'package:my_med/src/modules/intro/pages/onboarding.dart';
 import 'package:my_med/src/modules/intro/pages/splash_page.dart';
 
 part 'router.gr.dart';
@@ -10,6 +12,8 @@ part 'router.gr.dart';
   routes: <AutoRoute>[
     AutoRoute(page: TestPage),
     AutoRoute(page: SplashPage, path: '/splash', initial: true),
+    AutoRoute(page: OnboardingPage, path: '/on_boarding'),
+    AutoRoute(page: LoginPage, path: '/login'),
   ],
 )
 class AppRouter extends _$AppRouter {}

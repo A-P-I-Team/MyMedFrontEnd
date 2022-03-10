@@ -24,6 +24,14 @@ class _$AppRouter extends RootStackRouter {
     SplashRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const SplashPage());
+    },
+    OnboardingRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const OnboardingPage());
+    },
+    LoginRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const LoginPage());
     }
   };
 
@@ -32,7 +40,9 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig('/#redirect',
             path: '/', redirectTo: '/splash', fullMatch: true),
         RouteConfig(TestRoute.name, path: '/test-page'),
-        RouteConfig(SplashRoute.name, path: '/splash')
+        RouteConfig(SplashRoute.name, path: '/splash'),
+        RouteConfig(OnboardingRoute.name, path: '/on_boarding'),
+        RouteConfig(LoginRoute.name, path: '/login')
       ];
 }
 
@@ -50,4 +60,20 @@ class SplashRoute extends PageRouteInfo<void> {
   const SplashRoute() : super(SplashRoute.name, path: '/splash');
 
   static const String name = 'SplashRoute';
+}
+
+/// generated route for
+/// [OnboardingPage]
+class OnboardingRoute extends PageRouteInfo<void> {
+  const OnboardingRoute() : super(OnboardingRoute.name, path: '/on_boarding');
+
+  static const String name = 'OnboardingRoute';
+}
+
+/// generated route for
+/// [LoginPage]
+class LoginRoute extends PageRouteInfo<void> {
+  const LoginRoute() : super(LoginRoute.name, path: '/login');
+
+  static const String name = 'LoginRoute';
 }
