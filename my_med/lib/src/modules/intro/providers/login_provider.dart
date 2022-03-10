@@ -30,7 +30,6 @@ class LoginProvider extends ChangeNotifier {
   }
 
   Future<void> Login() async {
-    print("objectfhfhfhfh");
     isLoading = true;
     notifyListeners();
     await Future.delayed(const Duration(seconds: 2));
