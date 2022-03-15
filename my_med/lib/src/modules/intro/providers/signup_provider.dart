@@ -1,7 +1,4 @@
-// ignore_for_file: join_return_with_assignment
-
 import 'dart:typed_data';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/utils/regex.dart';
@@ -25,7 +22,11 @@ class SignupProvider extends ChangeNotifier {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
   final GlobalKey<FormState> emailPageformKey = GlobalKey<FormState>();
-  bool enableButton = false;
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController birthdateController = TextEditingController();
+  bool enableButtonForEmailPage = false;
+  bool enableButtonForPersonalInformationPage = false;
 
   SignupProvider(this.context);
 
@@ -33,6 +34,7 @@ class SignupProvider extends ChangeNotifier {
   void dispose() {
     pageController.dispose();
     registerController.nameController.dispose();
+    //TODO disposing controllers
     super.dispose();
   }
 
@@ -51,27 +53,27 @@ class SignupProvider extends ChangeNotifier {
     if (_isLoading) return false;
     bool value = currentPage == 0 && emailPageformKey.currentState != null && emailPageformKey.currentState!.validate();
     // bool value = currentPage == 0 && registerController.nameController.text.isNotEmpty && registerController.birthDate != null;
-    // value |= currentPage == 2 && registerController.photo != null;
+    value |= currentPage == 1 && enableButtonForPersonalInformationPage;
     return value;
   }
 
-  bool get canPressConfirm {
-    if (_isLoading) return false;
-    bool value = canPressNext;
-    value |= currentPage == 3 && registerController.areQuestionsAnswered;
-    return value;
-  }
+  // bool get canPressConfirm {
+  //   if (_isLoading) return false;
+  //   bool value = canPressNext;
+  //   value |= currentPage == 3 && registerController.areQuestionsAnswered;
+  //   return value;
+  // }
 
   String get pageTitle {
     switch (currentPage) {
       case 0:
-        return "Email";
+        return "Credentials";
       case 1:
-        return "Enter your personal information";
+        return "Personal Information";
       case 2:
-        return "Upload your photo";
+        return "Upload Your Photo";
       default:
-        return "Answer the questions";
+        return "Fill The Form";
     }
   }
 
@@ -120,17 +122,29 @@ class SignupProvider extends ChangeNotifier {
 
   void onEmailChanged(String value) {
     emailPageformKey.currentState!.validate();
-    isFormValid();
+    isEmailFormValid();
   }
 
   void onPasswordChanged(String value) {
     emailPageformKey.currentState!.validate();
-    isFormValid();
+    isEmailFormValid();
   }
 
   void onConfirmPasswordChanged(String value) {
     emailPageformKey.currentState!.validate();
-    isFormValid();
+    isEmailFormValid();
+  }
+
+  void onFirstnameChanged(String value) {
+    isPersonalInformationValid();
+  }
+
+  void onlastNameChanged(String value) {
+    isPersonalInformationValid();
+  }
+
+  void onbirthdayChanged(String value) {
+    isPersonalInformationValid();
   }
 
   void setupPhoto(final Uint8List? photo, final String? path) {
@@ -144,13 +158,14 @@ class SignupProvider extends ChangeNotifier {
       context.router.pop();
     } else {
       _currentPage--;
-      pageController.animateToPage(
-        _currentPage,
-        curve: _animationCurve,
-        duration: _animationDuration,
-      );
+      pageController
+          .animateToPage(
+            _currentPage,
+            curve: _animationCurve,
+            duration: _animationDuration,
+          )
+          .then((value) => notifyListeners());
     }
-    notifyListeners();
   }
 
   void onNextPressed() {
@@ -190,11 +205,21 @@ class SignupProvider extends ChangeNotifier {
     }
   }
 
-  void isFormValid() {
-    if (emailPageformKey.currentState!.validate()) {
-      enableButton = true;
+  void isPersonalInformationValid() {
+    if (firstNameController.text.isNotEmpty && lastNameController.text.isNotEmpty && birthdateController.text.isNotEmpty) {
+      enableButtonForPersonalInformationPage = true;
     } else {
-      enableButton = false;
+      enableButtonForPersonalInformationPage = false;
+    }
+    debugPrint(birthdateController.text);
+    notifyListeners();
+  }
+
+  void isEmailFormValid() {
+    if (emailPageformKey.currentState!.validate()) {
+      enableButtonForEmailPage = true;
+    } else {
+      enableButtonForEmailPage = false;
     }
     notifyListeners();
   }
