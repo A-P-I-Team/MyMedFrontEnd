@@ -27,6 +27,7 @@ class SignupProvider extends ChangeNotifier {
   final TextEditingController birthdateController = TextEditingController();
   bool enableButtonForEmailPage = false;
   bool enableButtonForPersonalInformationPage = false;
+  bool enableButtonForUploadPhotoPage = false;
 
   SignupProvider(this.context);
 
@@ -51,9 +52,15 @@ class SignupProvider extends ChangeNotifier {
 
   bool get canPressNext {
     if (_isLoading) return false;
-    bool value = currentPage == 0 && emailPageformKey.currentState != null && emailPageformKey.currentState!.validate();
-    // bool value = currentPage == 0 && registerController.nameController.text.isNotEmpty && registerController.birthDate != null;
-    value |= currentPage == 1 && enableButtonForPersonalInformationPage;
+    bool value = false;
+    if (currentPage == 0 && emailPageformKey.currentState != null && emailPageformKey.currentState!.validate()) {
+      value = true;
+    } else if (currentPage == 1 && enableButtonForPersonalInformationPage) {
+      value = true;
+    } else if (currentPage == 2 && enableButtonForUploadPhotoPage) {
+      value = true;
+    }
+
     return value;
   }
 
@@ -150,6 +157,7 @@ class SignupProvider extends ChangeNotifier {
   void setupPhoto(final Uint8List? photo, final String? path) {
     registerController.photo = photo;
     registerController.photoPath = path;
+    enableButtonForUploadPhotoPage = true;
     notifyListeners();
   }
 
