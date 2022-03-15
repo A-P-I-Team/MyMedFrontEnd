@@ -59,9 +59,9 @@ class _OnboardingPage extends StatelessWidget {
                               alignment: Alignment.center,
                             ),
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: Center(
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
                               child: Text(
                                 [
                                   "Picture 1",
@@ -99,13 +99,13 @@ class _OnboardingPage extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: 3,
+                flex: 2,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     getButton(
                       context: context,
-                      route: const LoginRoute(),
+                      route: const SignUpRoute(),
                       buttonType: ButtonType.primary,
                       child: const Text(
                         "Sign up",
