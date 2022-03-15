@@ -14,6 +14,9 @@ class STextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final void Function(String)? onChanged;
   final TextEditingController? controller;
+  final TextStyle? hintStyle;
+  final bool readOnly;
+  final BoxConstraints? suffixIconConstraints;
 
   const STextField({
     Key? key,
@@ -30,12 +33,16 @@ class STextField extends StatelessWidget {
     this.applyBorder = true,
     this.textAlign = TextAlign.center,
     this.borderRadius = const BorderRadius.all(Radius.circular(16)),
+    this.hintStyle,
+    this.readOnly = false,
+    this.suffixIconConstraints,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).colorScheme.primary;
     return TextField(
+      readOnly: readOnly,
       focusNode: focusNode,
       textAlign: textAlign,
       onChanged: onChanged,
@@ -49,9 +56,10 @@ class STextField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hint,
         isDense: isDense,
-        hintStyle: const TextStyle(
-          color: Color(0xFFBCBCC0),
-        ),
+        hintStyle: hintStyle ??
+            const TextStyle(
+              color: Color(0xFFBCBCC0),
+            ),
         labelText: label,
         labelStyle: const TextStyle(color: Color(0xFFBCBCC0)),
         floatingLabelStyle: TextStyle(color: primaryColor),
@@ -81,10 +89,11 @@ class STextField extends StatelessWidget {
           maxWidth: 48,
           maxHeight: 48,
         ),
-        suffixIconConstraints: const BoxConstraints(
-          maxWidth: 48,
-          maxHeight: 48,
-        ),
+        suffixIconConstraints: suffixIconConstraints ??
+            const BoxConstraints(
+              maxWidth: 48,
+              maxHeight: 48,
+            ),
         contentPadding: EdgeInsets.symmetric(
           horizontal: 16,
           vertical: isDense ? 0 : 14,
