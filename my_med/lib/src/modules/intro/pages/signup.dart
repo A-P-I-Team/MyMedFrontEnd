@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_med/src/components/button.dart';
 import 'package:my_med/src/modules/intro/pages/Upload_photo_page.dart';
 import 'package:my_med/src/modules/intro/pages/email_page.dart';
 import 'package:my_med/src/modules/intro/pages/personal_information_page.dart';
@@ -36,16 +35,29 @@ class _SignUpPage extends StatelessWidget {
           formKey: provider.emailPageformKey,
           confirmPasswordController: provider.confirmPasswordController,
           onConfirmPasswordChanged: provider.onConfirmPasswordChanged,
-          formIsValid: provider.enableButton,
-          onConfirmTap: provider.onConfirmPressed,
           emailValidation: provider.validateEmail,
           passwordConfirmValidation: provider.validateConfirmPassword,
           passwordValidation: provider.validatePassword,
+          formIsValid: provider.enableButtonForEmailPage,
+          onConfirmTap: provider.onConfirmPressed,
         );
       case 1:
-        return PersonalInformationPage(activeColor: activeColor);
+        return PersonalInformationPage(
+          activeColor: activeColor,
+          firstNameController: provider.firstNameController,
+          lastNameController: provider.lastNameController,
+          birthdayController: provider.birthdateController,
+          isFormValid: provider.enableButtonForPersonalInformationPage,
+          onConfirmTap: provider.onConfirmPressed,
+          onBirthChanged: provider.onbirthdayChanged,
+          onFirstNameChanged: provider.onFirstnameChanged,
+          onLastNameChanged: provider.onlastNameChanged,
+        );
       case 2:
-        return PhotoPage(activeColor: activeColor);
+        return PhotoPage(
+          activeColor: activeColor,
+          isButtonEnable: provider.enableButtonForUploadPhotoPage,
+        );
       case 3:
         return const QuestionsPage();
     }
