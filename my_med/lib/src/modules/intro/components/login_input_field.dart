@@ -2,14 +2,13 @@
 import 'package:flutter/material.dart';
 
 class DefaultTextField extends StatelessWidget {
-  final validUsername = RegExp(r'^[a-zA-Z0-9@+-_.]+$');
   final String? label;
   final bool obscureText;
   final String? Function(String?)? validator;
   final TextEditingController controller;
   final void Function(String) onChanged;
 
-  DefaultTextField({
+  const DefaultTextField({
     Key? key,
     this.obscureText = false,
     this.label,
