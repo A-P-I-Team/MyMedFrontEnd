@@ -36,7 +36,11 @@ class EmailPage extends StatelessWidget {
     return Form(
       key: formKey,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(
+          top: 40.0,
+          left: 16,
+          right: 16,
+        ),
         child: Column(
           children: [
             Expanded(
@@ -89,7 +93,7 @@ class EmailPage extends StatelessWidget {
                     width: double.infinity,
                     child: DefaultButton(
                       onPressed: (formIsValid) ? onConfirmTap : null,
-                      child: const Text("Confirm"),
+                      child: const Text("Verify"),
                     ),
                   ),
                 ),
