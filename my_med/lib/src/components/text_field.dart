@@ -17,6 +17,7 @@ class STextField extends StatelessWidget {
   final TextStyle? hintStyle;
   final bool readOnly;
   final BoxConstraints? suffixIconConstraints;
+  final int? maxLength;
 
   const STextField({
     Key? key,
@@ -36,12 +37,14 @@ class STextField extends StatelessWidget {
     this.hintStyle,
     this.readOnly = false,
     this.suffixIconConstraints,
+    this.maxLength,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).colorScheme.primary;
     return TextField(
+      maxLength: maxLength,
       readOnly: readOnly,
       focusNode: focusNode,
       textAlign: textAlign,
