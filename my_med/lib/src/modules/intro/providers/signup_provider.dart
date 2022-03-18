@@ -1,11 +1,11 @@
+import 'dart:async';
 import 'dart:typed_data';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:my_med/src/components/button.dart';
-import 'package:my_med/src/components/text_field.dart';
 import 'package:my_med/src/components/utils/regex.dart';
 import 'package:my_med/src/models/date.dart';
 import 'package:my_med/src/modules/intro/models/register_controller.dart';
+import 'package:my_med/src/modules/intro/pages/stateful_bottom_sheet.dart';
 
 class SignupProvider extends ChangeNotifier {
   final BuildContext context;
@@ -31,7 +31,8 @@ class SignupProvider extends ChangeNotifier {
   bool isOTPRight = false;
   bool enableButtonForPersonalInformationPage = false;
   bool enableButtonForUploadPhotoPage = false;
-  String timer = '3:00';
+
+  final GlobalKey<StatefulBottomSheetState> bottomSheetKey = GlobalKey<StatefulBottomSheetState>();
 
   SignupProvider(this.context);
 
@@ -204,7 +205,13 @@ class SignupProvider extends ChangeNotifier {
 
   Future<void> onConfirmPressed() async {
     if (currentPage == 0) {
-      buildBottomSheet();
+      FocusScope.of(context).requestFocus(FocusNode());
+      // if (bottomSheetKey.currentState != null) {
+      //   debugPrint("YEYEYS");
+      //   bottomSheetKey.currentState!.showOtp();
+      // }
+      // buildBottomSheet();
+      return;
     } else if (currentPage == registerPageCount) {
       if (!registerController.areQuestionsAnswered) return;
       _isLoading = true;
@@ -219,71 +226,9 @@ class SignupProvider extends ChangeNotifier {
     }
   }
 
-  void buildBottomSheet() {
-    showModalBottomSheet(
-      isDismissible: false,
-      context: context,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(32),
-        topRight: Radius.circular(32),
-      )),
-      builder: (_) {
-        return SizedBox(
-          height: MediaQuery.of(context).size.height * 0.4,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 25,
-              vertical: 20,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  children: const [
-                    Text(
-                      'Verify your email account',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF60606B)),
-                    ),
-                    Expanded(
-                        child: Text(
-                      'timer',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-                    )),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    'Enter the 6-digit code we sent to ${emailController.text}',
-                    style: const TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF8E8E93)),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const DefaultButton(
-                  isExpanded: true,
-                  child: Text('Confirm'),
-                ),
-                const SizedBox(height: 32),
-                TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Change email account',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
-                      ),
-                    ))
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
+  // void buildBottomSheet(BuildContext context) {
+
+  // }
 
   void isPersonalInformationValid() {
     if (firstNameController.text.isNotEmpty && lastNameController.text.isNotEmpty && birthdateController.text.isNotEmpty) {
