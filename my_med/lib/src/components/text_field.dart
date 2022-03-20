@@ -18,6 +18,7 @@ class STextField extends StatelessWidget {
   final bool readOnly;
   final BoxConstraints? suffixIconConstraints;
   final int? maxLength;
+  final String? errorText;
 
   const STextField({
     Key? key,
@@ -38,6 +39,7 @@ class STextField extends StatelessWidget {
     this.readOnly = false,
     this.suffixIconConstraints,
     this.maxLength,
+    this.errorText,
   }) : super(key: key);
 
   @override
@@ -111,6 +113,19 @@ class STextField extends StatelessWidget {
             ? OutlineInputBorder(
                 borderRadius: borderRadius,
                 borderSide: BorderSide(color: primaryColor),
+              )
+            : InputBorder.none,
+        errorText: errorText,
+        errorBorder: applyBorder
+            ? OutlineInputBorder(
+                borderRadius: borderRadius,
+                borderSide: BorderSide(color: Theme.of(context).errorColor),
+              )
+            : InputBorder.none,
+        focusedErrorBorder: applyBorder
+            ? OutlineInputBorder(
+                borderRadius: borderRadius,
+                borderSide: BorderSide(color: Theme.of(context).errorColor),
               )
             : InputBorder.none,
       ),
