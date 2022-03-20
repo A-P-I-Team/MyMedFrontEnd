@@ -69,13 +69,6 @@ class SignupProvider extends ChangeNotifier {
     return value;
   }
 
-  // bool get canPressConfirm {
-  //   if (_isLoading) return false;
-  //   bool value = canPressNext;
-  //   value |= currentPage == 3 && registerController.areQuestionsAnswered;
-  //   return value;
-  // }
-
   String get pageTitle {
     switch (currentPage) {
       case 0:
@@ -95,6 +88,11 @@ class SignupProvider extends ChangeNotifier {
     } else {
       return "Confirm";
     }
+  }
+
+  void changeOTPStatus(bool newVal) {
+    isOTPRight = newVal;
+    notifyListeners();
   }
 
   String? validateEmail(String? value) {
@@ -206,11 +204,7 @@ class SignupProvider extends ChangeNotifier {
   Future<void> onConfirmPressed() async {
     if (currentPage == 0) {
       FocusScope.of(context).requestFocus(FocusNode());
-      // if (bottomSheetKey.currentState != null) {
-      //   debugPrint("YEYEYS");
-      //   bottomSheetKey.currentState!.showOtp();
-      // }
-      // buildBottomSheet();
+      changeOTPStatus(false);
       return;
     } else if (currentPage == registerPageCount) {
       if (!registerController.areQuestionsAnswered) return;
@@ -236,7 +230,6 @@ class SignupProvider extends ChangeNotifier {
     } else {
       enableButtonForPersonalInformationPage = false;
     }
-    debugPrint(birthdateController.text);
     notifyListeners();
   }
 
