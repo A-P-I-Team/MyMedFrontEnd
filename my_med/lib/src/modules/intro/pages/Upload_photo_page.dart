@@ -8,12 +8,14 @@ import 'package:image_picker/image_picker.dart';
 
 class PhotoPage extends StatelessWidget {
   final Color activeColor;
-  final isButtonEnable;
+  final bool isButtonEnable;
+  final void Function() onConfirmPressed;
 
   const PhotoPage({
     Key? key,
     required this.activeColor,
     required this.isButtonEnable,
+    required this.onConfirmPressed,
   }) : super(key: key);
 
   Widget _photoBuilder(final BuildContext context) {
@@ -131,7 +133,7 @@ class PhotoPage extends StatelessWidget {
                 child: SizedBox(
                   width: double.infinity,
                   child: DefaultButton(
-                    onPressed: (isButtonEnable) ? () {} : null,
+                    onPressed: (isButtonEnable) ? onConfirmPressed : null,
                     child: const Text("Confirm"),
                   ),
                 ),

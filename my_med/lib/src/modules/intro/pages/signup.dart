@@ -78,6 +78,7 @@ class _SignUpPage extends StatelessWidget {
         return PhotoPage(
           activeColor: activeColor,
           isButtonEnable: provider.enableButtonForUploadPhotoPage,
+          onConfirmPressed: provider.onConfirmPressed,
         );
       case 3:
         return const QuestionsPage();
