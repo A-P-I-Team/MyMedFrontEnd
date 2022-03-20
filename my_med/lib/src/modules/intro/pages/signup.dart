@@ -55,6 +55,9 @@ class _SignUpPage extends StatelessWidget {
                   return StatefulBottomSheet(
                     key: provider.bottomSheetKey,
                     emailController: provider.emailController,
+                    orginalOTP: '123321',
+                    changeOTPStatus: provider.changeOTPStatus,
+                    goToNextPage: provider.onNextPressed,
                   );
                 });
           },
