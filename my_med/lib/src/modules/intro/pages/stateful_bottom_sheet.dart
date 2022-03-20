@@ -6,9 +6,15 @@ import 'package:my_med/src/components/text_field.dart';
 
 class StatefulBottomSheet extends StatefulWidget {
   final TextEditingController emailController;
+  final String orginalOTP;
+  final void Function(bool newVal) changeOTPStatus;
+  final void Function() goToNextPage;
   const StatefulBottomSheet({
     Key? key,
     required this.emailController,
+    required this.orginalOTP,
+    required this.changeOTPStatus,
+    required this.goToNextPage,
   }) : super(key: key);
 
   @override
@@ -24,6 +30,8 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
   bool get isTimerFinished => timeRemaining == Duration.zero;
   final FocusNode _focus = FocusNode();
   bool isOTPComplete = false;
+  String otpVerification = '';
+  String? errorText;
 
   @override
   void dispose() {
@@ -101,6 +109,17 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
             ),
             const SizedBox(height: 8),
             STextField(
+              errorText: errorText,
+              prefix: AnimatedSwitcher(
+                key: ValueKey(errorText),
+                duration: const Duration(milliseconds: 500),
+                switchInCurve: Curves.bounceIn,
+                switchOutCurve: Curves.easeOut,
+                child: Icon(
+                  (errorText == null) ? Icons.email_rounded : Icons.error_outline_rounded,
+                  color: (errorText == null) ? Theme.of(context).primaryColor : Theme.of(context).errorColor,
+                ),
+              ),
               maxLength: 6,
               focusNode: _focus,
               hint: (_focus.hasFocus) ? '' : '_ _ _ _ _ _',
@@ -112,8 +131,10 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
               onChanged: (value) {
+                errorText = null;
                 if (value.length == 6) {
                   setState(() {
+                    otpVerification = value;
                     isOTPComplete = true;
                   });
                 } else {
@@ -128,7 +149,7 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
             ),
             AnimatedContainer(
               height: 55,
-              width: (isLoading) ? MediaQuery.of(context).size.width * 0.3 : MediaQuery.of(context).size.width * 0.8,
+              width: (isLoading) ? MediaQuery.of(context).size.width * 0.3 : MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 color: Theme.of(context).buttonTheme.colorScheme!.primary,
@@ -151,11 +172,22 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
                         });
                         Future.delayed(const Duration(seconds: 2)).then(
                           (value) {
-                            print("HERRERE");
+                            print("After Confirm pressed");
+                            if (otpVerification == widget.orginalOTP && widget.orginalOTP.length == 6) {
+                              context.router.pop();
+                              widget.goToNextPage();
+                              //TODO go to next step
+                              widget.changeOTPStatus(true);
+                            } else {
+                              widget.changeOTPStatus(false);
+
+                              setState(() {
+                                errorText = 'Wrong OTP';
+                              });
+                            }
                             setState(() {
                               isLoading = false;
                             });
-                            context.router.pop();
                           },
                         );
                       }
@@ -164,7 +196,7 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
             ),
             const SizedBox(height: 24),
             TextButton(
-                onPressed: () {},
+                onPressed: () => context.router.pop(),
                 child: Text(
                   'Change email account',
                   style: TextStyle(
@@ -201,37 +233,20 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
   }
 
   Future<void> resendOtp() async {
-    // if (!isTimerFinished) return;
-    // if (_isLoading) return;
-    // final email = emailController.text;
-    // if (emailController.text.isEmpty) return;
-    // _isLoading = true;
-    // notifyListeners();
+    print("heeyeyeeey");
+    if (!isTimerFinished) return;
+    if (isLoading) return;
+    setState(() {
+      isLoading = true;
+    });
     // final response = await _api.sendOtp('+98$number');
-    // if (response ) {
-    //   _restartTimer();
-    // } else {
-    //   otpPhoneKey.currentState?.hideOtp();
-    // }
-    // _isLoading = false;
-    // notifyListeners();
-  }
-
-  Future<void> verifyOtp() async {
-    // final code = otpController.text;
-    // if (code.length != 6) return;
-    // _isLoading = true;
-    // notifyListeners();
-    // final status = await _api.verifyOtp(otpController.text);
-    // _isLoading = false;
-    // notifyListeners();
-    // if (status == null) return;
-    // final isRegistered = status == 'sign_in';
-    // if (isRegistered) {
-    //   context.vRouter.to('/home');
-    // } else {
-    //   context.vRouter.to('/onboarding/register');
-    // }
+    await Future.delayed(const Duration(seconds: 2));
+    if (true) {
+      _restartTimer();
+    } else {
+      //TODO Error handling
+    }
+    isLoading = false;
   }
 
   void _restartTimer() {
