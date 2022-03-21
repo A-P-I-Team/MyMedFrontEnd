@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:my_med/src/core/routing/router.dart';
+import 'package:my_med/src/modules/dashboard/pages/dashboard_page.dart';
 
 class LoginProvider extends ChangeNotifier {
   final BuildContext context;
@@ -35,6 +38,10 @@ class LoginProvider extends ChangeNotifier {
     await Future.delayed(const Duration(seconds: 2));
     isLoading = false;
     notifyListeners();
-    //TODO naviagting or show error
+    if (true) {
+      context.router.push(const DashboardRoute());
+    } else {
+      //TODO Error Handling
+    }
   }
 }
