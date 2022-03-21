@@ -36,6 +36,10 @@ class _$AppRouter extends RootStackRouter {
     SignUpRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const SignUpPage());
+    },
+    DashboardRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const DashboardPage());
     }
   };
 
@@ -47,7 +51,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(SplashRoute.name, path: '/splash'),
         RouteConfig(OnboardingRoute.name, path: '/on_boarding'),
         RouteConfig(LoginRoute.name, path: '/login'),
-        RouteConfig(SignUpRoute.name, path: '/signup')
+        RouteConfig(SignUpRoute.name, path: '/signup'),
+        RouteConfig(DashboardRoute.name, path: '/dashboard')
       ];
 }
 
@@ -89,4 +94,12 @@ class SignUpRoute extends PageRouteInfo<void> {
   const SignUpRoute() : super(SignUpRoute.name, path: '/signup');
 
   static const String name = 'SignUpRoute';
+}
+
+/// generated route for
+/// [DashboardPage]
+class DashboardRoute extends PageRouteInfo<void> {
+  const DashboardRoute() : super(DashboardRoute.name, path: '/dashboard');
+
+  static const String name = 'DashboardRoute';
 }
