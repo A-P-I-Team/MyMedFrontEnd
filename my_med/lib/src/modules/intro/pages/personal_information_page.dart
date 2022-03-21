@@ -12,6 +12,7 @@ class PersonalInformationPage extends StatelessWidget {
   final void Function(String) onLastNameChanged;
   final bool isFormValid;
   final void Function() onConfirmTap;
+  final void Function() updateStat;
 
   const PersonalInformationPage({
     Key? key,
@@ -24,6 +25,7 @@ class PersonalInformationPage extends StatelessWidget {
     required this.onBirthChanged,
     required this.onFirstNameChanged,
     required this.onLastNameChanged,
+    required this.updateStat,
   }) : super(key: key);
 
   @override
@@ -80,6 +82,7 @@ class PersonalInformationPage extends StatelessWidget {
                 ),
               ).then((date) {
                 birthdayController.text = date.toString().split(' ')[0];
+                updateStat();
               });
             },
             child: AbsorbPointer(
