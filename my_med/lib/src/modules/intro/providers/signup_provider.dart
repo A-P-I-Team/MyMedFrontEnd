@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/utils/regex.dart';
+import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/models/date.dart';
 import 'package:my_med/src/modules/intro/models/register_controller.dart';
 import 'package:my_med/src/modules/intro/pages/stateful_bottom_sheet.dart';
@@ -34,6 +35,41 @@ class SignupProvider extends ChangeNotifier {
 
   final GlobalKey<StatefulBottomSheetState> bottomSheetKey = GlobalKey<StatefulBottomSheetState>();
 
+  /*** FORM ***/
+  String gender = 'Female', relationship = 'Single', vaccinated = 'Yes', city = 'California';
+  bool isQuestionsFormValid = true;
+
+  void onGenderChanged(String? newGender) {
+    gender = newGender!;
+    notifyListeners();
+  }
+
+  void onCityChanged(String? newCity) {
+    city = newCity!;
+    notifyListeners();
+  }
+
+  void onRelationshipChanged(String? newRelationship) {
+    relationship = newRelationship!;
+    notifyListeners();
+  }
+
+  void onVaccinatedChanged(String? newVaccinated) {
+    vaccinated = newVaccinated!;
+    notifyListeners();
+  }
+
+  Future<List<String>> onFindCity(String? filter) async {
+    _isLoading = true;
+    notifyListeners();
+    await Future.delayed(const Duration(seconds: 1));
+    _isLoading = false;
+    notifyListeners();
+    return ['Texas', 'Boston', 'California', 'L.A', 'Chicago'];
+  }
+
+  /*** FORM - END ***/
+
   SignupProvider(this.context);
 
   @override
@@ -63,6 +99,8 @@ class SignupProvider extends ChangeNotifier {
     } else if (currentPage == 1 && enableButtonForPersonalInformationPage) {
       value = true;
     } else if (currentPage == 2 && enableButtonForUploadPhotoPage) {
+      value = true;
+    } else if (currentPage == 3 && isQuestionsFormValid) {
       value = true;
     }
 
@@ -157,6 +195,10 @@ class SignupProvider extends ChangeNotifier {
     isPersonalInformationValid();
   }
 
+  void updateState() {
+    notifyListeners();
+  }
+
   void setupPhoto(final Uint8List? photo, final String? path) {
     registerController.photo = photo;
     registerController.photoPath = path;
@@ -187,6 +229,8 @@ class SignupProvider extends ChangeNotifier {
         curve: _animationCurve,
         duration: _animationDuration,
       );
+    } else if (currentPage + 1 == registerPageCount) {
+      onConfirmPressed();
     }
     notifyListeners();
   }
@@ -196,25 +240,28 @@ class SignupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onAnswerSelected(final int questionIndex, final int? answerIndex) {
-    registerController.questions[questionIndex].selectedAnswer = answerIndex;
-    notifyListeners();
-  }
+  // void onAnswerSelected(final int questionIndex, final int? answerIndex) {
+  //   registerController.questions[questionIndex].selectedAnswer = answerIndex;
+  //   notifyListeners();
+  // }
 
   Future<void> onConfirmPressed() async {
+    FocusScope.of(context).requestFocus(FocusNode());
+
     if (currentPage == 0) {
-      FocusScope.of(context).requestFocus(FocusNode());
       changeOTPStatus(false);
       return;
-    } else if (currentPage == registerPageCount) {
-      if (!registerController.areQuestionsAnswered) return;
+    } else if (currentPage + 1 == registerPageCount) {
       _isLoading = true;
       notifyListeners();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       // final response = await _api.register(registerController);
       _isLoading = false;
       notifyListeners();
-      // if (response) context.vRouter.to('/login');
+      if (true) {
+        context.router.pop();
+        context.router.push(const LoginRoute());
+      }
     } else {
       onNextPressed();
     }
