@@ -29,7 +29,7 @@ class LoginProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> Login() async {
+  Future<void> login() async {
     isLoading = true;
     notifyListeners();
     await Future.delayed(const Duration(seconds: 2));
