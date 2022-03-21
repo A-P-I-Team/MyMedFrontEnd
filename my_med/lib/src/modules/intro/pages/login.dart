@@ -70,7 +70,7 @@ class _LoginState extends StatelessWidget {
                 child: DefaultButton(
                   forceEnabling: provider.isLoading,
                   isExpanded: true,
-                  onPressed: (provider.isButtonEnabled && provider.isLoading == false) ? provider.Login : null,
+                  onPressed: (provider.isButtonEnabled && provider.isLoading == false) ? provider.login : null,
                   child: (provider.isLoading)
                       ? const Center(
                           child: CircularProgressIndicator(color: Colors.white),
