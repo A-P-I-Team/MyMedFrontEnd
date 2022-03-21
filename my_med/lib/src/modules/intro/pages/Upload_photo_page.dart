@@ -118,7 +118,7 @@ class PhotoPage extends StatelessWidget {
                   color: Theme.of(context).primaryColor,
                 ),
                 const SizedBox(width: 8),
-                const Text("Take another photo"),
+                const Text("Take a new photo"),
               ],
             ),
           ),
