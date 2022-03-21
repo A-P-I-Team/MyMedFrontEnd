@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_med/src/modules/intro/pages/Upload_photo_page.dart';
+import 'package:my_med/src/modules/intro/pages/upload_photo_page.dart';
 import 'package:my_med/src/modules/intro/pages/stateful_bottom_sheet.dart';
 import 'package:my_med/src/modules/intro/pages/email_page.dart';
 import 'package:my_med/src/modules/intro/pages/personal_information_page.dart';
@@ -73,6 +73,7 @@ class _SignUpPage extends StatelessWidget {
           onBirthChanged: provider.onbirthdayChanged,
           onFirstNameChanged: provider.onFirstnameChanged,
           onLastNameChanged: provider.onlastNameChanged,
+          updateStat: provider.updateState,
         );
       case 2:
         return PhotoPage(
@@ -81,7 +82,23 @@ class _SignUpPage extends StatelessWidget {
           onConfirmPressed: provider.onConfirmPressed,
         );
       case 3:
-        return const QuestionsPage();
+        return (provider.isLoading)
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : QuestionsPage(
+                onGenderChanged: provider.onGenderChanged,
+                gender: provider.gender,
+                isVaccinated: provider.vaccinated,
+                relationship: provider.relationship,
+                defaultCity: provider.city,
+                onCityChanged: provider.onCityChanged,
+                onFind: provider.onFindCity,
+                isFormValid: provider.isQuestionsFormValid,
+                onSubmitPressed: provider.onConfirmPressed,
+                onRelationChanged: provider.onRelationshipChanged,
+                onVaccinatedChanged: provider.onVaccinatedChanged,
+              );
     }
     throw UnimplementedError();
   }
