@@ -172,7 +172,6 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
                         });
                         Future.delayed(const Duration(seconds: 2)).then(
                           (value) {
-                            print("After Confirm pressed");
                             if (otpVerification == widget.orginalOTP && widget.orginalOTP.length == 6) {
                               context.router.pop();
                               widget.goToNextPage();
@@ -233,7 +232,6 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
   }
 
   Future<void> resendOtp() async {
-    print("heeyeyeeey");
     if (!isTimerFinished) return;
     if (isLoading) return;
     setState(() {
