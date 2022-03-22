@@ -14,6 +14,8 @@ class PreferencesService {
     return _storage.getString('Token');
   }
 
+  static bool hasToken() => _storage.containsKey('Token');
+
   static Future<void> setTokens({
     required String token,
   }) async {
