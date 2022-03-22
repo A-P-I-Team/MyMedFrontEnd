@@ -204,6 +204,16 @@ class QuestionsPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),
+              showSelectedItems: true,
+              popupElevation: 0,
+              searchFieldProps: TextFieldProps(
+                  autocorrect: true,
+                  decoration: InputDecoration(
+                    labelText: defaultCity,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  )),
             ),
           ),
           Expanded(
