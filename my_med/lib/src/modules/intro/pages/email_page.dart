@@ -15,6 +15,7 @@ class EmailPage extends StatelessWidget {
   final String? Function(String?) emailValidation;
   final String? Function(String?) passwordValidation;
   final String? Function(String?) passwordConfirmValidation;
+  final bool isLoading;
   const EmailPage({
     Key? key,
     required this.emailController,
@@ -29,6 +30,7 @@ class EmailPage extends StatelessWidget {
     required this.emailValidation,
     required this.passwordValidation,
     required this.passwordConfirmValidation,
+    required this.isLoading,
   }) : super(key: key);
 
   @override
@@ -93,7 +95,12 @@ class EmailPage extends StatelessWidget {
                     width: double.infinity,
                     child: DefaultButton(
                       onPressed: (formIsValid) ? onConfirmTap : null,
-                      child: const Text("Verify"),
+                      child: (isLoading)
+                          ? const Center(
+                              child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ))
+                          : const Text("Verify"),
                     ),
                   ),
                 ),
