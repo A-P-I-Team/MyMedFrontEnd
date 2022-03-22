@@ -45,9 +45,7 @@ class _$AppRouter extends RootStackRouter {
 
   @override
   List<RouteConfig> get routes => [
-        RouteConfig('/#redirect',
-            path: '/', redirectTo: '/splash', fullMatch: true),
-        RouteConfig(TestRoute.name, path: '/test-page'),
+        RouteConfig(TestRoute.name, path: '/'),
         RouteConfig(SplashRoute.name, path: '/splash'),
         RouteConfig(OnboardingRoute.name, path: '/on_boarding'),
         RouteConfig(LoginRoute.name, path: '/login'),
@@ -59,7 +57,7 @@ class _$AppRouter extends RootStackRouter {
 /// generated route for
 /// [TestPage]
 class TestRoute extends PageRouteInfo<void> {
-  const TestRoute() : super(TestRoute.name, path: '/test-page');
+  const TestRoute() : super(TestRoute.name, path: '/');
 
   static const String name = 'TestRoute';
 }

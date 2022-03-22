@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/core/routing/router.dart';
+import 'package:my_med/src/modules/intro/pages/onboarding.dart';
 
 class TestPage extends StatefulWidget {
   const TestPage({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class TestPage extends StatefulWidget {
 
 class _TestPageState extends State<TestPage> {
   Widget? get testWidget {
+    // ignore: prefer_const_constructors
     return null; // Call any page want to test.
   }
 
@@ -22,7 +24,7 @@ class _TestPageState extends State<TestPage> {
   }
 
   void toHome() {
-    context.router.popAndPush(const SplashRoute());
+    context.router.replaceAll(const [SplashRoute()]);
   }
 
   @override
@@ -34,8 +36,8 @@ class _TestPageState extends State<TestPage> {
       floatingActionButton: FloatingActionButton(
         mini: true,
         elevation: 0,
-        onPressed: toHome,
-        backgroundColor: Colors.green,
+        onPressed: () {},
+        backgroundColor: Colors.green.shade100,
         child: const Text('Test'),
       ),
     );
