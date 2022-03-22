@@ -1,11 +1,12 @@
 import 'dart:async';
-import 'dart:typed_data';
+import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/utils/regex.dart';
 import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/models/date.dart';
 import 'package:my_med/src/modules/intro/apis/auth_api.dart';
+import 'package:my_med/src/modules/intro/models/city_model.dart';
 import 'package:my_med/src/modules/intro/models/register_controller.dart';
 import 'package:my_med/src/modules/intro/pages/stateful_bottom_sheet.dart';
 
@@ -21,22 +22,23 @@ class SignupProvider extends ChangeNotifier {
   final _authAPI = AuthAPI();
   bool _isLoading = false;
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
-  final GlobalKey<FormState> emailPageformKey = GlobalKey<FormState>();
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController birthdateController = TextEditingController();
   final TextEditingController ssnController = TextEditingController();
-  bool enableButtonForEmailPage = false;
-  bool isOTPRight = false;
   bool enableButtonForPersonalInformationPage = false;
   bool enableButtonForUploadPhotoPage = false;
 
-  final GlobalKey<StatefulBottomSheetState> bottomSheetKey = GlobalKey<StatefulBottomSheetState>();
-
   ///*** Credentials ***/
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+  final GlobalKey<FormState> emailPageformKey = GlobalKey<FormState>();
+  final GlobalKey<StatefulBottomSheetState> bottomSheetKey = GlobalKey<StatefulBottomSheetState>();
+  bool enableButtonForEmailPage = false;
+
+  bool isOTPRight = false;
+
   int? otpCode;
   void setNewOTPCode(int newOTPCode) {
     otpCode = newOTPCode;
@@ -48,6 +50,7 @@ class SignupProvider extends ChangeNotifier {
   ///*** Question FORM ***/
   String gender = 'Female', relationship = 'Single', vaccinated = 'Yes', city = 'California';
   bool isQuestionsFormValid = true;
+  List<CityModel> cityList = [];
 
   void onGenderChanged(String? newGender) {
     gender = newGender!;
@@ -70,12 +73,13 @@ class SignupProvider extends ChangeNotifier {
   }
 
   Future<List<String>> onFindCity(String? filter) async {
+    print('call');
     _isLoading = true;
     notifyListeners();
-    await Future.delayed(const Duration(seconds: 1));
+    cityList = await _authAPI.getCities();
     _isLoading = false;
     notifyListeners();
-    return ['Texas', 'Boston', 'California', 'L.A', 'Chicago'];
+    return List.generate(cityList.length, (index) => cityList[index].cityName);
   }
 
   ///*** Question FORM - END ***/
@@ -86,7 +90,13 @@ class SignupProvider extends ChangeNotifier {
   void dispose() {
     pageController.dispose();
     registerController.nameController.dispose();
-    //TODO disposing controllers
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    birthdateController.dispose();
+    ssnController.dispose();
     super.dispose();
   }
 
@@ -213,9 +223,8 @@ class SignupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setupPhoto(final Uint8List? photo, final String? path) {
-    registerController.photo = photo;
-    registerController.photoPath = path;
+  void setupPhoto(File profilePhotoFile) {
+    registerController.profilePhotoFile = profilePhotoFile;
     enableButtonForUploadPhotoPage = true;
     notifyListeners();
   }
@@ -277,14 +286,23 @@ class SignupProvider extends ChangeNotifier {
     } else if (currentPage + 1 == registerPageCount) {
       _isLoading = true;
       notifyListeners();
-      await Future.delayed(const Duration(seconds: 1));
-      // final response = await _api.register(registerController);
+      final ok = await _authAPI.registerUser(
+        email: emailController.text,
+        birthday: birthdateController.text,
+        firstName: firstNameController.text,
+        lastName: lastNameController.text,
+        gender: gender,
+        password: passwordController.text,
+        ssn: ssnController.text,
+        profilePicFile: registerController.profilePhotoFile!,
+        isVaccinated: vaccinated,
+        relationshipStatus: relationship,
+        userCityID: cityList.firstWhere((element) => element.cityName == city).id.toString(),
+      );
       _isLoading = false;
       notifyListeners();
-      if (true) {
-        context.router.pop();
-        context.router.push(const LoginRoute());
-      }
+      if (ok == false) return false;
+      context.router.popAndPush(const LoginRoute());
       return true;
     } else {
       onNextPressed();
