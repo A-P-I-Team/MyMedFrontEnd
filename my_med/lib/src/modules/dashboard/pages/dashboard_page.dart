@@ -1,4 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:my_med/src/components/utils/shared_preferences.dart';
+import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/modules/dashboard/providers/dashboard_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +23,19 @@ class _DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Dashboard'),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            PreferencesService.logout();
+            context.router.replaceAll(const [OnboardingRoute()]);
+          },
+          child: const Text('Exit'),
+        ),
+      ),
     );
   }
 }
