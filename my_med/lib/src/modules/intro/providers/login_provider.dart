@@ -33,6 +33,7 @@ class LoginProvider extends ChangeNotifier {
   }
 
   Future<void> login() async {
+    FocusScope.of(context).requestFocus(FocusNode());
     isLoading = true;
     notifyListeners();
     final ok = await AuthAPI().login(email: emailController.text, password: passwordController.text);
