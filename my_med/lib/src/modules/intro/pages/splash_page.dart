@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:my_med/src/components/utils/shared_preferences.dart';
 import 'package:my_med/src/core/routing/router.dart';
 
 class SplashPage extends StatefulWidget {
@@ -12,12 +13,14 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    //TODO Check token here
-    if (true) {
+    final bool ok = PreferencesService.hasToken();
+    if (ok == false) {
       Future.delayed(const Duration(seconds: 2)).then((_) {
-        context.router.replaceAll(const [
-          OnboardingRoute(),
-        ]);
+        context.router.replaceAll(const [OnboardingRoute()]);
+      });
+    } else {
+      Future.delayed(const Duration(seconds: 2)).then((_) {
+        context.router.replaceAll(const [DashboardRoute()]);
       });
     }
     super.initState();
