@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:my_med/src/components/utils/regex.dart';
 import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/models/date.dart';
+import 'package:my_med/src/modules/intro/apis/auth_api.dart';
 import 'package:my_med/src/modules/intro/models/register_controller.dart';
 import 'package:my_med/src/modules/intro/pages/stateful_bottom_sheet.dart';
 
@@ -12,13 +13,12 @@ class SignupProvider extends ChangeNotifier {
   final BuildContext context;
   final _animationCurve = Curves.easeInOut;
   final _animationDuration = const Duration(milliseconds: 350);
-
   int _currentPage = 0;
   final int registerPageCount = 4;
   final pageController = PageController();
   final registerController = RegisterController();
 
-  // final _api = AuthApi();
+  final _authAPI = AuthAPI();
   bool _isLoading = false;
 
   final TextEditingController emailController = TextEditingController();
@@ -28,6 +28,7 @@ class SignupProvider extends ChangeNotifier {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController birthdateController = TextEditingController();
+  final TextEditingController ssnController = TextEditingController();
   bool enableButtonForEmailPage = false;
   bool isOTPRight = false;
   bool enableButtonForPersonalInformationPage = false;
@@ -35,7 +36,16 @@ class SignupProvider extends ChangeNotifier {
 
   final GlobalKey<StatefulBottomSheetState> bottomSheetKey = GlobalKey<StatefulBottomSheetState>();
 
-  /*** FORM ***/
+  ///*** Credentials ***/
+  int? otpCode;
+  void setNewOTPCode(int newOTPCode) {
+    otpCode = newOTPCode;
+    notifyListeners();
+  }
+
+  ///*** Credentials  - End ***/
+
+  ///*** Question FORM ***/
   String gender = 'Female', relationship = 'Single', vaccinated = 'Yes', city = 'California';
   bool isQuestionsFormValid = true;
 
@@ -68,7 +78,7 @@ class SignupProvider extends ChangeNotifier {
     return ['Texas', 'Boston', 'California', 'L.A', 'Chicago'];
   }
 
-  /*** FORM - END ***/
+  ///*** Question FORM - END ***/
 
   SignupProvider(this.context);
 
@@ -195,6 +205,10 @@ class SignupProvider extends ChangeNotifier {
     isPersonalInformationValid();
   }
 
+  void onSSNChanged(String value) {
+    isPersonalInformationValid();
+  }
+
   void updateState() {
     notifyListeners();
   }
@@ -245,12 +259,21 @@ class SignupProvider extends ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void> onConfirmPressed() async {
+  Future<bool> onConfirmPressed() async {
     FocusScope.of(context).requestFocus(FocusNode());
 
     if (currentPage == 0) {
+      _isLoading = true;
+      notifyListeners();
+      otpCode = await _authAPI.verifyEmailAccountWithOTP(
+        email: emailController.text,
+      );
+      _isLoading = false;
+      notifyListeners();
+      debugPrint('$otpCode');
       changeOTPStatus(false);
-      return;
+      if (otpCode == null) return false;
+      return true;
     } else if (currentPage + 1 == registerPageCount) {
       _isLoading = true;
       notifyListeners();
@@ -262,17 +285,15 @@ class SignupProvider extends ChangeNotifier {
         context.router.pop();
         context.router.push(const LoginRoute());
       }
+      return true;
     } else {
       onNextPressed();
+      return true;
     }
   }
 
-  // void buildBottomSheet(BuildContext context) {
-
-  // }
-
   void isPersonalInformationValid() {
-    if (firstNameController.text.isNotEmpty && lastNameController.text.isNotEmpty && birthdateController.text.isNotEmpty) {
+    if (firstNameController.text.isNotEmpty && lastNameController.text.isNotEmpty && birthdateController.text.isNotEmpty && ssnController.text.isNotEmpty) {
       enableButtonForPersonalInformationPage = true;
     } else {
       enableButtonForPersonalInformationPage = false;

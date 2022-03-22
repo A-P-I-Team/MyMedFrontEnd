@@ -9,12 +9,16 @@ class StatefulBottomSheet extends StatefulWidget {
   final String orginalOTP;
   final void Function(bool newVal) changeOTPStatus;
   final void Function() goToNextPage;
+  final Future<int?> Function({required String email, VoidCallback? onTimeout, VoidCallback? onDisconnect}) sendOtp;
+  final void Function(int newOTPCode) setOTPCode;
   const StatefulBottomSheet({
     Key? key,
     required this.emailController,
     required this.orginalOTP,
     required this.changeOTPStatus,
     required this.goToNextPage,
+    required this.sendOtp,
+    required this.setOTPCode,
   }) : super(key: key);
 
   @override
@@ -23,8 +27,9 @@ class StatefulBottomSheet extends StatefulWidget {
 
 class StatefulBottomSheetState extends State<StatefulBottomSheet> {
   bool isLoading = false;
+  bool isLoadingResendOTP = false;
   Timer? _timer;
-  static const _retryTime = Duration(minutes: 2);
+  static const _retryTime = Duration(minutes: 1, seconds: 30);
   Duration timeRemaining = _retryTime;
 
   bool get isTimerFinished => timeRemaining == Duration.zero;
@@ -64,38 +69,47 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF60606B)),
                 ),
                 Expanded(
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: (isTimerFinished) ? resendOtp : null,
-                      child: AnimatedCrossFade(
-                        sizeCurve: Curves.easeInOut,
-                        firstCurve: Curves.easeInOut,
-                        secondCurve: Curves.easeInOut,
-                        alignment: Alignment.centerLeft,
-                        duration: const Duration(milliseconds: 500),
-                        crossFadeState: isTimerFinished ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                        firstChild: Text(
-                          timeRemainigText,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                            color: Theme.of(context).primaryColor,
+                  child: (isLoadingResendOTP)
+                      ? const Align(
+                          alignment: Alignment.centerRight,
+                          child: SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(),
                           ),
-                          key: const ValueKey(#resend),
-                        ),
-                        secondChild: Text(
-                          timeRemainigText,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                            color: Theme.of(context).primaryColor,
+                        )
+                      : Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                            onPressed: (isTimerFinished) ? resendOtp : null,
+                            child: AnimatedCrossFade(
+                              sizeCurve: Curves.easeInOut,
+                              firstCurve: Curves.easeInOut,
+                              secondCurve: Curves.easeInOut,
+                              alignment: Alignment.centerLeft,
+                              duration: const Duration(milliseconds: 500),
+                              crossFadeState: isTimerFinished ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                              firstChild: Text(
+                                timeRemainigText,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                key: const ValueKey(#resend),
+                              ),
+                              secondChild: Text(
+                                timeRemainigText,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                key: const ValueKey(#nosend),
+                              ),
+                            ),
                           ),
-                          key: const ValueKey(#nosend),
                         ),
-                      ),
-                    ),
-                  ),
                 ),
               ],
             ),
@@ -166,7 +180,7 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
                     : const Text('Confirm'),
                 onPressed: (isOTPComplete)
                     ? () {
-                        //TODO Call API
+                        FocusScope.of(context).requestFocus(FocusNode());
                         setState(() {
                           isLoading = true;
                         });
@@ -175,7 +189,6 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
                             if (otpVerification == widget.orginalOTP && widget.orginalOTP.length == 6) {
                               context.router.pop();
                               widget.goToNextPage();
-                              //TODO go to next step
                               widget.changeOTPStatus(true);
                             } else {
                               widget.changeOTPStatus(false);
@@ -233,18 +246,19 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
 
   Future<void> resendOtp() async {
     if (!isTimerFinished) return;
-    if (isLoading) return;
+    if (isLoadingResendOTP) return;
     setState(() {
-      isLoading = true;
+      isLoadingResendOTP = true;
     });
-    // final response = await _api.sendOtp('+98$number');
-    await Future.delayed(const Duration(seconds: 2));
-    if (true) {
+    final otpCode = await widget.sendOtp(email: widget.emailController.text);
+    if (otpCode != null) {
+      widget.setOTPCode(otpCode);
+      debugPrint('$otpCode');
       _restartTimer();
-    } else {
-      //TODO Error handling
     }
-    isLoading = false;
+    setState(() {
+      isLoadingResendOTP = false;
+    });
   }
 
   void _restartTimer() {

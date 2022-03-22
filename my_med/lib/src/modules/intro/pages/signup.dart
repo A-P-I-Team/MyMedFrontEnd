@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_med/src/modules/intro/apis/auth_api.dart';
 import 'package:my_med/src/modules/intro/pages/upload_photo_page.dart';
 import 'package:my_med/src/modules/intro/pages/stateful_bottom_sheet.dart';
 import 'package:my_med/src/modules/intro/pages/email_page.dart';
@@ -41,26 +42,32 @@ class _SignUpPage extends StatelessWidget {
           passwordValidation: provider.validatePassword,
           formIsValid: provider.enableButtonForEmailPage,
           onConfirmTap: () {
-            provider.onConfirmPressed();
-            showModalBottomSheet(
-                isScrollControlled: true,
-                context: context,
-                isDismissible: false,
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(32),
-                  topRight: Radius.circular(32),
-                )),
-                builder: (_) {
-                  return StatefulBottomSheet(
-                    key: provider.bottomSheetKey,
-                    emailController: provider.emailController,
-                    orginalOTP: '123321',
-                    changeOTPStatus: provider.changeOTPStatus,
-                    goToNextPage: provider.onNextPressed,
-                  );
-                });
+            provider.onConfirmPressed().then((value) {
+              if (provider.otpCode != null) {
+                showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    isDismissible: false,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(32),
+                      topRight: Radius.circular(32),
+                    )),
+                    builder: (_) {
+                      return StatefulBottomSheet(
+                        key: provider.bottomSheetKey,
+                        emailController: provider.emailController,
+                        orginalOTP: provider.otpCode.toString(),
+                        changeOTPStatus: provider.changeOTPStatus,
+                        goToNextPage: provider.onNextPressed,
+                        sendOtp: AuthAPI().verifyEmailAccountWithOTP,
+                        setOTPCode: provider.setNewOTPCode,
+                      );
+                    });
+              }
+            });
           },
+          isLoading: provider.isLoading,
         );
       case 1:
         return PersonalInformationPage(
@@ -74,6 +81,8 @@ class _SignUpPage extends StatelessWidget {
           onFirstNameChanged: provider.onFirstnameChanged,
           onLastNameChanged: provider.onlastNameChanged,
           updateStat: provider.updateState,
+          onSSNChanged: provider.onSSNChanged,
+          ssnController: provider.ssnController,
         );
       case 2:
         return PhotoPage(
