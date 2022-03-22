@@ -16,6 +16,7 @@ class STextField extends StatelessWidget {
   final TextEditingController? controller;
   final TextStyle? hintStyle;
   final bool readOnly;
+  final BoxConstraints? prefixIconConstraints;
   final BoxConstraints? suffixIconConstraints;
   final int? maxLength;
   final String? errorText;
@@ -40,6 +41,7 @@ class STextField extends StatelessWidget {
     this.suffixIconConstraints,
     this.maxLength,
     this.errorText,
+    this.prefixIconConstraints,
   }) : super(key: key);
 
   @override
@@ -59,7 +61,7 @@ class STextField extends StatelessWidget {
         fontWeight: FontWeight.w600,
       ),
       decoration: InputDecoration(
-        hintText: hint,
+        hintText: hint ?? '',
         isDense: isDense,
         hintStyle: hintStyle ??
             const TextStyle(
@@ -90,10 +92,11 @@ class STextField extends StatelessWidget {
                 child: Center(child: suffix),
               )
             : null,
-        prefixIconConstraints: const BoxConstraints(
-          maxWidth: 48,
-          maxHeight: 48,
-        ),
+        prefixIconConstraints: prefixIconConstraints ??
+            const BoxConstraints(
+              maxWidth: 48,
+              maxHeight: 48,
+            ),
         suffixIconConstraints: suffixIconConstraints ??
             const BoxConstraints(
               maxWidth: 48,
