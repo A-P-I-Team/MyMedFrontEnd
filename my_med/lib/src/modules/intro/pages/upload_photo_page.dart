@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/button.dart';
 import 'package:my_med/src/components/loading_circles.dart';
@@ -69,7 +71,7 @@ class PhotoPage extends StatelessWidget {
     if (image == null) return;
     final bytes = await image.readAsBytes();
     final path = image.path;
-    provider.setupPhoto(bytes, path);
+    provider.setupPhoto(File(image.path));
   }
 
   @override
