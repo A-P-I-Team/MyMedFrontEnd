@@ -48,4 +48,16 @@ class UserModel {
         "birthdate": birthdate,
         "user_city": userCityID,
       };
+
+  static String getGender(String userGender) {
+    if (userGender == 'Female') {
+      return "F";
+    }
+    if (userGender == 'Male') {
+      return "M";
+    }
+    return "O";
+  }
 }
+
+enum Genders { female, male, others }

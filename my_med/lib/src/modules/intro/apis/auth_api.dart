@@ -101,7 +101,7 @@ class AuthAPI {
         firstName: firstName,
         lastName: lastName,
         ssn: ssn,
-        gender: gender,
+        gender: UserModel.getGender(gender),
         birthdate: birthday,
         userCityID: userCityID,
         isVaccinated: isVaccinated,
@@ -122,6 +122,10 @@ class AuthAPI {
     } on TimeoutException catch (_) {
       onTimeout;
       debugPrint("Timeout connection!");
+      return false;
+    } on SocketException catch (_) {
+      onDisconnect;
+      debugPrint("No Network");
       return false;
     } catch (e) {
       debugPrint(e.toString());
