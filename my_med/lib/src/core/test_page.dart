@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/core/routing/router.dart';
-import 'package:my_med/src/modules/intro/pages/onboarding.dart';
 
 class TestPage extends StatefulWidget {
   const TestPage({Key? key}) : super(key: key);
@@ -38,7 +37,7 @@ class _TestPageState extends State<TestPage> {
         elevation: 0,
         onPressed: () {},
         backgroundColor: Colors.green.shade100,
-        child: const Text('Test'),
+        child: const Text('debug'),
       ),
     );
   }
