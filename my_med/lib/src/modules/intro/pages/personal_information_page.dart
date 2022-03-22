@@ -15,6 +15,7 @@ class PersonalInformationPage extends StatelessWidget {
   final bool isFormValid;
   final void Function() onConfirmTap;
   final void Function() updateStat;
+  final String? errorText;
 
   const PersonalInformationPage({
     Key? key,
@@ -30,6 +31,7 @@ class PersonalInformationPage extends StatelessWidget {
     required this.updateStat,
     required this.ssnController,
     required this.onSSNChanged,
+    this.errorText,
   }) : super(key: key);
 
   @override
@@ -136,6 +138,8 @@ class PersonalInformationPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           STextField(
+            maxLength: 10,
+            errorText: errorText,
             onChanged: onSSNChanged,
             key: const ValueKey(#ssn),
             textAlign: TextAlign.start,

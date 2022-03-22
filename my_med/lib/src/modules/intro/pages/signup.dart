@@ -83,6 +83,7 @@ class _SignUpPage extends StatelessWidget {
           updateStat: provider.updateState,
           onSSNChanged: provider.onSSNChanged,
           ssnController: provider.ssnController,
+          errorText: provider.ssnErrorText,
         );
       case 2:
         return PhotoPage(

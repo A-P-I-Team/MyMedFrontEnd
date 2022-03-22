@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/utils/regex.dart';
@@ -28,6 +29,7 @@ class SignupProvider extends ChangeNotifier {
   final TextEditingController ssnController = TextEditingController();
   bool enableButtonForPersonalInformationPage = false;
   bool enableButtonForUploadPhotoPage = false;
+  String? ssnErrorText;
 
   ///*** Credentials ***/
   final TextEditingController emailController = TextEditingController();
@@ -216,6 +218,13 @@ class SignupProvider extends ChangeNotifier {
   }
 
   void onSSNChanged(String value) {
+    if (value.length < 10) {
+      ssnErrorText = 'The SSN should be a 10 digit number!';
+      notifyListeners();
+    } else {
+      ssnErrorText = null;
+      notifyListeners();
+    }
     isPersonalInformationValid();
   }
 
@@ -223,8 +232,10 @@ class SignupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setupPhoto(File profilePhotoFile) {
+  void setupPhoto({required File profilePhotoFile, required final String? path, final Uint8List? photo}) {
     registerController.profilePhotoFile = profilePhotoFile;
+    registerController.photo = photo;
+    registerController.photoPath = path;
     enableButtonForUploadPhotoPage = true;
     notifyListeners();
   }
@@ -245,7 +256,7 @@ class SignupProvider extends ChangeNotifier {
   }
 
   void onNextPressed() {
-    if (currentPage < registerPageCount) {
+    if (currentPage + 1 < registerPageCount) {
       _currentPage++;
       pageController.animateToPage(
         _currentPage,
@@ -311,7 +322,7 @@ class SignupProvider extends ChangeNotifier {
   }
 
   void isPersonalInformationValid() {
-    if (firstNameController.text.isNotEmpty && lastNameController.text.isNotEmpty && birthdateController.text.isNotEmpty && ssnController.text.isNotEmpty) {
+    if (firstNameController.text.isNotEmpty && firstNameController.text.length <= 50 && lastNameController.text.isNotEmpty && lastNameController.text.length <= 50 && birthdateController.text.isNotEmpty && ssnController.text.length == 10) {
       enableButtonForPersonalInformationPage = true;
     } else {
       enableButtonForPersonalInformationPage = false;

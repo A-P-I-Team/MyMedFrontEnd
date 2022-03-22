@@ -71,7 +71,11 @@ class PhotoPage extends StatelessWidget {
     if (image == null) return;
     final bytes = await image.readAsBytes();
     final path = image.path;
-    provider.setupPhoto(File(image.path));
+    provider.setupPhoto(
+      profilePhotoFile: File(image.path),
+      path: path,
+      photo: bytes,
+    );
   }
 
   @override
