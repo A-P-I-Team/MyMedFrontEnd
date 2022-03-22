@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/core/routing/router.dart';
-import 'package:my_med/src/modules/dashboard/pages/dashboard_page.dart';
+import 'package:my_med/src/modules/intro/apis/auth_api.dart';
 
 class LoginProvider extends ChangeNotifier {
   final BuildContext context;
@@ -35,13 +35,11 @@ class LoginProvider extends ChangeNotifier {
   Future<void> login() async {
     isLoading = true;
     notifyListeners();
-    await Future.delayed(const Duration(seconds: 2));
+    final ok = await AuthAPI().login(email: emailController.text, password: passwordController.text);
     isLoading = false;
     notifyListeners();
-    if (true) {
+    if (ok) {
       context.router.push(const DashboardRoute());
-    } else {
-      //TODO Error Handling
     }
   }
 }
