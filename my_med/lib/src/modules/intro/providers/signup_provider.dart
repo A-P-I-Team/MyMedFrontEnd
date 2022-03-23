@@ -75,7 +75,6 @@ class SignupProvider extends ChangeNotifier {
   }
 
   Future<List<String>> onFindCity(String? filter) async {
-    print('call');
     _isLoading = true;
     notifyListeners();
     cityList = await _authAPI.getCities();
