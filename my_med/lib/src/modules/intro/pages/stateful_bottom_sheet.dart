@@ -53,7 +53,7 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: (MediaQuery.of(context).viewInsets.bottom == 0) ? MediaQuery.of(context).size.height * 0.45 : MediaQuery.of(context).size.height * 0.75,
+      height: (MediaQuery.of(context).viewInsets.bottom == 0) ? MediaQuery.of(context).size.height * 0.5 : MediaQuery.of(context).size.height * 0.75,
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 25,
