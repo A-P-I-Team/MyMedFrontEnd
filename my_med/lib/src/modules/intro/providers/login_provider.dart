@@ -40,7 +40,7 @@ class LoginProvider extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
     if (ok) {
-      context.router.push(const DashboardRoute());
+      context.router.replaceAll(const [DashboardRoute()]);
     }
   }
 }
