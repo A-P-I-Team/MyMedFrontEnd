@@ -104,6 +104,9 @@ class SignupProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   int get currentPage => _currentPage;
+  set currentPage(int newValue) {
+    _currentPage = newValue;
+  }
 
   Curve get animationCurve => _animationCurve;
   Duration get animationDuration => _animationDuration;
@@ -244,6 +247,7 @@ class SignupProvider extends ChangeNotifier {
       context.router.pop();
     } else {
       _currentPage--;
+      if (pageController.hasClients == false) return;
       pageController
           .animateToPage(
             _currentPage,
@@ -257,6 +261,7 @@ class SignupProvider extends ChangeNotifier {
   void onNextPressed() {
     if (currentPage + 1 < registerPageCount) {
       _currentPage++;
+      if (pageController.hasClients == false) return;
       pageController.animateToPage(
         _currentPage,
         curve: _animationCurve,
@@ -279,7 +284,9 @@ class SignupProvider extends ChangeNotifier {
   // }
 
   Future<bool> onConfirmPressed() async {
-    FocusScope.of(context).requestFocus(FocusNode());
+    if (context.owner != null) {
+      FocusScope.of(context).requestFocus(FocusNode());
+    }
 
     if (currentPage == 0) {
       _isLoading = true;
