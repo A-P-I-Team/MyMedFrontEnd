@@ -6,8 +6,6 @@ import 'package:my_med/src/modules/intro/apis/auth_api.dart';
 
 class LoginProvider extends ChangeNotifier {
   final BuildContext context;
-  Duration timeRemaining = _retryTime;
-  static const _retryTime = Duration(minutes: 2);
   bool isLoading = false;
 
   final TextEditingController emailController = TextEditingController();
@@ -33,13 +31,15 @@ class LoginProvider extends ChangeNotifier {
   }
 
   Future<void> login() async {
-    FocusScope.of(context).requestFocus(FocusNode());
+    if (context.owner != null && FocusScope.of(context).hasFocus) {
+      FocusScope.of(context).requestFocus(FocusNode());
+    }
     isLoading = true;
     notifyListeners();
     final ok = await AuthAPI().login(email: emailController.text, password: passwordController.text);
     isLoading = false;
     notifyListeners();
-    if (ok) {
+    if (context.owner != null && ok) {
       context.router.replaceAll(const [DashboardRoute()]);
     }
   }
