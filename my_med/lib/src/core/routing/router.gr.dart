@@ -24,22 +24,40 @@ class _$AppRouter extends RootStackRouter {
     SplashRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const SplashPage());
+    },
+    OnboardingRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const OnboardingPage());
+    },
+    LoginRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const LoginPage());
+    },
+    SignUpRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const SignUpPage());
+    },
+    DashboardRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const DashboardPage());
     }
   };
 
   @override
   List<RouteConfig> get routes => [
-        RouteConfig('/#redirect',
-            path: '/', redirectTo: '/splash', fullMatch: true),
-        RouteConfig(TestRoute.name, path: '/test-page'),
-        RouteConfig(SplashRoute.name, path: '/splash')
+        RouteConfig(TestRoute.name, path: '/'),
+        RouteConfig(SplashRoute.name, path: '/splash'),
+        RouteConfig(OnboardingRoute.name, path: '/on_boarding'),
+        RouteConfig(LoginRoute.name, path: '/login'),
+        RouteConfig(SignUpRoute.name, path: '/signup'),
+        RouteConfig(DashboardRoute.name, path: '/dashboard')
       ];
 }
 
 /// generated route for
 /// [TestPage]
 class TestRoute extends PageRouteInfo<void> {
-  const TestRoute() : super(TestRoute.name, path: '/test-page');
+  const TestRoute() : super(TestRoute.name, path: '/');
 
   static const String name = 'TestRoute';
 }
@@ -50,4 +68,36 @@ class SplashRoute extends PageRouteInfo<void> {
   const SplashRoute() : super(SplashRoute.name, path: '/splash');
 
   static const String name = 'SplashRoute';
+}
+
+/// generated route for
+/// [OnboardingPage]
+class OnboardingRoute extends PageRouteInfo<void> {
+  const OnboardingRoute() : super(OnboardingRoute.name, path: '/on_boarding');
+
+  static const String name = 'OnboardingRoute';
+}
+
+/// generated route for
+/// [LoginPage]
+class LoginRoute extends PageRouteInfo<void> {
+  const LoginRoute() : super(LoginRoute.name, path: '/login');
+
+  static const String name = 'LoginRoute';
+}
+
+/// generated route for
+/// [SignUpPage]
+class SignUpRoute extends PageRouteInfo<void> {
+  const SignUpRoute() : super(SignUpRoute.name, path: '/signup');
+
+  static const String name = 'SignUpRoute';
+}
+
+/// generated route for
+/// [DashboardPage]
+class DashboardRoute extends PageRouteInfo<void> {
+  const DashboardRoute() : super(DashboardRoute.name, path: '/dashboard');
+
+  static const String name = 'DashboardRoute';
 }

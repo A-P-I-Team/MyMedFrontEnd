@@ -12,6 +12,8 @@ class MyMed extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'My Med',
       theme: ThemeData(
+        backgroundColor: Colors.white,
+        scaffoldBackgroundColor: Colors.white,
         colorScheme: const ColorScheme.light(primary: Color(0xFF47BAEB)),
         appBarTheme: const AppBarTheme(
           foregroundColor: Color(0xFF909090),

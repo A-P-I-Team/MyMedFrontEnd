@@ -11,6 +11,7 @@ class TestPage extends StatefulWidget {
 
 class _TestPageState extends State<TestPage> {
   Widget? get testWidget {
+    // ignore: prefer_const_constructors
     return null; // Call any page want to test.
   }
 
@@ -22,7 +23,7 @@ class _TestPageState extends State<TestPage> {
   }
 
   void toHome() {
-    context.router.popAndPush(const SplashRoute());
+    context.router.replaceAll(const [SplashRoute()]);
   }
 
   @override
@@ -34,9 +35,9 @@ class _TestPageState extends State<TestPage> {
       floatingActionButton: FloatingActionButton(
         mini: true,
         elevation: 0,
-        onPressed: toHome,
-        backgroundColor: Colors.green,
-        child: const Text('Test'),
+        onPressed: () {},
+        backgroundColor: Colors.green.shade100,
+        child: const Text('debug'),
       ),
     );
   }
