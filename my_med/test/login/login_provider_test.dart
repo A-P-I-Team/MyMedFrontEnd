@@ -72,6 +72,8 @@ void main() {
 
   test('Login Button Pressing Test', () async {
     WidgetsFlutterBinding.ensureInitialized();
+    await PreferencesService.initialize();
+
     // setup
     loginProvider.emailController.text = 'iliya.mi78@gmail.com';
     loginProvider.passwordController.text = 'Ab654321';
