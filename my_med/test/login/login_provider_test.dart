@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:my_med/src/components/utils/shared_preferences.dart';
 import 'package:my_med/src/modules/intro/providers/login_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MockBuildContext extends Mock implements BuildContext {}
 
@@ -72,6 +73,7 @@ void main() {
 
   test('Login Button Pressing Test', () async {
     WidgetsFlutterBinding.ensureInitialized();
+    SharedPreferences.setMockInitialValues({});
     await PreferencesService.initialize();
 
     // setup
