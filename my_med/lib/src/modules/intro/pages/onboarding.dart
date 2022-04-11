@@ -161,7 +161,10 @@ class _OnboardingPage extends StatelessWidget {
           widthFactor: .8,
           child: DefaultButton(
             color: (color == null) ? null : color,
-            onPressed: () => context.router.push(route),
+            onPressed: () {
+              if (ScaffoldMessenger.of(context).mounted) ScaffoldMessenger.of(context).removeCurrentSnackBar();
+              context.router.push(route);
+            },
             buttonType: buttonType,
             child: child,
           ),
