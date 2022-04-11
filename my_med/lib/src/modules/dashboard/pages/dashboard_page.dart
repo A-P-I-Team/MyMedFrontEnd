@@ -35,7 +35,7 @@ class _DashboardPage extends StatelessWidget {
             context.router.replaceAll(const [OnboardingRoute()]).then((value) {
               CustomSnackBar().showMessage(
                 context: context,
-                msg: 'Exit Successfully',
+                content: const Text('Exit Successfully'),
                 duration: const Duration(seconds: 4),
                 elevation: 0,
               );

@@ -44,7 +44,7 @@ class LoginProvider extends ChangeNotifier {
     if (context.owner != null && ok) {
       CustomSnackBar().showMessage(
         context: ctx,
-        msg: "Welcome Back!",
+        content: const Text("Welcome Back!"),
         duration: const Duration(seconds: 2),
         bgColor: Colors.green,
         elevation: 0,
