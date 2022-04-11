@@ -26,7 +26,6 @@ class _LoginStateState extends State<_LoginState> {
   double _height = 0;
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).viewInsets);
     final provider = context.watch<LoginProvider>();
     return KeyboardVisibilityBuilder(
       builder: (context, isKeyboardVisible) {
