@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/utils/regex.dart';
+import 'package:my_med/src/components/utils/snack_bar.dart';
 import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/models/date.dart';
 import 'package:my_med/src/modules/intro/apis/auth_api.dart';
@@ -50,7 +51,8 @@ class SignupProvider extends ChangeNotifier {
   ///*** Credentials  - End ***/
 
   ///*** Question FORM ***/
-  String gender = 'Female', relationship = 'Single', vaccinated = 'Yes', city = 'California';
+  String gender = 'Female', relationship = 'Single', vaccinated = 'Yes', city = '';
+  String? cityErrorText;
   bool isQuestionsFormValid = true;
   List<CityModel> cityList = [];
 
@@ -76,6 +78,7 @@ class SignupProvider extends ChangeNotifier {
 
   Future<List<String>> onFindCity(String? filter) async {
     _isLoading = true;
+    cityErrorText = null;
     notifyListeners();
     cityList = await _authAPI.getCities();
     _isLoading = false;
@@ -103,6 +106,7 @@ class SignupProvider extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
+  // ignore: unnecessary_getters_setters
   int get currentPage => _currentPage;
   set currentPage(int newValue) {
     _currentPage = newValue;
@@ -278,12 +282,7 @@ class SignupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // void onAnswerSelected(final int questionIndex, final int? answerIndex) {
-  //   registerController.questions[questionIndex].selectedAnswer = answerIndex;
-  //   notifyListeners();
-  // }
-
-  Future<bool> onConfirmPressed() async {
+  Future<bool> onConfirmPressed({BuildContext? ctx}) async {
     if (context.owner != null) {
       FocusScope.of(context).requestFocus(FocusNode());
     }
@@ -301,6 +300,11 @@ class SignupProvider extends ChangeNotifier {
       if (otpCode == null) return false;
       return true;
     } else if (currentPage + 1 == registerPageCount) {
+      if (city.isEmpty) {
+        cityErrorText = 'Please choose your city';
+        notifyListeners();
+        return false;
+      }
       _isLoading = true;
       notifyListeners();
       final ok = await _authAPI.registerUser(
@@ -319,6 +323,31 @@ class SignupProvider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
       if (ok == false) return false;
+      if (ctx != null) {
+        CustomSnackBar().showMessage(
+          context: ctx,
+          margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.85, left: 24, right: 24),
+          content: SizedBox(
+            height: 25,
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
+              Icon(
+                Icons.check_circle,
+                color: Colors.white,
+              ),
+              SizedBox(width: 8),
+              Text('You Have Successfuly Signed Up'),
+            ]),
+          ),
+          duration: const Duration(seconds: 3),
+          bgColor: Colors.green,
+          snackBarBehavior: SnackBarBehavior.floating,
+          dismissDirection: DismissDirection.startToEnd,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        );
+      }
+
       context.router.popAndPush(const LoginRoute());
       return true;
     } else {
