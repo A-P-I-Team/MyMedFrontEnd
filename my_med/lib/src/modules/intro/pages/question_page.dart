@@ -15,6 +15,7 @@ class QuestionsPage extends StatelessWidget {
   final Future<List<String>> Function(String?) onFind;
   final bool isFormValid;
   final void Function() onSubmitPressed;
+  final String? cityErrorText;
   const QuestionsPage({
     Key? key,
     required this.onGenderChanged,
@@ -28,6 +29,7 @@ class QuestionsPage extends StatelessWidget {
     required this.onSubmitPressed,
     required this.onRelationChanged,
     required this.onVaccinatedChanged,
+    required this.cityErrorText,
   }) : super(key: key);
 
   @override
@@ -161,7 +163,7 @@ class QuestionsPage extends StatelessWidget {
             height: 16,
           ),
           SizedBox(
-            height: 50,
+            height: cityErrorText == null ? 50 : 70,
             child: DropdownSearch<String>(
               showAsSuffixIcons: true,
               onChanged: onCityChanged,
@@ -172,6 +174,15 @@ class QuestionsPage extends StatelessWidget {
               selectionListViewProps: const SelectionListViewProps(),
               dropDownButton: const SizedBox(),
               dropdownSearchDecoration: InputDecoration(
+                errorText: cityErrorText,
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Theme.of(context).errorColor),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Theme.of(context).errorColor),
+                ),
                 prefix: Row(
                   children: [
                     Icon(
