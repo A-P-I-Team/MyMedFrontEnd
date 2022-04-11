@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:my_med/src/components/utils/snack_bar.dart';
 import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/modules/intro/apis/auth_api.dart';
 
@@ -30,9 +31,10 @@ class LoginProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> login() async {
+  Future<void> login(BuildContext ctx) async {
     if (context.owner != null && FocusScope.of(context).hasFocus) {
       FocusScope.of(context).requestFocus(FocusNode());
+      await Future.delayed(const Duration(milliseconds: 200));
     }
     isLoading = true;
     notifyListeners();
@@ -40,7 +42,15 @@ class LoginProvider extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
     if (context.owner != null && ok) {
-      context.router.replaceAll(const [DashboardRoute()]);
+      CustomSnackBar().showMessage(
+        context: ctx,
+        msg: "Welcome Back!",
+        duration: const Duration(seconds: 2),
+        bgColor: Colors.green,
+        elevation: 0,
+      );
+
+      await context.router.replaceAll(const [DashboardRoute()]);
     }
   }
 }
