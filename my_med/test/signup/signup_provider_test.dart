@@ -24,7 +24,7 @@ void main() {
     expect(sut.isOTPRight, false);
     expect(sut.canPressNext, false);
     expect(sut.gender, 'Female');
-    expect(sut.city, 'California');
+    expect(sut.city, '');
     expect(sut.relationship, 'Single');
     expect(sut.vaccinated, 'Yes');
   });
