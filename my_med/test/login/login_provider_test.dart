@@ -81,7 +81,7 @@ void main() {
     loginProvider.passwordController.text = 'Ab654321';
     // run
     loginProvider.isTextFieldsValid('temp');
-    await loginProvider.login();
+    await loginProvider.login(_context);
     loginProvider.isLoading;
 
     // verify (result)

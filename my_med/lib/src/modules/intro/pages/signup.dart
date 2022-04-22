@@ -105,9 +105,10 @@ class _SignUpPage extends StatelessWidget {
                 onCityChanged: provider.onCityChanged,
                 onFind: provider.onFindCity,
                 isFormValid: provider.isQuestionsFormValid,
-                onSubmitPressed: provider.onConfirmPressed,
+                onSubmitPressed: () => provider.onConfirmPressed(ctx: context),
                 onRelationChanged: provider.onRelationshipChanged,
                 onVaccinatedChanged: provider.onVaccinatedChanged,
+                cityErrorText: provider.cityErrorText,
               );
     }
     throw UnimplementedError();

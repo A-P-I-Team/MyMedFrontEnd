@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/button.dart';
+import 'package:my_med/src/components/utils/snack_bar.dart';
 import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/modules/intro/providers/onboarding_provider.dart';
 import 'package:provider/provider.dart';
@@ -161,7 +162,10 @@ class _OnboardingPage extends StatelessWidget {
           widthFactor: .8,
           child: DefaultButton(
             color: (color == null) ? null : color,
-            onPressed: () => context.router.push(route),
+            onPressed: () {
+              if (ScaffoldMessenger.of(context).mounted) ScaffoldMessenger.of(context).removeCurrentSnackBar();
+              context.router.push(route);
+            },
             buttonType: buttonType,
             child: child,
           ),

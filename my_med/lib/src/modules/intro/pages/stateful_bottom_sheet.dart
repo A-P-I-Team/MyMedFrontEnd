@@ -206,7 +206,7 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
                     : null,
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             TextButton(
                 onPressed: () => context.router.pop(),
                 child: Text(
@@ -280,6 +280,7 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
   }
 
   Future<void> showOtp() async {
+    //TODO Continue Implementation
     setState(() {
       isLoading = true;
     });

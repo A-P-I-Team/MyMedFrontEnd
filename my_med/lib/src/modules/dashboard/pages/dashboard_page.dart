@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/utils/shared_preferences.dart';
+import 'package:my_med/src/components/utils/snack_bar.dart';
 import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/modules/dashboard/providers/dashboard_provider.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,14 @@ class _DashboardPage extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () {
             PreferencesService.logout();
-            context.router.replaceAll(const [OnboardingRoute()]);
+            context.router.replaceAll(const [OnboardingRoute()]).then((value) {
+              CustomSnackBar().showMessage(
+                context: context,
+                content: const Text('Exit Successfully'),
+                duration: const Duration(seconds: 4),
+                elevation: 0,
+              );
+            });
           },
           child: const Text('Exit'),
         ),
