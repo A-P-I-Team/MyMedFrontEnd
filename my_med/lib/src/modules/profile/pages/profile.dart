@@ -36,10 +36,10 @@ class _ProfilePage extends StatelessWidget {
         color: Colors.white,
         child: Column(
           children: [
-            const Expanded(
+            Expanded(
               child: AvatarColumn(
-                fullName: 'John Smith',
-                identification: '0032023045',
+                fullName: provider.patient!.fullName,
+                identification: provider.patient!.identification,
               ),
               flex: 1,
             ),

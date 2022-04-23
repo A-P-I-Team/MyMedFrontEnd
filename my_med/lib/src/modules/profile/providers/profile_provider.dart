@@ -4,11 +4,15 @@ import 'package:my_med/src/modules/profile/components/edit_birthday_popup.dart';
 import 'package:my_med/src/modules/profile/components/edit_name_pop_up.dart';
 import 'package:my_med/src/modules/profile/components/edit_sexuality_popup.dart';
 
-enum Sexuality { man, woman }
+enum Sexuality { man, woman, other }
 
 class ProfileProvider extends ChangeNotifier {
   final BuildContext context;
-  Patient? patient;
+  Patient? patient = Patient(
+    fullName: 'Iliya Mirzaei',
+    email: 'Iliya.mi78@gmail.com',
+    identification: '0024034032',
+  );
   bool hasError = false;
   String _year = "";
   String _month = "";
