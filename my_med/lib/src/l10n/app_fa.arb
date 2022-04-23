@@ -24,5 +24,7 @@
     "cancel": "انصراف",
     "year": "سال",
     "month": "ماه",
-    "day": "روز"
+    "day": "روز",
+    "firstNameAndLastName": "نام و نام خانوادگی",
+    "logoutDoubleCheckQuestion": "آیا میخواهید از حساب کاربری خارج شوید؟"
 }

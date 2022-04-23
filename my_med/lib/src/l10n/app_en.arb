@@ -128,5 +128,13 @@
     "@day": {
         "type": "text",
         "description": "modules setting > pages > profile_page.dart > Day text"
+    },
+    "firstNameAndLastName": "First name and last name",
+    "@firstNameAndLastName": {
+        "description": "full name textfield label"
+    },
+    "logoutDoubleCheckQuestion": "Are you sure you want to logout?",
+    "@logoutDoubleCheckQuestion": {
+        "description": "logout dialog title"
     }
 }
