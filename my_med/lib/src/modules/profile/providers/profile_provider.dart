@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_med/src/models/patient_model.dart';
 import 'package:my_med/src/modules/profile/components/edit_birthday_popup.dart';
 import 'package:my_med/src/modules/profile/components/edit_name_pop_up.dart';
 import 'package:my_med/src/modules/profile/components/edit_sexuality_popup.dart';
@@ -7,6 +8,7 @@ enum Sexuality { man, woman }
 
 class ProfileProvider extends ChangeNotifier {
   final BuildContext context;
+  Patient? patient;
   bool hasError = false;
   String _year = "";
   String _month = "";
