@@ -40,6 +40,22 @@ class _$AppRouter extends RootStackRouter {
     DashboardRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const DashboardPage());
+    },
+    SettingRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const SettingPage());
+    },
+    LanguageRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const LanguagePage());
+    },
+    AboutUsRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const AboutUsPage());
+    },
+    NotificationRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const NotificationPage());
     }
   };
 
@@ -50,7 +66,11 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(OnboardingRoute.name, path: '/on_boarding'),
         RouteConfig(LoginRoute.name, path: '/login'),
         RouteConfig(SignUpRoute.name, path: '/signup'),
-        RouteConfig(DashboardRoute.name, path: '/dashboard')
+        RouteConfig(DashboardRoute.name, path: '/dashboard'),
+        RouteConfig(SettingRoute.name, path: '/setting'),
+        RouteConfig(LanguageRoute.name, path: '/language'),
+        RouteConfig(AboutUsRoute.name, path: '/aboutUs'),
+        RouteConfig(NotificationRoute.name, path: '/notification')
       ];
 }
 
@@ -100,4 +120,37 @@ class DashboardRoute extends PageRouteInfo<void> {
   const DashboardRoute() : super(DashboardRoute.name, path: '/dashboard');
 
   static const String name = 'DashboardRoute';
+}
+
+/// generated route for
+/// [SettingPage]
+class SettingRoute extends PageRouteInfo<void> {
+  const SettingRoute() : super(SettingRoute.name, path: '/setting');
+
+  static const String name = 'SettingRoute';
+}
+
+/// generated route for
+/// [LanguagePage]
+class LanguageRoute extends PageRouteInfo<void> {
+  const LanguageRoute() : super(LanguageRoute.name, path: '/language');
+
+  static const String name = 'LanguageRoute';
+}
+
+/// generated route for
+/// [AboutUsPage]
+class AboutUsRoute extends PageRouteInfo<void> {
+  const AboutUsRoute() : super(AboutUsRoute.name, path: '/aboutUs');
+
+  static const String name = 'AboutUsRoute';
+}
+
+/// generated route for
+/// [NotificationPage]
+class NotificationRoute extends PageRouteInfo<void> {
+  const NotificationRoute()
+      : super(NotificationRoute.name, path: '/notification');
+
+  static const String name = 'NotificationRoute';
 }
