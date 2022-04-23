@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/models/patient_model.dart';
 import 'package:my_med/src/modules/profile/components/edit_birthday_popup.dart';
 import 'package:my_med/src/modules/profile/components/edit_name_pop_up.dart';
 import 'package:my_med/src/modules/profile/components/edit_sexuality_popup.dart';
+import 'package:auto_route/auto_route.dart';
 
 enum Sexuality { man, woman, other }
 
@@ -156,6 +158,6 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   void onSettingTap() {
-    //TODO naviagte to setting page
+    context.router.push(const SettingRoute());
   }
 }
