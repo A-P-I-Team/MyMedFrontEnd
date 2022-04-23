@@ -10,6 +10,7 @@ class EmailContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      alignment: Alignment.topCenter,
       children: [
         Container(
           margin: const EdgeInsets.all(8.0),
@@ -54,13 +55,10 @@ class EmailContainer extends StatelessWidget {
             ],
           ),
         ),
-        Align(
-          alignment: Alignment.topCenter,
-          child: Image.asset(
-            "assets/profile_page_email.png",
-            width: 60,
-            height: 60,
-          ),
+        Image.asset(
+          "assets/profile_page_email.png",
+          width: 70,
+          height: 70,
         ),
       ],
     );
