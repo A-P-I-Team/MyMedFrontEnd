@@ -1,0 +1,132 @@
+{
+    "moduleSettingPagesSettingPageSystemLanguage": "System language",
+    "@moduleSettingPagesSettingPageSystemLanguage": {
+        "type": "text",
+        "description": "modules setting > pages > setting_page.dart > System language"
+    },
+    "settingPageEnglish": "English",
+    "@settingPageEnglish": {
+        "type": "text",
+        "description": "modules setting > pages > setting_page.dart > English"
+    },
+    "settingPagePersian": "Persian",
+    "@settingPagePersian": {
+        "type": "text",
+        "description": "modules setting > pages > setting_page.dart > Persian"
+    },
+    "selectLanguage": "Select language",
+    "@selectLanguage": {
+        "type": "text",
+        "description": "modules setting > pages > setting_page.dart > language_page.dart > Appbar title"
+    },
+    "setting": "Setting",
+    "@setting": {
+        "type": "text",
+        "description": "modules setting > pages > setting_page.dart > Setting title"
+    },
+    "language": "Language",
+    "@language": {
+        "type": "text",
+        "description": "modules setting > pages > setting_page.dart > language text"
+    },
+    "persian": "persian",
+    "@persian": {
+        "type": "text",
+        "description": "modules setting > pages > setting_page.dart > persian text"
+    },
+    "announcement": "announecment",
+    "@announcement": {
+        "type": "text",
+        "description": "modules setting > pages > setting_page.dart > announement text"
+    },
+    "termsAndConditions": "Terms and conditions",
+    "@termsAndConditions": {
+        "type": "text",
+        "description": "modules setting > pages > setting_page.dart > Terms and conditions text"
+    },
+    "aboutUs": "About us",
+    "@aboutUs": {
+        "type": "text",
+        "description": "modules setting > pages > setting_page.dart > About us text"
+    },
+    "logout": "Logout",
+    "@logout": {
+        "type": "text",
+        "description": "modules setting > pages > setting_page.dart > Logout text"
+    },
+    "profile": "Profile",
+    "@profile": {
+        "type": "text",
+        "description": "modules setting > pages > profile_page.dart > Profile title"
+    },
+    "man": "Man",
+    "@man": {
+        "type": "text",
+        "description": "modules setting > pages > profile_page.dart > Man text"
+    },
+    "woman": "Woman",
+    "@woman": {
+        "type": "text",
+        "description": "modules setting > pages > profile_page.dart > Woman text"
+    },
+    "sexuality": "Sexuality",
+    "@sexuality": {
+        "type": "text",
+        "description": "modules setting > pages > profile_page.dart > Sexuality text"
+    },
+    "phoneNumber": "Phone number",
+    "@phoneNumber": {
+        "type": "text",
+        "description": "modules setting > pages > profile_page.dart > Phone number text"
+    },
+    "birthday": "Birthday",
+    "@birthday": {
+        "type": "text",
+        "description": "modules setting > pages > profile_page.dart > Birthday text"
+    },
+    "drugs": "Drugs",
+    "@drugs": {
+        "type": "text",
+        "description": "modules setting > pages > profile_page.dart > Drugs text"
+    },
+    "home": "Home",
+    "@home": {
+        "type": "text",
+        "description": "modules setting > pages > profile_page.dart > Home text"
+    },
+    "calendar": "Calendar",
+    "@calendar": {
+        "type": "text",
+        "description": "modules setting > pages > profile_page.dart > Calendar text"
+    },
+    "doctors": "Doctors",
+    "@doctors": {
+        "type": "text",
+        "description": "modules setting > pages > profile_page.dart > Doctors text"
+    },
+    "confirm": "Confirm",
+    "@confirm": {
+        "type": "text",
+        "description": "modules setting > pages > profile_page.dart > Confirm text"
+    },
+    "cancel": "Cancel",
+    "@cancel": {
+        "type": "text",
+        "description": "modules setting > pages > profile_page.dart > Cancel text"
+    },
+    "year": "YYYY",
+    "@year": {
+        "type": "text",
+        "description": "modules setting > pages > profile_page.dart > Year text"
+    },
+    "month": "MM",
+    "@month": {
+        "type": "text",
+        "description": "modules setting > pages > profile_page.dart > Month text"
+    },
+    "day": "DD",
+    "@day": {
+        "type": "text",
+        "description": "modules setting > pages > profile_page.dart > Day text"
+    }
+}

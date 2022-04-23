@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:my_med/src/core/routing/router.dart';
+import 'package:my_med/src/l10n/localization_provider.dart';
+import 'package:provider/provider.dart';
 
 class MyMed extends StatelessWidget {
+  const MyMed({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LocalizationProvider()),
+      ],
+      child: _MyMed(),
+    );
+  }
+}
+
+class _MyMed extends StatelessWidget {
   final _appRouter = AppRouter();
 
-  MyMed({Key? key}) : super(key: key);
+  _MyMed({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +31,7 @@ class MyMed extends StatelessWidget {
         backgroundColor: Colors.white,
         scaffoldBackgroundColor: Colors.white,
         colorScheme: const ColorScheme.light(primary: Color(0xFF47BAEB)),
+        fontFamily: "IRANSans",
         appBarTheme: const AppBarTheme(
           foregroundColor: Color(0xFF909090),
           backgroundColor: Colors.white,
@@ -54,6 +71,9 @@ class MyMed extends StatelessWidget {
       ),
       routerDelegate: _appRouter.delegate(),
       routeInformationParser: _appRouter.defaultRouteParser(),
+      locale: context.watch<LocalizationProvider>().locale,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
     );
   }
 }
