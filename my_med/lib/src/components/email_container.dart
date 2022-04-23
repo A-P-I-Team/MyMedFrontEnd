@@ -22,7 +22,7 @@ class EmailContainer extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               Expanded(
                 child: Align(
                   child: Column(
