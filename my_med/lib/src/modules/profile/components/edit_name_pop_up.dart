@@ -17,7 +17,10 @@ class _EditNamePopUpState extends State<EditNamePopUp> {
   Widget build(BuildContext context) {
     return AlertDialog(
       titlePadding: const EdgeInsets.all(0),
-      title: DialogTitle().buildDialogTitle(context.localizations.firstNameAndLastName),
+      title: DialogTitle().buildDialogTitle(
+        context.localizations.firstNameAndLastName,
+        backgroundColor: Theme.of(context).primaryColorLight,
+      ),
       contentPadding: const EdgeInsets.all(0),
       content: buildContent(context),
       actions: [

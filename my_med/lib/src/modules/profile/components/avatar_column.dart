@@ -16,7 +16,14 @@ class AvatarColumn extends StatelessWidget {
     return FittedBox(
       child: Column(
         children: [
-          SvgPicture.asset("assets/avatar.svg"),
+          CircleAvatar(
+            radius: 40,
+            backgroundColor: Theme.of(context).primaryColorLight,
+            child: const Icon(
+              Icons.person,
+              size: 45,
+            ),
+          ),
           const SizedBox(height: 8),
           Text(
             fullName,

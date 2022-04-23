@@ -24,7 +24,10 @@ class _EditBirthDayPopUpState extends State<EditBirthDayPopUp> {
   Widget build(BuildContext context) {
     return AlertDialog(
       titlePadding: const EdgeInsets.all(0),
-      title: DialogTitle().buildDialogTitle(context.localizations.birthday),
+      title: DialogTitle().buildDialogTitle(
+        context.localizations.birthday,
+        backgroundColor: Theme.of(context).primaryColorLight,
+      ),
       contentPadding: const EdgeInsets.all(0),
       content: buildContent(context),
       actions: [

@@ -40,8 +40,8 @@ class EmailContainer extends StatelessWidget {
                       Text(
                         context.localizations.phoneNumber,
                         style: const TextStyle(
-                          fontWeight: FontWeight.w300,
-                          fontSize: 10,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
                           color: Color(0xFF474747),
                         ),
                         textDirection: TextDirection.rtl,
@@ -57,7 +57,7 @@ class EmailContainer extends StatelessWidget {
         Align(
           alignment: Alignment.topCenter,
           child: Image.asset(
-            "assets/profile_page_phone.png",
+            "assets/profile_page_email.png",
             width: 60,
             height: 60,
           ),

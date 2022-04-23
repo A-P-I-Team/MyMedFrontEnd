@@ -68,8 +68,8 @@ class InformationContainer extends StatelessWidget {
                               Text(
                                 context.localizations.firstNameAndLastName,
                                 style: const TextStyle(
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 10,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12,
                                   color: Color(0xFF474747),
                                 ),
                                 textDirection: TextDirection.rtl,

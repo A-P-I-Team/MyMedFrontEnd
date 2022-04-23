@@ -7,7 +7,10 @@ class DialogTitle {
   }) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
         color: backgroundColor,
       ),
       height: 50,

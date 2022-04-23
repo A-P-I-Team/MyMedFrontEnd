@@ -11,14 +11,17 @@ class EditSexualityPopUp extends StatefulWidget {
 }
 
 class _EditSexualityPopUpState extends State<EditSexualityPopUp> {
-  String sexuality = "زن";
-  Set<String> sexualitySet = {"مرد", "زن"};
+  String sexuality = 'man';
+  Set<String> sexualitySet = {"man", "female", "other"};
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       titlePadding: const EdgeInsets.all(0),
-      title: DialogTitle().buildDialogTitle(context.localizations.sexuality),
+      title: DialogTitle().buildDialogTitle(
+        context.localizations.sexuality,
+        backgroundColor: Theme.of(context).primaryColorLight,
+      ),
       contentPadding: const EdgeInsets.all(0),
       content: buildContent(context),
       actions: [
@@ -71,34 +74,62 @@ class _EditSexualityPopUpState extends State<EditSexualityPopUp> {
 
   Container buildContent(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height / 6,
+      height: MediaQuery.of(context).size.height / 4.5,
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 32),
       margin: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Flexible(
-            child: ListTile(
-              minLeadingWidth: 20,
-              horizontalTitleGap: 0,
-              contentPadding: const EdgeInsets.all(0),
-              title: Text(
-                context.localizations.man,
-                overflow: TextOverflow.visible,
-              ),
-              leading: SizedBox(
-                width: 30,
-                child: Radio<String>(
-                  value: sexualitySet.elementAt(0),
-                  groupValue: sexuality,
-                  onChanged: (String? value) {
-                    setState(() {
-                      sexuality = value!;
-                    });
-                  },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Flexible(
+                child: ListTile(
+                  minLeadingWidth: 20,
+                  horizontalTitleGap: 0,
+                  contentPadding: const EdgeInsets.all(0),
+                  title: Text(
+                    context.localizations.man,
+                    overflow: TextOverflow.visible,
+                  ),
+                  leading: SizedBox(
+                    width: 30,
+                    child: Radio<String>(
+                      value: sexualitySet.elementAt(0),
+                      groupValue: sexuality,
+                      onChanged: (String? value) {
+                        setState(() {
+                          sexuality = value!;
+                        });
+                      },
+                    ),
+                  ),
                 ),
               ),
-            ),
+              Flexible(
+                child: ListTile(
+                  minLeadingWidth: 20,
+                  horizontalTitleGap: 0,
+                  contentPadding: const EdgeInsets.all(0),
+                  title: Text(
+                    context.localizations.woman,
+                    overflow: TextOverflow.visible,
+                  ),
+                  leading: SizedBox(
+                    width: 30,
+                    child: Radio<String>(
+                      value: sexualitySet.elementAt(1),
+                      groupValue: sexuality,
+                      onChanged: (String? value) {
+                        setState(() {
+                          sexuality = value!;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           Flexible(
             child: ListTile(
@@ -106,13 +137,13 @@ class _EditSexualityPopUpState extends State<EditSexualityPopUp> {
               horizontalTitleGap: 0,
               contentPadding: const EdgeInsets.all(0),
               title: Text(
-                context.localizations.woman,
-                overflow: TextOverflow.visible,
+                context.localizations.otherGender,
+                overflow: TextOverflow.ellipsis,
               ),
               leading: SizedBox(
                 width: 30,
                 child: Radio<String>(
-                  value: sexualitySet.elementAt(1),
+                  value: sexualitySet.elementAt(2),
                   groupValue: sexuality,
                   onChanged: (String? value) {
                     setState(() {

@@ -32,13 +32,12 @@ class SmallEditButton extends StatelessWidget {
           child: DecoratedBox(
             decoration: BuildButtonStyle().buttonStyle(),
             child: Container(
-              padding: const EdgeInsets.all(0),
               alignment: Alignment.center,
               child: Text(
                 context.localizations.smallEditButton,
                 style: const TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w300,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
                   color: Colors.white,
                 ),
                 textAlign: TextAlign.center,
