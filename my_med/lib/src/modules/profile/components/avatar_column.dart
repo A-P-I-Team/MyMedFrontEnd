@@ -33,6 +33,7 @@ class AvatarColumn extends StatelessWidget {
               color: Color(0xFF474747),
             ),
           ),
+          const SizedBox(height: 2),
           Text(
             identification,
             style: const TextStyle(
