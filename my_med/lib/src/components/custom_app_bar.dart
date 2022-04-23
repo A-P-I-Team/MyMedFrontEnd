@@ -35,9 +35,9 @@ class CustomAppbar {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 16.0),
-                      child: SvgPicture.asset("assets/doctora.svg"),
+                      child: Image.asset("assets/launcher_icon_blue_red"),
                     ),
-                    SvgPicture.asset("assets/logo.svg"),
+                    SvgPicture.asset("assets/launcher_icon_blue_red"),
                   ],
                 ),
               )
