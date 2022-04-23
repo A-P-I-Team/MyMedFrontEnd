@@ -8,7 +8,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => ProfileProvider(),
+      create: (_) => ProfileProvider(context),
       child: const _ProfilePage(),
     );
   }
