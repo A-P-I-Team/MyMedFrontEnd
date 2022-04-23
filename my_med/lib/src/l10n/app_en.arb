@@ -136,5 +136,17 @@
     "logoutDoubleCheckQuestion": "Are you sure you want to logout?",
     "@logoutDoubleCheckQuestion": {
         "description": "logout dialog title"
+    },
+    "searchDrugText": "Search your drug",
+    "@searchDrugText": {
+        "description": "search bar for finding drug"
+    },
+    "smallEditButton": "Edit",
+    "@smallEditButton": {
+        "description": "small edit button"
+    },
+    "otherGender": "Other",
+    "@otherGender": {
+        "description": "Other gender"
     }
 }

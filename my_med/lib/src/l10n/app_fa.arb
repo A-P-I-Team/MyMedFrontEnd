@@ -26,5 +26,8 @@
     "month": "ماه",
     "day": "روز",
     "firstNameAndLastName": "نام و نام خانوادگی",
-    "logoutDoubleCheckQuestion": "آیا میخواهید از حساب کاربری خارج شوید؟"
+    "logoutDoubleCheckQuestion": "آیا میخواهید از حساب کاربری خارج شوید؟",
+    "searchDrugText": "جست و جوی داروی مورد نظر",
+    "smallEditButton": "ویرایش",
+    "otherGender": "-"
 }
