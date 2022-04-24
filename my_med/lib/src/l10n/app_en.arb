@@ -148,5 +148,29 @@
     "otherGender": "Other",
     "@otherGender": {
         "description": "Other gender"
+    },
+    "allNotifications": "All notifications",
+    "@allNotifications": {
+        "description": "All notifications"
+    },
+    "activeNotificationsForReceivingUpdatesAndAds": ".Turn on notification for receiving updates and advertisments",
+    "@activeNotificationsForReceivingUpdatesAndAds": {
+        "description": "modules setting > notification page > turn on notifications for receiving updates and ads"
+    },
+    "settingNotifications": "Notifications",
+    "@settingNotifications": {
+        "description": "modules setting > notification page > notifications"
+    },
+    "settingReminders": "Reminders",
+    "@settingReminders": {
+        "description": "modules setting > notification page > Reminders"
+    },
+    "inAppNotifications": "In app notifications",
+    "@inAppNotifications": {
+        "description": "modules setting > notification page > In app notifications"
+    },
+    "adsNotification": "Advertisments",
+    "@adsNotification": {
+        "description": "modules setting > notification page > Ads notifications"
     }
 }
