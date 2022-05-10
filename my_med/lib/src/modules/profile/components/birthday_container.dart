@@ -15,64 +15,55 @@ class BirthdayContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          margin: const EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            boxShadow: CustomShadow().buildBoxShadow(),
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 68),
-              Expanded(
-                child: Align(
-                  child: Column(
-                    children: [
-                      Text(
-                        birthDate,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          color: Color(0xFF474747),
-                        ),
-                        textDirection: TextDirection.rtl,
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        context.localizations.birthday,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12,
-                          color: Color(0xFF474747),
-                        ),
-                        textDirection: TextDirection.rtl,
-                      ),
-                    ],
-                  ),
-                  alignment: Alignment.center,
-                ),
-              ),
-              Expanded(
-                child: SmallEditButton(
-                  onTap: showEditBirthdayPopUp,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Align(
-          alignment: Alignment.topCenter,
-          child: Image.asset(
+    return Container(
+      margin: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        boxShadow: CustomShadow().buildBoxShadow(),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: 8),
+          Image.asset(
             "assets/profile_page_cake.png",
             width: 60,
             height: 60,
           ),
-        ),
-      ],
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  birthDate,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    color: Color(0xFF474747),
+                  ),
+                  textDirection: TextDirection.rtl,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  context.localizations.birthday,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    color: Color(0xFF474747),
+                  ),
+                  textDirection: TextDirection.rtl,
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: SmallEditButton(
+              onTap: showEditBirthdayPopUp,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

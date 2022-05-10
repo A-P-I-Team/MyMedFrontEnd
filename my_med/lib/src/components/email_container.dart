@@ -9,58 +9,49 @@ class EmailContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.topCenter,
-      children: [
-        Container(
-          margin: const EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            boxShadow: CustomShadow().buildBoxShadow(),
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
+    return Container(
+      margin: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        boxShadow: CustomShadow().buildBoxShadow(),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: 8),
+          Image.asset(
+            "assets/profile_page_email.png",
+            width: 70,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 40),
-              Expanded(
-                child: Align(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 68),
-                      Text(
-                        email,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          color: Color(0xFF474747),
-                        ),
-                        textDirection: TextDirection.rtl,
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        context.localizations.phoneNumber,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12,
-                          color: Color(0xFF474747),
-                        ),
-                        textDirection: TextDirection.rtl,
-                      ),
-                    ],
+          Expanded(
+            child: Column(
+              children: [
+                const SizedBox(height: 68),
+                Text(
+                  email,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    color: Color(0xFF474747),
                   ),
-                  alignment: Alignment.center,
+                  textDirection: TextDirection.rtl,
                 ),
-              ),
-            ],
+                const SizedBox(height: 4),
+                Text(
+                  context.localizations.phoneNumber,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    color: Color(0xFF474747),
+                  ),
+                  textDirection: TextDirection.rtl,
+                ),
+              ],
+            ),
           ),
-        ),
-        Image.asset(
-          "assets/profile_page_email.png",
-          width: 70,
-          height: 70,
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

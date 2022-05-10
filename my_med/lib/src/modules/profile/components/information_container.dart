@@ -37,66 +37,56 @@ class InformationContainer extends StatelessWidget {
           EmailContainer(
             email: phoneNumber,
           ),
-          Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: CustomShadow().buildBoxShadow(),
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                boxShadow: CustomShadow().buildBoxShadow(),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 8),
+                  Image.asset(
+                    "assets/profile_page_id_card.png",
+                    width: 60,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 68),
-                      Expanded(
-                        child: Align(
-                          child: Column(
-                            children: [
-                              Text(
-                                fullName,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 14,
-                                  color: Color(0xFF474747),
-                                ),
-                                textDirection: TextDirection.rtl,
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                context.localizations.firstNameAndLastName,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
-                                  color: Color(0xFF474747),
-                                ),
-                                textDirection: TextDirection.rtl,
-                              ),
-                            ],
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          fullName,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                            color: Color(0xFF474747),
                           ),
-                          alignment: Alignment.center,
+                          textDirection: TextDirection.rtl,
                         ),
-                      ),
-                      Expanded(
-                        child: SmallEditButton(
-                          onTap: showEditNamePopUp,
+                        const SizedBox(height: 4),
+                        Text(
+                          context.localizations.firstNameAndLastName,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 12,
+                            color: Color(0xFF474747),
+                          ),
+                          textDirection: TextDirection.rtl,
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
+                  Expanded(
+                    child: SmallEditButton(
+                      onTap: showEditNamePopUp,
+                    ),
+                  ),
+                ],
               ),
-              Align(
-                alignment: Alignment.topCenter,
-                child: Image.asset(
-                  "assets/profile_page_id_card.png",
-                  width: 60,
-                  height: 60,
-                ),
-              ),
-            ],
+            ),
           ),
           BirthdayContainer(
             birthDate: dateOfBirth,
