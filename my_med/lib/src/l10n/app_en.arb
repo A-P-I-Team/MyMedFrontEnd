@@ -172,5 +172,13 @@
     "adsNotification": "Advertisments",
     "@adsNotification": {
         "description": "modules setting > notification page > Ads notifications"
+    },
+    "period": "Period",
+    "@period": {
+        "description": "modules drug > drug page > drug period"
+    },
+    "daily": "day(s)",
+    "@daily": {
+        "description": "modules setting > notification page > daily period"
     }
 }

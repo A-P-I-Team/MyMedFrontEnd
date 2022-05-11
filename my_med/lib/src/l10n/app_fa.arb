@@ -35,5 +35,7 @@
     "settingReminders": "یادآور ها",
     "inAppNotifications": "اعلانات درون برنامه ای",
     "adsNotification": "تبلیغات",
-    "settingNotifications": "اعلانات"
+    "settingNotifications": "اعلانات",
+    "period": "دوره",
+    "daily": "روزه"
 }
