@@ -13,7 +13,7 @@ class CoreApi {
       return await _client.get(
         url,
         headers: {
-          'access': token!,
+          "Authorization": "Token " + token!,
         },
       );
     } catch (e) {
@@ -25,7 +25,7 @@ class CoreApi {
   Future<Response?> post(
     Uri url, {
     Map<String, String>? headers,
-    Map<String, dynamic>? body,
+    Object? body,
   }) async {
     if (token == null) return null;
     try {
@@ -33,7 +33,7 @@ class CoreApi {
         url,
         body: body,
         headers: {
-          'access': token!,
+          "Authorization": "Token " + token!,
         },
       );
     } catch (e) {
@@ -45,7 +45,7 @@ class CoreApi {
   Future<Response?> patch(
     Uri url, {
     Map<String, String>? headers,
-    Map<String, dynamic>? body,
+    Object? body,
   }) async {
     if (token == null) return null;
     try {
@@ -53,7 +53,7 @@ class CoreApi {
         url,
         body: body,
         headers: {
-          'access': token!,
+          "Authorization": "Token " + token!,
         },
       );
     } catch (e) {
