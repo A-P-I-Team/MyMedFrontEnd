@@ -116,8 +116,8 @@ class _ExitPopUpState extends State<ExitPopUp> {
               constraints: const BoxConstraints(maxHeight: 40),
               alignment: Alignment.center,
               child: Text(
-                "خروج از حساب کاربری",
-                style: TextStyle(
+                context.localizations.logout,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w300,
                   color: Colors.white,
@@ -132,9 +132,9 @@ class _ExitPopUpState extends State<ExitPopUp> {
 
   cancelButton() {
     final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
-      primary: Color(0xFFD7D9DA),
-      minimumSize: Size(88, 40),
-      padding: EdgeInsets.all(0),
+      primary: const Color(0xFFD7D9DA),
+      minimumSize: const Size(88, 40),
+      padding: const EdgeInsets.all(0),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
@@ -151,14 +151,15 @@ class _ExitPopUpState extends State<ExitPopUp> {
             });
           },
           child: DecoratedBox(
-            decoration: BuildButtonStyle().buttonStyle2(width: 1, borderColor: Color(0xFFD7D9DA)),
+            decoration: BuildButtonStyle()
+                .buttonStyle2(width: 1, borderColor: const Color(0xFFD7D9DA)),
             child: Container(
-              padding: EdgeInsets.all(0),
-              constraints: BoxConstraints(maxHeight: 40),
+              padding: const EdgeInsets.all(0),
+              constraints: const BoxConstraints(maxHeight: 40),
               alignment: Alignment.center,
               child: Text(
-                "انصراف",
-                style: TextStyle(
+                context.localizations.cancel,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w300,
                   color: Color(0xFF5EAFC0),
