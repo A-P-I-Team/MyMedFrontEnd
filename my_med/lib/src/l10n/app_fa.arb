@@ -24,5 +24,16 @@
     "cancel": "انصراف",
     "year": "سال",
     "month": "ماه",
-    "day": "روز"
+    "day": "روز",
+    "firstNameAndLastName": "نام و نام خانوادگی",
+    "logoutDoubleCheckQuestion": "آیا میخواهید از حساب کاربری خارج شوید؟",
+    "searchDrugText": "جست و جوی داروی مورد نظر",
+    "smallEditButton": "ویرایش",
+    "otherGender": "-",
+    "allNotifications": "همه اعلانات",
+    "activeNotificationsForReceivingUpdatesAndAds": "برای دریافت به روزرسانی ها و تبلیغات، اعلان را فعال کنید.",
+    "settingReminders": "یادآور ها",
+    "inAppNotifications": "اعلانات درون برنامه ای",
+    "adsNotification": "تبلیغات",
+    "settingNotifications": "اعلانات"
 }

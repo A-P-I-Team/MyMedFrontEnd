@@ -128,5 +128,49 @@
     "@day": {
         "type": "text",
         "description": "modules setting > pages > profile_page.dart > Day text"
+    },
+    "firstNameAndLastName": "First name and last name",
+    "@firstNameAndLastName": {
+        "description": "full name textfield label"
+    },
+    "logoutDoubleCheckQuestion": "Are you sure you want to logout?",
+    "@logoutDoubleCheckQuestion": {
+        "description": "logout dialog title"
+    },
+    "searchDrugText": "Search your drug",
+    "@searchDrugText": {
+        "description": "search bar for finding drug"
+    },
+    "smallEditButton": "Edit",
+    "@smallEditButton": {
+        "description": "small edit button"
+    },
+    "otherGender": "Other",
+    "@otherGender": {
+        "description": "Other gender"
+    },
+    "allNotifications": "All notifications",
+    "@allNotifications": {
+        "description": "All notifications"
+    },
+    "activeNotificationsForReceivingUpdatesAndAds": ".Turn on notification for receiving updates and advertisments",
+    "@activeNotificationsForReceivingUpdatesAndAds": {
+        "description": "modules setting > notification page > turn on notifications for receiving updates and ads"
+    },
+    "settingNotifications": "Notifications",
+    "@settingNotifications": {
+        "description": "modules setting > notification page > notifications"
+    },
+    "settingReminders": "Reminders",
+    "@settingReminders": {
+        "description": "modules setting > notification page > Reminders"
+    },
+    "inAppNotifications": "In app notifications",
+    "@inAppNotifications": {
+        "description": "modules setting > notification page > In app notifications"
+    },
+    "adsNotification": "Advertisments",
+    "@adsNotification": {
+        "description": "modules setting > notification page > Ads notifications"
     }
 }
