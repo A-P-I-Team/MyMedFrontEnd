@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:my_med/src/l10n/localization_provider.dart';
 
 class CustomAppbar {
@@ -34,10 +33,20 @@ class CustomAppbar {
                 child: Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 16.0),
-                      child: Image.asset("assets/launcher_icon_blue_red"),
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Image.asset(
+                        "assets/launcher_icon_blue_red.png",
+                        width: 40,
+                        height: 40,
+                      ),
                     ),
-                    SvgPicture.asset("assets/launcher_icon_blue_red"),
+                    Text(
+                      "My Med",
+                      style: TextStyle(
+                        color: Colors.blue.shade300,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
               )
@@ -58,7 +67,9 @@ class CustomAppbar {
       ),
       title: Text(context.localizations.profile),
       centerTitle: true,
-      actions: [IconButton(onPressed: onSettingTap, icon: const Icon(Icons.settings))],
+      actions: [
+        IconButton(onPressed: onSettingTap, icon: const Icon(Icons.settings))
+      ],
     );
   }
 
