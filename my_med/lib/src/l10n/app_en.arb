@@ -180,5 +180,13 @@
     "daily": "day(s)",
     "@daily": {
         "description": "modules setting > notification page > daily period"
+    },
+    "unknown": "Unknown",
+    "@unknown": {
+        "description": "Unknown"
+    },
+    "doctorProfileButton": "Profile",
+    "@doctorProfileButton": {
+        "description": "modules Doctors > Doctors page > Profile button"
     }
 }
