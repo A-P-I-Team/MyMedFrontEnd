@@ -1,113 +1,100 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:provider/provider.dart';
-import 'package:my_med/src/core/routing/router.dart';
 import 'package:flutter/material.dart';
-
-import '../../../components/button.dart';
-import '../components/login_input_field.dart';
+import 'package:my_med/src/components/button.dart';
+import 'package:my_med/src/modules/intro/apis/auth_api.dart';
+import 'package:my_med/src/modules/intro/components/login_input_field.dart';
+import 'package:my_med/src/modules/intro/pages/stateful_bottom_sheet.dart';
+import 'package:my_med/src/modules/intro/providers/forgetpassword_provider.dart';
+import 'package:provider/provider.dart';
 
 class ForgetPasswordPage extends StatelessWidget {
-  const ForgetPasswordPage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    // return ChangeNotifierProvider<ForgetPasswordProvider>(
-      // create: (_) => ForgetPasswordProvider(),
-      // child: _ForgetPasswordState(),
-    // );
-    return const Scaffold();
+    return ChangeNotifierProvider<ForgetpasswordProvider>(
+        create: (_) => ForgetpasswordProvider(_), child: _ForgetPasswordPage());
   }
 }
 
-class _ForgetPasswordState extends StatefulWidget {
-  @override
-  State<_ForgetPasswordState> createState() => _ForgetPasswordStateState();
-}
+class _ForgetPasswordPage extends StatelessWidget {
+  // Constant Variables
+  late final TextEditingController emailController;
+  late final GlobalKey formKey;
+  late final bool formIsValid;
+  late final bool isLoading;
+  final Color titleColor = const Color(0xFF31313D);
+  final Color iconColorActive = const Color(0xFF6C6C70);
+  final Color iconColorDeactive = const Color(0xFFD8D8DC);
 
-class _ForgetPasswordStateState extends State<_ForgetPasswordState> {
-  double _height = 0;
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<ForgetPasswordProvider>();
-    return KeyboardVisibilityBuilder(
-      builder: (context, isKeyboardVisible) {
-        if (isKeyboardVisible) {
-          _height = 0;
-        } else {
-          _height = MediaQuery.of(context).size.height * 0.4;
-        }
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: SafeArea(
-            child: Column(
-              children: [
-                AnimatedContainer(
-                  duration: const Duration(seconds: 1),
-                  curve: Curves.fastOutSlowIn,
-                  height: _height,
-                  child: Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Image.asset("assets/login.jpg"),
-                  ),
-                ),
-                Expanded(
-                  child: Align(
-                    alignment: const Alignment(0, -.4),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 28, right: 22),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          DefaultTextField(
-                            controller: provider.emailController,
-                            label: "Email",
-                            onChanged: provider.isTextFieldsValid,
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                AnimatedPadding(
-                  padding: MediaQuery.of(context).viewInsets,
-                  duration: const Duration(seconds: 1),
-                  curve: Curves.decelerate,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 8, 24, 20),
-                    child: AnimatedContainer(
-                      height: 55,
-                      width: (provider.isLoading) ? MediaQuery.of(context).size.width * 0.3 : MediaQuery.of(context).size.width * 0.8,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: Theme.of(context).buttonTheme.colorScheme!.primary,
-                      ),
-                      duration: const Duration(milliseconds: 500),
-                      child: DefaultButton(
-                        forceEnabling: provider.isLoading,
-                        isExpanded: true,
-                        //Here---------------------------------------------
-                        onPressed: (provider.isButtonEnabled && provider.isLoading == false) ? () => provider.login(context) : null,
-                        child: (provider.isLoading)
-                            ? const Center(
-                                child: CircularProgressIndicator(color: Colors.white),
-                              )
-                            : const Text(
-                                'Confirm Email',
-                                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-                              ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+    final provider = context.watch<ForgetpasswordProvider>();
+    return Form(
+        key: formKey,
+        child: Column(
+          children: [
+            Expanded(
+              child: DefaultTextField(
+                  controller: emailController,
+                  label: "Email",
+                  onChanged: provider.onEmailChanged,
+                  validator: provider.validateEmail),
             ),
-          ),
-        );
-      },
-    );
+            Expanded(
+              child: Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                    ),
+                    child: SizedBox(
+                        width: double.infinity,
+                        child: DefaultButton(
+                          onPressed: (formIsValid)
+                              ? () {
+                                  provider.onConfirmPressed().then((value) {
+                                    if (provider.otpCode != null) {
+                                      showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          context: context,
+                                          isDismissible: false,
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(32),
+                                            topRight: Radius.circular(32),
+                                          )),
+                                          builder: (_) {
+                                            return StatefulBottomSheet(
+                                              key: provider.bottomSheetKey,
+                                              emailController:
+                                                  provider.emailController,
+                                              orginalOTP:
+                                                  provider.otpCode.toString(),
+                                              changeOTPStatus:
+                                                  provider.changeOTPStatus,
+                                              goToNextPage:
+                                                  provider.onNextPressed,
+                                              sendOtp: AuthAPI()
+                                                  .verifyEmailAccountWithOTP,
+                                              setOTPCode:
+                                                  provider.setNewOTPCode,
+                                            );
+                                          });
+                                    }
+                                  });
+                                }
+                              : null,
+                          child: (isLoading)
+                              ? const Center(
+                                  child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ))
+                              : const Text("Verify"),
+                        )),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ));
   }
 }

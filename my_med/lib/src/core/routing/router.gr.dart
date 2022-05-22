@@ -40,6 +40,10 @@ class _$AppRouter extends RootStackRouter {
     DashboardRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const DashboardPage());
+    },
+    ForgetPasswordRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: ForgetPasswordPage());
     }
   };
 
@@ -50,7 +54,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(OnboardingRoute.name, path: '/on_boarding'),
         RouteConfig(LoginRoute.name, path: '/login'),
         RouteConfig(SignUpRoute.name, path: '/signup'),
-        RouteConfig(DashboardRoute.name, path: '/dashboard')
+        RouteConfig(DashboardRoute.name, path: '/dashboard'),
+        RouteConfig(ForgetPasswordRoute.name, path: '/forget_password')
       ];
 }
 
@@ -100,4 +105,13 @@ class DashboardRoute extends PageRouteInfo<void> {
   const DashboardRoute() : super(DashboardRoute.name, path: '/dashboard');
 
   static const String name = 'DashboardRoute';
+}
+
+/// generated route for
+/// [ForgetPasswordPage]
+class ForgetPasswordRoute extends PageRouteInfo<void> {
+  const ForgetPasswordRoute()
+      : super(ForgetPasswordRoute.name, path: '/forget_password');
+
+  static const String name = 'ForgetPasswordRoute';
 }
