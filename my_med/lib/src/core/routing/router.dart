@@ -8,6 +8,10 @@ import 'package:my_med/src/modules/intro/pages/onboarding.dart';
 import 'package:my_med/src/modules/intro/pages/signup.dart';
 import 'package:my_med/src/modules/intro/pages/splash_page.dart';
 import 'package:my_med/src/modules/intro/pages/forget_password.dart';
+import 'package:my_med/src/modules/setting/pages/about_us_page.dart';
+import 'package:my_med/src/modules/setting/pages/language_page.dart';
+import 'package:my_med/src/modules/setting/pages/notification_page.dart';
+import 'package:my_med/src/modules/setting/pages/setting_page.dart';
 
 part 'router.gr.dart';
 
@@ -21,6 +25,10 @@ part 'router.gr.dart';
     AutoRoute(page: SignUpPage, path: '/signup'),
     AutoRoute(page: DashboardPage, path: '/dashboard'),
     AutoRoute(page: ForgetPasswordPage, path: '/forget_password'),
+    AutoRoute(page: SettingPage, path: '/setting'),
+    AutoRoute(page: LanguagePage, path: '/language'),
+    AutoRoute(page: AboutUsPage, path: '/aboutUs'),
+    AutoRoute(page: NotificationPage, path: '/notification'),
   ],
 )
 class AppRouter extends _$AppRouter {}
