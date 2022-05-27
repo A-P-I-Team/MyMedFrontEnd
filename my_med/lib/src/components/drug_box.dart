@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:my_med/src/components/custom_shadow.dart';
 import 'package:my_med/src/l10n/localization_provider.dart';
 import 'package:my_med/src/modules/drug/models/drug_model.dart';
+import 'package:provider/provider.dart';
 
 class DrugBox extends StatelessWidget {
   final DrugModel drug;
@@ -28,98 +29,104 @@ class DrugBox extends StatelessWidget {
         ),
         boxShadow: CustomShadow().buildBoxShadow(offset: const Offset(0, 0)),
       ),
-      child: Row(
-        children: [
-          IconButton(
-            onPressed: () => onTap?.call(drug),
-            color: const Color(0xFFBABBBC),
-            icon: const Icon(Icons.arrow_back_ios),
-          ),
-          Text(
-            (drug.consumptionStart == null)
-                ? ''
-                : drug.consumptionStart!.split(' ')[0],
-            textDirection: TextDirection.rtl,
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 12,
-              color: Color(0xFF474747),
+      child: Directionality(
+        textDirection:
+            (context.read<LocalizationProvider>().locale == const Locale('en'))
+                ? TextDirection.rtl
+                : TextDirection.ltr,
+        child: Row(
+          children: [
+            IconButton(
+              onPressed: () => onTap?.call(drug),
+              color: const Color(0xFFBABBBC),
+              icon: const Icon(Icons.arrow_back_ios),
             ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
+            Text(
+              (drug.consumptionStart == null)
+                  ? ''
+                  : drug.consumptionStart!.split(' ')[0],
               textDirection: TextDirection.rtl,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      '(' + drug.dosage.toString() + ')',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 8,
-                        color: Color(0xFF909090),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      drug.name,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14,
-                        color: Color(0xFF474747),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text.rich(
-                      TextSpan(
-                        text: context.localizations.period,
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 12,
+                color: Color(0xFF474747),
+              ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
+                textDirection: TextDirection.rtl,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        '(' + drug.dosage.toString() + ')',
                         style: const TextStyle(
                           fontWeight: FontWeight.w400,
-                          fontSize: 10,
+                          fontSize: 8,
+                          color: Color(0xFF909090),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        drug.name,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
                           color: Color(0xFF474747),
                         ),
-                        children: [
-                          TextSpan(
-                            text: ' ' + drug.consumptionDuration + ' ',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF5EAFC0),
-                            ),
-                          ),
-                          TextSpan(
-                            text: context.localizations.daily,
-                          ),
-                        ],
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    (drug.isActive)
-                        ? SvgPicture.asset(
-                            "assets/bell.svg",
-                            color: const Color(0xFF5EAFC0),
-                            width: 20,
-                            height: 20,
-                          )
-                        : const SizedBox(),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text.rich(
+                        TextSpan(
+                          text: context.localizations.period,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 10,
+                            color: Color(0xFF474747),
+                          ),
+                          children: [
+                            TextSpan(
+                              text: ' ' + drug.consumptionDuration + ' ',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF5EAFC0),
+                              ),
+                            ),
+                            TextSpan(
+                              text: context.localizations.daily,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      (drug.isActive)
+                          ? SvgPicture.asset(
+                              "assets/bell.svg",
+                              color: const Color(0xFF5EAFC0),
+                              width: 20,
+                              height: 20,
+                            )
+                          : const SizedBox(),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            width: 16,
-          ),
-        ],
+            const SizedBox(
+              width: 16,
+            ),
+          ],
+        ),
       ),
     );
   }

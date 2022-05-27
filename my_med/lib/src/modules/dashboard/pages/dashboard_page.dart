@@ -1,12 +1,23 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:my_med/src/l10n/localization_provider.dart';
 import 'package:my_med/src/modules/dashboard/providers/dashboard_provider.dart';
 import 'package:provider/provider.dart';
 
-class DashboardPage extends StatelessWidget implements AutoRouteWrapper {
+class DashboardPage extends StatelessWidget {
   const DashboardPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => DashboardProvider(context),
+      child: const _DashboardPage(),
+    );
+  }
+}
+
+class _DashboardPage extends StatelessWidget {
+  const _DashboardPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +30,6 @@ class DashboardPage extends StatelessWidget implements AutoRouteWrapper {
         provider.bottomNavigationIndex,
         provider.setBottomNavigationIndex,
       ),
-    );
-  }
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => DashboardProvider(context),
-      child: this,
     );
   }
 
