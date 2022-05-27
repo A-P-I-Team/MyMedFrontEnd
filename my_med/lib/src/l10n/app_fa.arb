@@ -37,5 +37,7 @@
     "adsNotification": "تبلیغات",
     "settingNotifications": "اعلانات",
     "period": "دوره",
-    "daily": "روزه"
+    "daily": "روزه",
+    "unknown": "نامشخص",
+    "doctorProfileButton": "مشخصات"
 }

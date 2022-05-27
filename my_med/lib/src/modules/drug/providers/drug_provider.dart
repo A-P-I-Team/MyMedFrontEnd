@@ -16,7 +16,7 @@ class DrugProvider extends ChangeNotifier {
               id: '#',
               name: 'Acetaminophen',
               dosage: 500.0,
-              doctor: DoctorModel(
+              doctor: DoctorModelMock(
                   id: '#', name: 'Danial Bazmande', profession: 'ENT Doctor'),
               consumptionAmount: '1',
               consumptionStart: DateTime.now().toString(),
@@ -33,7 +33,7 @@ class DrugProvider extends ChangeNotifier {
               id: '#',
               name: 'Co-amoxiclav',
               dosage: 500.0,
-              doctor: DoctorModel(
+              doctor: DoctorModelMock(
                   id: '#', name: 'Danial Bazmande', profession: 'ENT Doctor'),
               consumptionAmount: '1',
               consumptionStart:

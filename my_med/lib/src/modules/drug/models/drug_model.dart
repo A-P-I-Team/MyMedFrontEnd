@@ -4,7 +4,7 @@ class DrugModel {
   final String id;
   final String name;
   final double dosage;
-  final DoctorModel doctor;
+  final DoctorModelMock doctor;
   final String consumptionAmount;
   final String? consumptionStart;
   final int consumptionTimes;
