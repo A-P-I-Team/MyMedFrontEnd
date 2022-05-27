@@ -43,7 +43,7 @@ class DrugBox extends StatelessWidget {
             ),
             Text(
               (drug.consumptionStart == null)
-                  ? ''
+                  ? context.localizations.notStarted
                   : drug.consumptionStart!.split(' ')[0],
               textDirection: TextDirection.rtl,
               style: const TextStyle(
@@ -62,7 +62,7 @@ class DrugBox extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        '(' + drug.dosage.toString() + ')',
+                        '(${drug.dosage})',
                         style: const TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 8,
@@ -71,7 +71,7 @@ class DrugBox extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        drug.name,
+                        drug.medicine,
                         style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
@@ -96,7 +96,7 @@ class DrugBox extends StatelessWidget {
                           ),
                           children: [
                             TextSpan(
-                              text: ' ' + drug.consumptionDuration + ' ',
+                              text: ' ${drug.days} ',
                               style: const TextStyle(
                                 fontWeight: FontWeight.w700,
                                 color: Color(0xFF5EAFC0),
@@ -109,7 +109,7 @@ class DrugBox extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      (drug.isActive)
+                      (drug.isActive != null && drug.isActive!)
                           ? SvgPicture.asset(
                               "assets/bell.svg",
                               color: const Color(0xFF5EAFC0),

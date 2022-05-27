@@ -188,5 +188,9 @@
     "doctorProfileButton": "Profile",
     "@doctorProfileButton": {
         "description": "modules Doctors > Doctors page > Profile button"
+    },
+    "notStarted": "Not started",
+    "@notStarted": {
+        "description": "modules Drugs > Drug page > consumption started date"
     }
 }
