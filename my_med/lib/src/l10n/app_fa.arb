@@ -39,5 +39,6 @@
     "period": "دوره",
     "daily": "روزه",
     "unknown": "نامشخص",
-    "doctorProfileButton": "مشخصات"
+    "doctorProfileButton": "مشخصات",
+    "notStarted": "شروع نشده است"
 }
