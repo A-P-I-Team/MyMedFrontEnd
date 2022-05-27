@@ -60,10 +60,18 @@ class _DoctorPage extends StatelessWidget {
                     child: Column(
                       children: [
                         (doctor.profilePic == null)
-                            ? Image.asset(
-                                "assets/doctor.png",
+                            ? Container(
                                 width: 64,
                                 height: 64,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: Image.asset(
+                                      "assets/doctor.png",
+                                    ).image,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               )
                             : CachedNetworkImage(
                                 imageUrl: doctor.profilePic!,
