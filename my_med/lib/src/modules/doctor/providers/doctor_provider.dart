@@ -14,46 +14,14 @@ class DoctorProvider extends ChangeNotifier {
   }
 
   void getDoctors() async {
-    //TODO API Call (Get Doctors)
     doctorsList = await DoctorAPIs().getDoctors();
-    // doctorsList = [
-    //   DoctorModel(
-    //     id: '#',
-    //     name: 'Danial Bazmande',
-    //     profession: 'ENT Doctor',
-    //   ),
-    //   DoctorModel(
-    //     id: '#',
-    //     name: 'Mohammad Yarmoghadam',
-    //     profession: 'Surgery Expert',
-    //   ),
-    //   DoctorModel(
-    //     id: '#',
-    //     name: 'AmirMahdi Shadman',
-    //     profession: 'Surgery Expert',
-    //   ),
-    //   DoctorModel(
-    //     id: '#',
-    //     name: 'Alireza Haghani',
-    //     profession: 'Physician',
-    //   ),
-    //   DoctorModel(
-    //     id: '#',
-    //     name: 'Ali Mostofi',
-    //     profession: 'ENT Doctor',
-    //   ),
-    //   DoctorModel(
-    //     id: '#',
-    //     name: 'Arash Taherian Khode Asl',
-    //     profession: 'Hair and Care',
-    //   ),
-    // ];
     doctorListFiltered.addAll(
       doctorsList.where(
         (element) => (('${element.firstName} ${element.lastName}')
             .contains(searchBarController.text)),
       ),
     );
+    notifyListeners();
   }
 
   void onDoctorsDetailsTap(String id) {
