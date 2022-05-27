@@ -59,10 +59,10 @@ class _DoctorPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        (doctor.imageURL == null)
+                        (doctor.profilePic == null)
                             ? Image.asset("assets/doctor.png")
                             : CachedNetworkImage(
-                                imageUrl: doctor.imageURL!,
+                                imageUrl: doctor.profilePic!,
                                 placeholder: (context, url) => const Center(
                                     child: CircularProgressIndicator()),
                                 imageBuilder: (context, imageProvider) =>
@@ -85,7 +85,7 @@ class _DoctorPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                doctor.name,
+                                '${doctor.firstName} ${doctor.lastName}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16,
@@ -97,8 +97,7 @@ class _DoctorPage extends StatelessWidget {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                doctor.profession ??
-                                    context.localizations.unknown,
+                                doctor.field ?? context.localizations.unknown,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w300,
                                   fontSize: 10,
@@ -111,8 +110,9 @@ class _DoctorPage extends StatelessWidget {
                         Flexible(
                           child: MiniButton(
                             title: context.localizations.doctorProfileButton,
-                            onTap: () => provider.onDoctorsDetailsTap(
-                                provider.doctorListFiltered[index].id),
+                            onTap: () => provider.onDoctorsDetailsTap(provider
+                                .doctorListFiltered[index].id
+                                .toString()),
                           ),
                         ),
                       ],

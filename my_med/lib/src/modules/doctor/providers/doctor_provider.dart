@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:my_med/src/modules/doctor/apis/doctor_apis.dart';
 import 'package:my_med/src/modules/doctor/models/doctor_model.dart';
 
 class DoctorProvider extends ChangeNotifier {
@@ -12,42 +13,47 @@ class DoctorProvider extends ChangeNotifier {
     getDoctors();
   }
 
-  void getDoctors() {
+  void getDoctors() async {
     //TODO API Call (Get Doctors)
-    doctorsList = [
-      DoctorModel(
-        id: '#',
-        name: 'Danial Bazmande',
-        profession: 'ENT Doctor',
+    doctorsList = await DoctorAPIs().getDoctors();
+    // doctorsList = [
+    //   DoctorModel(
+    //     id: '#',
+    //     name: 'Danial Bazmande',
+    //     profession: 'ENT Doctor',
+    //   ),
+    //   DoctorModel(
+    //     id: '#',
+    //     name: 'Mohammad Yarmoghadam',
+    //     profession: 'Surgery Expert',
+    //   ),
+    //   DoctorModel(
+    //     id: '#',
+    //     name: 'AmirMahdi Shadman',
+    //     profession: 'Surgery Expert',
+    //   ),
+    //   DoctorModel(
+    //     id: '#',
+    //     name: 'Alireza Haghani',
+    //     profession: 'Physician',
+    //   ),
+    //   DoctorModel(
+    //     id: '#',
+    //     name: 'Ali Mostofi',
+    //     profession: 'ENT Doctor',
+    //   ),
+    //   DoctorModel(
+    //     id: '#',
+    //     name: 'Arash Taherian Khode Asl',
+    //     profession: 'Hair and Care',
+    //   ),
+    // ];
+    doctorListFiltered.addAll(
+      doctorsList.where(
+        (element) => (('${element.firstName} ${element.lastName}')
+            .contains(searchBarController.text)),
       ),
-      DoctorModel(
-        id: '#',
-        name: 'Mohammad Yarmoghadam',
-        profession: 'Surgery Expert',
-      ),
-      DoctorModel(
-        id: '#',
-        name: 'AmirMahdi Shadman',
-        profession: 'Surgery Expert',
-      ),
-      DoctorModel(
-        id: '#',
-        name: 'Alireza Haghani',
-        profession: 'Physician',
-      ),
-      DoctorModel(
-        id: '#',
-        name: 'Ali Mostofi',
-        profession: 'ENT Doctor',
-      ),
-      DoctorModel(
-        id: '#',
-        name: 'Arash Taherian Khode Asl',
-        profession: 'Hair and Care',
-      ),
-    ];
-    doctorListFiltered.addAll(doctorsList
-        .where((element) => (element.name.contains(searchBarController.text))));
+    );
   }
 
   void onDoctorsDetailsTap(String id) {
@@ -63,14 +69,20 @@ class DoctorProvider extends ChangeNotifier {
 
   void onSearchChanged(String? value) {
     doctorListFiltered = doctorsList
-        .where((element) => (element.name.contains(searchBarController.text)))
+        .where(
+          (element) => (('${element.firstName} ${element.lastName}')
+              .contains(searchBarController.text)),
+        )
         .toList();
     notifyListeners();
   }
 
   void updateList() {
     doctorListFiltered = doctorsList
-        .where((element) => (element.name.contains(searchBarController.text)))
+        .where(
+          (element) => (('${element.firstName} ${element.lastName}')
+              .contains(searchBarController.text)),
+        )
         .toList();
   }
 
