@@ -60,7 +60,11 @@ class _DoctorPage extends StatelessWidget {
                     child: Column(
                       children: [
                         (doctor.profilePic == null)
-                            ? Image.asset("assets/doctor.png")
+                            ? Image.asset(
+                                "assets/doctor.png",
+                                width: 64,
+                                height: 64,
+                              )
                             : CachedNetworkImage(
                                 imageUrl: doctor.profilePic!,
                                 placeholder: (context, url) => const Center(
