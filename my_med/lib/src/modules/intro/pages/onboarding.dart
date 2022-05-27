@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_med/src/components/button.dart';
 import 'package:my_med/src/components/utils/snack_bar.dart';
 import 'package:my_med/src/core/routing/router.dart';
+import 'package:my_med/src/modules/intro/components/textButtonComponent.dart';
 import 'package:my_med/src/modules/intro/providers/onboarding_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -134,25 +135,6 @@ class _OnboardingPage extends StatelessWidget {
                             ),
                             TextSpan(
                               text: 'Login',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    //Forget password field
-                    getButton(
-                      context: context,
-                      route: const ForgetPasswordRoute(),
-                      child: const Text.rich(
-                        TextSpan(
-                          style: TextStyle(fontWeight: FontWeight.w700),
-                          children: [
-                            TextSpan(
-                              text: 'Forget your password?',
                               style: TextStyle(
                                 fontSize: 16,
                               ),

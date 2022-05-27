@@ -6,7 +6,7 @@ import 'package:my_med/src/modules/intro/pages/stateful_bottom_sheet.dart';
 
 class ForgetpasswordProvider extends ChangeNotifier {
   final BuildContext context;
-  final GlobalKey<FormState> emailPageformKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> verifyFormKey = GlobalKey<FormState>();
 
   bool isButtonEnabled = false;
   final TextEditingController emailController = TextEditingController();
@@ -14,7 +14,7 @@ class ForgetpasswordProvider extends ChangeNotifier {
       GlobalKey<StatefulBottomSheetState>();
   bool enableButtonForEmailField = false;
   final int _currentPage = 0;
-  bool _isLoading = false;
+  bool isLoading = false;
   int? otpCode;
   final _authAPI = AuthAPI();
   bool isOTPRight = false;
@@ -50,12 +50,12 @@ class ForgetpasswordProvider extends ChangeNotifier {
   }
 
   void onEmailChanged(String value) {
-    emailPageformKey.currentState!.validate();
+    verifyFormKey.currentState!.validate();
     isEmailFormValid();
   }
 
   void isEmailFormValid() {
-    if (emailPageformKey.currentState!.validate()) {
+    if (verifyFormKey.currentState!.validate()) {
       enableButtonForEmailField = true;
     } else {
       enableButtonForEmailField = false;
@@ -82,17 +82,17 @@ class ForgetpasswordProvider extends ChangeNotifier {
       FocusScope.of(context).requestFocus(FocusNode());
     }
 
-    _isLoading = true;
+    isLoading = true;
     notifyListeners();
     otpCode = await _authAPI.verifyEmailAccountWithOTP(
       email: emailController.text,
     );
-    _isLoading = false;
+    isLoading = false;
     notifyListeners();
     debugPrint('$otpCode');
     changeOTPStatus(false);
     if (otpCode == null) return false;
-    _isLoading = true;
+    isLoading = true;
     notifyListeners();
 
     if (ctx != null) {

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:my_med/src/components/button.dart';
+import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/modules/intro/components/login_input_field.dart';
+import 'package:my_med/src/modules/intro/components/textButtonComponent.dart';
 import 'package:my_med/src/modules/intro/providers/login_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -70,6 +72,28 @@ class _LoginStateState extends State<_LoginState> {
                             label: "Password",
                             onChanged: provider.isTextFieldsValid,
                           ),
+                          SizedBox(
+                            height: 20,
+                          ),
+
+                          //Forget password field
+                          textButtonComponent(
+                            ctx: context,
+                            route: const ForgetPasswordRoute(),
+                            child: const Text.rich(
+                              TextSpan(
+                                style: TextStyle(fontWeight: FontWeight.w700),
+                                children: [
+                                  TextSpan(
+                                    text: 'Forget your password?',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -83,23 +107,31 @@ class _LoginStateState extends State<_LoginState> {
                     padding: const EdgeInsets.fromLTRB(24, 8, 24, 20),
                     child: AnimatedContainer(
                       height: 55,
-                      width: (provider.isLoading) ? MediaQuery.of(context).size.width * 0.3 : MediaQuery.of(context).size.width * 0.8,
+                      width: (provider.isLoading)
+                          ? MediaQuery.of(context).size.width * 0.3
+                          : MediaQuery.of(context).size.width * 0.8,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        color: Theme.of(context).buttonTheme.colorScheme!.primary,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme!.primary,
                       ),
                       duration: const Duration(milliseconds: 500),
                       child: DefaultButton(
                         forceEnabling: provider.isLoading,
                         isExpanded: true,
-                        onPressed: (provider.isButtonEnabled && provider.isLoading == false) ? () => provider.login(context) : null,
+                        onPressed: (provider.isButtonEnabled &&
+                                provider.isLoading == false)
+                            ? () => provider.login(context)
+                            : null,
                         child: (provider.isLoading)
                             ? const Center(
-                                child: CircularProgressIndicator(color: Colors.white),
+                                child: CircularProgressIndicator(
+                                    color: Colors.white),
                               )
                             : const Text(
                                 'Login',
-                                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700, fontSize: 16),
                               ),
                       ),
                     ),

@@ -15,11 +15,7 @@ class ForgetPasswordPage extends StatelessWidget {
 }
 
 class _ForgetPasswordPage extends StatelessWidget {
-  // Constant Variables
-  late final TextEditingController emailController;
-  late final GlobalKey formKey;
-  late final bool formIsValid;
-  late final bool isLoading;
+  //Variables
   final Color titleColor = const Color(0xFF31313D);
   final Color iconColorActive = const Color(0xFF6C6C70);
   final Color iconColorDeactive = const Color(0xFFD8D8DC);
@@ -27,16 +23,27 @@ class _ForgetPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<ForgetpasswordProvider>();
-    return Form(
-        key: formKey,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Verify Email"),
+
+      ),
+      body: Form(
+        key: provider.verifyFormKey,
         child: Column(
           children: [
-            Expanded(
-              child: DefaultTextField(
-                  controller: emailController,
-                  label: "Email",
-                  onChanged: provider.onEmailChanged,
-                  validator: provider.validateEmail),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.1,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Expanded(
+                child: DefaultTextField(
+                    controller: provider.emailController,
+                    label: "Email",
+                    onChanged: provider.onEmailChanged,
+                    validator: provider.validateEmail),
+              ),
             ),
             Expanded(
               child: Expanded(
@@ -49,7 +56,7 @@ class _ForgetPasswordPage extends StatelessWidget {
                     child: SizedBox(
                         width: double.infinity,
                         child: DefaultButton(
-                          onPressed: (formIsValid)
+                          onPressed: (provider.enableButtonForEmailField)
                               ? () {
                                   provider.onConfirmPressed().then((value) {
                                     if (provider.otpCode != null) {
@@ -83,18 +90,24 @@ class _ForgetPasswordPage extends StatelessWidget {
                                   });
                                 }
                               : null,
-                          child: (isLoading)
-                              ? const Center(
-                                  child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ))
+                          child: (provider.isLoading)
+                              ? const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Center(
+                                    child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )),
+                              )
                               : const Text("Verify"),
                         )),
                   ),
                 ),
               ),
-            )
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.1,
+            ),
           ],
-        ));
+        )));
   }
 }
