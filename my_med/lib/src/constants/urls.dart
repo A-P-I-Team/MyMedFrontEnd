@@ -8,5 +8,5 @@ class ConstURLs {
 
   static const String profile = '$baseDomain/profile/';
 
-  static const String doctor = '$baseDomain/medical/doctors';
+  static const String doctor = '$baseDomain/medical/my_doctors';
 }
