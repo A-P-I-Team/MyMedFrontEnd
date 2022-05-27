@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:my_med/src/components/custom_shadow.dart';
 import 'package:my_med/src/components/email_container.dart';
 import 'package:my_med/src/l10n/localization_provider.dart';
-import 'package:my_med/src/models/patient_model.dart';
 import 'package:my_med/src/modules/profile/components/birthday_container.dart';
 import 'package:my_med/src/modules/profile/components/sexuality_container.dart';
 import 'package:my_med/src/modules/profile/components/small_edit_button.dart';
+import 'package:my_med/src/modules/profile/models/profile_model.dart';
 
 class InformationContainer extends StatelessWidget {
-  final Patient patient;
+  final UserProfileModel patient;
   final void Function()? showEditNamePopUp;
   final void Function()? showEditBirthdayPopUp;
   final void Function()? showEditSexualityPopUp;
@@ -23,9 +23,9 @@ class InformationContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String phoneNumber = patient.email;
-    String fullName = patient.fullName;
-    String dateOfBirth = patient.dateOfBirth ?? "-/-/-";
+    String email = patient.email.toString();
+    String fullName = '${patient.firstName} ${patient.lastName}';
+    String dateOfBirth = patient.birthdate;
     String gender = patient.gender ?? "---";
 
     return Padding(
@@ -35,7 +35,7 @@ class InformationContainer extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         children: [
           EmailContainer(
-            email: phoneNumber,
+            email: email,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

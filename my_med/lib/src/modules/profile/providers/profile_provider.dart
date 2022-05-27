@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/core/routing/router.dart';
-import 'package:my_med/src/models/patient_model.dart';
+import 'package:my_med/src/modules/profile/apis/profile_apis.dart';
 import 'package:my_med/src/modules/profile/components/edit_birthday_popup.dart';
 import 'package:my_med/src/modules/profile/components/edit_name_pop_up.dart';
 import 'package:my_med/src/modules/profile/components/edit_sexuality_popup.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:my_med/src/modules/profile/models/profile_model.dart';
 
 enum Sexuality { man, woman, other }
 
 class ProfileProvider extends ChangeNotifier {
   final BuildContext context;
-  Patient? patient = Patient(
-    fullName: 'Iliya Mirzaei',
-    email: 'Iliya.mi78@gmail.com',
-    identification: '0024034032',
-  );
+  UserProfileModel? userProfileModel;
   bool hasError = false;
   String _year = "";
   String _month = "";
   String _day = "";
   bool isCompleteBirthDay = false;
   Sexuality _sexuality = Sexuality.man;
+  bool isloading = true;
+  bool isDisposed = false;
 
   Sexuality get sexuality => _sexuality;
 
@@ -28,8 +28,17 @@ class ProfileProvider extends ChangeNotifier {
     updatePatient();
   }
 
-  void updatePatient() {
-    //TODO API Call for get patient info
+  void updatePatient() async {
+    isloading = true;
+    notifyListeners();
+    userProfileModel = await ProfileAPI().getUserProfile(
+      onTimeout: () => APIErrorMessage().onTimeout(context),
+      onDisconnect: () => APIErrorMessage().onDisconnect(context),
+      onAPIError: () => APIErrorMessage().onDisconnect(context),
+    );
+    isloading = false;
+    if (isDisposed) return;
+    notifyListeners();
   }
 
   void onSexualityChange(Sexuality? sexuality) {
@@ -95,11 +104,19 @@ class ProfileProvider extends ChangeNotifier {
   String? dayValidator(String? value) {
     if (value!.isEmpty || int.parse(value) < 1 || int.parse(value) > 31) {
       return "";
-    } else if (value.isNotEmpty && int.parse(_month) >= 1 && int.parse(_month) <= 6 && int.parse(value) > 31) {
+    } else if (value.isNotEmpty &&
+        int.parse(_month) >= 1 &&
+        int.parse(_month) <= 6 &&
+        int.parse(value) > 31) {
       return "";
-    } else if (value.isNotEmpty && int.parse(_month) > 6 && int.parse(_month) < 12 && int.parse(value) > 30) {
+    } else if (value.isNotEmpty &&
+        int.parse(_month) > 6 &&
+        int.parse(_month) < 12 &&
+        int.parse(value) > 30) {
       return "";
-    } else if (value.isNotEmpty && int.parse(_month) == 12 && int.parse(value) > 29) {
+    } else if (value.isNotEmpty &&
+        int.parse(_month) == 12 &&
+        int.parse(value) > 29) {
       return "";
     } else {
       return null;
