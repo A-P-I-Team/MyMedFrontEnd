@@ -14,6 +14,11 @@
         "type": "text",
         "description": "modules setting > pages > setting_page.dart > Persian"
     },
+    "settingPageSelectedLanguage": "English",
+    "@settingPageSelectedLanguage": {
+        "type": "text",
+        "description": "modules setting > pages > setting_page.dart > Setting Page Selected Language"
+    },
     "selectLanguage": "Select language",
     "@selectLanguage": {
         "type": "text",
