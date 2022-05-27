@@ -42,7 +42,8 @@ class QuestionsPage extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               'Gender:',
-              style: TextStyle(fontWeight: FontWeight.w600, color: disableColorHeader),
+              style: TextStyle(
+                  fontWeight: FontWeight.w600, color: disableColorHeader),
             ),
           ),
           Row(
@@ -82,7 +83,8 @@ class QuestionsPage extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               'Relationship Status:',
-              style: TextStyle(fontWeight: FontWeight.w600, color: disableColorHeader),
+              style: TextStyle(
+                  fontWeight: FontWeight.w600, color: disableColorHeader),
             ),
           ),
           Row(
@@ -122,7 +124,8 @@ class QuestionsPage extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               'Are You Vaccinated?',
-              style: TextStyle(fontWeight: FontWeight.w600, color: disableColorHeader),
+              style: TextStyle(
+                  fontWeight: FontWeight.w600, color: disableColorHeader),
             ),
           ),
           Row(
@@ -156,7 +159,8 @@ class QuestionsPage extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               'Where Are You Living?',
-              style: TextStyle(fontWeight: FontWeight.w600, color: disableColorHeader),
+              style: TextStyle(
+                  fontWeight: FontWeight.w600, color: disableColorHeader),
             ),
           ),
           const SizedBox(
@@ -165,14 +169,12 @@ class QuestionsPage extends StatelessWidget {
           SizedBox(
             height: cityErrorText == null ? 50 : 70,
             child: DropdownSearch<String>(
-              showAsSuffixIcons: true,
               onChanged: onCityChanged,
               selectedItem: defaultCity,
-              showSearchBox: true,
-              onFind: onFind,
-              maxHeight: 300,
-              selectionListViewProps: const SelectionListViewProps(),
-              dropDownButton: const SizedBox(),
+              asyncItems: onFind,
+              // maxHeight: 300,
+              // selectionListViewProps: const SelectionListViewProps(),
+              // dropDownButton: const SizedBox(),
               dropdownSearchDecoration: InputDecoration(
                 errorText: cityErrorText,
                 errorBorder: OutlineInputBorder(
@@ -215,16 +217,19 @@ class QuestionsPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),
-              showSelectedItems: true,
-              popupElevation: 0,
-              searchFieldProps: TextFieldProps(
+              popupProps: PopupProps.menu(
+                showSelectedItems: true,
+                showSearchBox: true,
+                searchFieldProps: TextFieldProps(
                   autocorrect: true,
                   decoration: InputDecoration(
                     labelText: defaultCity,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
-                  )),
+                  ),
+                ),
+              ),
             ),
           ),
           Expanded(
