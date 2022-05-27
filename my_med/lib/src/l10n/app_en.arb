@@ -79,6 +79,11 @@
         "type": "text",
         "description": "modules setting > pages > profile_page.dart > Phone number text"
     },
+    "email": "Email address",
+    "@email": {
+        "type": "text",
+        "description": "modules setting > pages > profile_page.dart > email text"
+    },
     "birthday": "Birthday",
     "@birthday": {
         "type": "text",
@@ -192,5 +197,13 @@
     "notStarted": "Not started",
     "@notStarted": {
         "description": "modules Drugs > Drug page > consumption started date"
+    },
+    "retry": "Retry",
+    "@retry": {
+        "description": "retry"
+    },
+    "serverMessage": "Problem communicating with server!",
+    "@serverMessage": {
+        "description": "Server error message"
     }
 }
