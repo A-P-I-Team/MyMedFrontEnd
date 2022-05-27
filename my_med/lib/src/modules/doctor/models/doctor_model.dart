@@ -19,7 +19,6 @@ class DoctorModel {
     required this.firstName,
     required this.lastName,
     required this.profilePic,
-    required this.userCity,
     required this.field,
   });
 
@@ -27,7 +26,6 @@ class DoctorModel {
   final String firstName;
   final String lastName;
   final String? profilePic;
-  final int userCity;
   final String? field;
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) => DoctorModel(
@@ -35,7 +33,6 @@ class DoctorModel {
         firstName: json["first_name"],
         lastName: json["last_name"],
         profilePic: json["profile_pic"],
-        userCity: json["user_city"],
         field: json["field"],
       );
 
@@ -44,7 +41,6 @@ class DoctorModel {
         "first_name": firstName,
         "last_name": lastName,
         "profile_pic": profilePic,
-        "user_city": userCity,
         "field": field,
       };
 }
