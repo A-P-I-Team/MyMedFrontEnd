@@ -34,7 +34,7 @@ class UserProfileModel {
         citizensSsn: json["citizens_ssn"],
         userCity: UserCity.fromJson(json["user_city"]),
         profilePic: json["profile_pic"],
-        email: json["email"],
+        email: json["username"],
       );
 }
 
