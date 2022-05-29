@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/core/test_page.dart';
 import 'package:my_med/src/modules/dashboard/pages/dashboard_page.dart';
+import 'package:my_med/src/modules/intro/pages/change_password.dart';
 import 'package:my_med/src/modules/intro/pages/login.dart';
 import 'package:my_med/src/modules/intro/pages/onboarding.dart';
 import 'package:my_med/src/modules/intro/pages/signup.dart';
@@ -25,6 +26,7 @@ part 'router.gr.dart';
     AutoRoute(page: SignUpPage, path: '/signup'),
     AutoRoute(page: DashboardPage, path: '/dashboard'),
     AutoRoute(page: ForgetPasswordPage, path: '/forget_password'),
+    AutoRoute(page: ChangePasswordPage, path: '/forget_password/change_password'),
     AutoRoute(page: SettingPage, path: '/setting'),
     AutoRoute(page: LanguagePage, path: '/language'),
     AutoRoute(page: AboutUsPage, path: '/aboutUs'),

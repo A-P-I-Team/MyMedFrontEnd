@@ -43,7 +43,13 @@ class _$AppRouter extends RootStackRouter {
     },
     ForgetPasswordRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: ForgetPasswordPage());
+          routeData: routeData, child: const ForgetPasswordPage());
+    },
+    ChangePasswordRoute.name: (routeData) {
+      final args = routeData.argsAs<ChangePasswordRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: ChangePasswordPage(key: args.key, email: args.email));
     },
     SettingRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
@@ -72,6 +78,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(SignUpRoute.name, path: '/signup'),
         RouteConfig(DashboardRoute.name, path: '/dashboard'),
         RouteConfig(ForgetPasswordRoute.name, path: '/forget_password'),
+        RouteConfig(ChangePasswordRoute.name,
+            path: '/forget_password/change_password'),
         RouteConfig(SettingRoute.name, path: '/setting'),
         RouteConfig(LanguageRoute.name, path: '/language'),
         RouteConfig(AboutUsRoute.name, path: '/aboutUs'),
@@ -134,6 +142,30 @@ class ForgetPasswordRoute extends PageRouteInfo<void> {
       : super(ForgetPasswordRoute.name, path: '/forget_password');
 
   static const String name = 'ForgetPasswordRoute';
+}
+
+/// generated route for
+/// [ChangePasswordPage]
+class ChangePasswordRoute extends PageRouteInfo<ChangePasswordRouteArgs> {
+  ChangePasswordRoute({Key? key, required String email})
+      : super(ChangePasswordRoute.name,
+            path: '/forget_password/change_password',
+            args: ChangePasswordRouteArgs(key: key, email: email));
+
+  static const String name = 'ChangePasswordRoute';
+}
+
+class ChangePasswordRouteArgs {
+  const ChangePasswordRouteArgs({this.key, required this.email});
+
+  final Key? key;
+
+  final String email;
+
+  @override
+  String toString() {
+    return 'ChangePasswordRouteArgs{key: $key, email: $email}';
+  }
 }
 
 /// generated route for

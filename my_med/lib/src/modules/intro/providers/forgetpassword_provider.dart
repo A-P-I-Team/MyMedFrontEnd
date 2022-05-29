@@ -1,6 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/utils/regex.dart';
-import 'package:my_med/src/components/utils/snack_bar.dart';
+import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/modules/intro/apis/auth_api.dart';
 import 'package:my_med/src/modules/intro/pages/stateful_bottom_sheet.dart';
 
@@ -75,7 +76,7 @@ class ForgetpasswordProvider extends ChangeNotifier {
   }
 
   void onNextPressed() {
-    notifyListeners();
+    context.router.push(ChangePasswordRoute(email: emailController.text));
   }
 
   void setNewOTPCode(int newOTPCode) {
@@ -87,83 +88,15 @@ class ForgetpasswordProvider extends ChangeNotifier {
     if (context.owner != null) {
       FocusScope.of(context).requestFocus(FocusNode());
     }
-
-    if (ctx != null) {
-      CustomSnackBar().showMessage(
-        context: ctx,
-        margin: EdgeInsets.only(
-            bottom: MediaQuery.of(context).size.height * 0.85,
-            left: 24,
-            right: 24),
-        content: SizedBox(
-          height: 25,
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
-            Icon(
-              Icons.check_circle,
-              color: Colors.white,
-            ),
-            SizedBox(width: 8),
-            Text('You Have Successfuly Signed Up'),
-          ]),
-        ),
-        duration: const Duration(seconds: 3),
-        bgColor: Colors.green,
-        snackBarBehavior: SnackBarBehavior.floating,
-        dismissDirection: DismissDirection.startToEnd,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-      );
-    }
-    return true;
-  }
-
-  Future<bool> onSetNewPasswordConfirmPressed({BuildContext? ctx}) async {
-    if (context.owner != null) {
-      FocusScope.of(context).requestFocus(FocusNode());
-    }
-
-    _authAPI.setNewPassword(
-        password: passwordController.text,
-        confirmPassword: confirmPasswordController.text,
-        email: emailController.text);
-    isLoading = false;
-    notifyListeners();
-    if (otpCode == null) return false;
     isLoading = true;
     notifyListeners();
-
-    if (ctx != null) {
-      CustomSnackBar().showMessage(
-        context: ctx,
-        margin: EdgeInsets.only(
-            bottom: MediaQuery.of(context).size.height * 0.85,
-            left: 24,
-            right: 24),
-        content: SizedBox(
-          height: 25,
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
-            Icon(
-              Icons.check_circle,
-              color: Colors.white,
-            ),
-            SizedBox(width: 8),
-            Text('Your Password Successfuly Changed'),
-          ]),
-        ),
-        duration: const Duration(seconds: 3),
-        bgColor: Colors.green,
-        snackBarBehavior: SnackBarBehavior.floating,
-        dismissDirection: DismissDirection.startToEnd,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-      );
-    }
+    otpCode = await AuthAPI().verifyEmailAccountWithOTP(email: emailController.text, resetPassword: true,);
+    debugPrint(otpCode.toString());
+    isLoading = false;
+    notifyListeners();
     return true;
   }
+
 
   String? validatePassword(String? value) {
     if (value!.isEmpty) {
@@ -189,13 +122,6 @@ class ForgetpasswordProvider extends ChangeNotifier {
     return null;
   }
 
-  void onPasswordChanged(String value) {
-    changePassPageFormKey.currentState!.validate();
-    // isEmailFormValid();
-  }
+  
 
-  void onConfirmPasswordChanged(String value) {
-    changePassPageFormKey.currentState!.validate();
-    // isEmailFormValid();
-  }
 }

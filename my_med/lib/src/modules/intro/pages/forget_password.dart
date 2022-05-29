@@ -7,10 +7,14 @@ import 'package:my_med/src/modules/intro/providers/forgetpassword_provider.dart'
 import 'package:provider/provider.dart';
 
 class ForgetPasswordPage extends StatelessWidget {
+  const ForgetPasswordPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ForgetpasswordProvider>(
-        create: (_) => ForgetpasswordProvider(_), child: _ForgetPasswordPage());
+      create: (_) => ForgetpasswordProvider(_),
+      child: _ForgetPasswordPage(),
+    );
   }
 }
 
@@ -24,90 +28,87 @@ class _ForgetPasswordPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = context.watch<ForgetpasswordProvider>();
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Verify Email"),
-
-      ),
-      body: Form(
-        key: provider.verifyFormKey,
-        child: Column(
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.1,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Expanded(
-                child: DefaultTextField(
-                    controller: provider.emailController,
-                    label: "Email",
-                    onChanged: provider.onEmailChanged,
-                    validator: provider.validateEmail),
-              ),
-            ),
-            Expanded(
-              child: Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
+        body: Form(
+            key: provider.verifyFormKey,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.1,
+                ),
+                Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
+                      horizontal: 16,
                     ),
-                    child: SizedBox(
-                        width: double.infinity,
-                        child: DefaultButton(
-                          onPressed: (provider.enableButtonForEmailField)
-                              ? () {
-                                  provider.onConfirmPressed().then((value) {
-                                    if (provider.otpCode != null) {
-                                      showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          context: context,
-                                          isDismissible: false,
-                                          shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(32),
-                                            topRight: Radius.circular(32),
-                                          )),
-                                          builder: (_) {
-                                            return StatefulBottomSheet(
-                                              key: provider.bottomSheetKey,
-                                              emailController:
-                                                  provider.emailController,
-                                              orginalOTP:
-                                                  provider.otpCode.toString(),
-                                              changeOTPStatus:
-                                                  provider.changeOTPStatus,
-                                              goToNextPage:
-                                                  provider.onNextPressed,
-                                              sendOtp: AuthAPI()
-                                                  .verifyEmailAccountWithOTP,
-                                              setOTPCode:
-                                                  provider.setNewOTPCode,
-                                            );
-                                          });
-                                    }
-                                  });
-                                }
-                              : null,
-                          child: (provider.isLoading)
-                              ? const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Center(
-                                    child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                  )),
-                              )
-                              : const Text("Verify"),
-                        )),
+                    child: DefaultTextField(
+                        controller: provider.emailController,
+                        label: "Email",
+                        onChanged: provider.onEmailChanged,
+                        validator: provider.validateEmail),
                   ),
                 ),
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.1,
-            ),
-          ],
-        )));
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                      ),
+                      child: SizedBox(
+                          width: double.infinity,
+                          child: DefaultButton(
+                            onPressed: (provider.enableButtonForEmailField)
+                                ? () {
+                                    provider.onConfirmPressed().then((value) {
+                                      if (provider.otpCode != null) {
+                                        showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            context: context,
+                                            isDismissible: false,
+                                            shape: const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(32),
+                                              topRight: Radius.circular(32),
+                                            )),
+                                            builder: (_) {
+                                              return StatefulBottomSheet(
+                                                key: provider.bottomSheetKey,
+                                                emailController:
+                                                    provider.emailController,
+                                                orginalOTP:
+                                                    provider.otpCode.toString(),
+                                                changeOTPStatus:
+                                                    provider.changeOTPStatus,
+                                                goToNextPage:
+                                                    provider.onNextPressed,
+                                                sendOtp: AuthAPI()
+                                                    .verifyEmailAccountWithOTP,
+                                                setOTPCode:
+                                                    provider.setNewOTPCode,
+                                                    resetPassword: true,
+                                              );
+                                            });
+                                      }
+                                    });
+                                  }
+                                : null,
+                            child: (provider.isLoading)
+                                ? const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Center(
+                                        child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )),
+                                  )
+                                : const Text("Verify"),
+                          )),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.1,
+                ),
+              ],
+            )));
   }
 }

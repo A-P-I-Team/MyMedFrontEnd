@@ -2,15 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:my_med/src/components/button.dart';
 import 'package:my_med/src/modules/intro/components/login_input_field.dart';
 import 'package:my_med/src/modules/intro/providers/changepassword_provider.dart';
-import 'package:my_med/src/modules/intro/providers/forgetpassword_provider.dart';
 import 'package:provider/provider.dart';
 
 class ChangePasswordPage extends StatelessWidget {
-  const ChangePasswordPage({Key? key}) : super(key: key);
+  final String email;
+  const ChangePasswordPage({
+    Key? key,
+    required this.email,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ForgetpasswordProvider>(
-      create: (_) => ForgetpasswordProvider(_),
+    return ChangeNotifierProvider<ChangePasswordProvider>(
+      create: (_) => ChangePasswordProvider(
+        context: context,
+        email: email,
+      ),
       child: _ChangePasswordPage(),
     );
   }
@@ -19,48 +25,56 @@ class ChangePasswordPage extends StatelessWidget {
 class _ChangePasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<ForgetpasswordProvider>();
+    final provider = context.watch<ChangePasswordProvider>();
     return Scaffold(
-        body: Form(
-      key: provider.changePassPageFormKey,
-      child: Column(
-        children: [
-          DefaultTextField(
-            label: "Password",
-            controller: provider.passwordController,
-            onChanged: provider.onPasswordChanged,
-            validator: provider.validatePassword,
+      body: SafeArea(
+        child: Form(
+          key: provider.changePassPageFormKey,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                DefaultTextField(
+                  label: "Password",
+                  obscureText: true,
+                  controller: provider.passwordController,
+                  onChanged: provider.onPasswordChanged,
+                  validator: provider.validatePassword,
+                ),
+                const SizedBox(height: 24),
+                DefaultTextField(
+                  label: "Confirm Password",
+                  obscureText: true,
+                  controller: provider.confirmPasswordController,
+                  onChanged: provider.onConfirmPasswordChanged,
+                  validator: provider.validateConfirmPassword,
+                ),
+                Flexible(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: DefaultButton(
+                      isExpanded: true,
+                      onPressed: (provider.enableButtonForChangePassPage)
+                          ? () => provider.onSetNewPasswordConfirmPressed()
+                          : null,
+                      child: (provider.isLoading)
+                          ? const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                          : const Text("Verify"),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.1,
-          ),
-          DefaultTextField(
-            label: "Confirm Password",
-            controller: provider.confirmPasswordController,
-            onChanged: provider.onConfirmPasswordChanged,
-            validator: provider.validateConfirmPassword,
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.2,
-          ),
-          DefaultButton(
-            child: (provider.isLoading)
-                ? const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(
-                        child: CircularProgressIndicator(
-                      color: Colors.white,
-                    )),
-                  )
-                : const Text("Verify"),
-            onPressed: (provider.enableButtonForChangePassPage)
-                ? () {
-                    provider.onConfirmPressed().then((value) {});
-                  }
-                : null,
-          )
-        ],
+        ),
       ),
-    ));
+    );
   }
 }
