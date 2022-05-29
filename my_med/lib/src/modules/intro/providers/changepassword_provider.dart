@@ -54,43 +54,5 @@ class ChangePasswordProvider extends ChangeNotifier
     // isEmailFormValid();
   }
 
-   Future<bool> onConfirmPressed({BuildContext? ctx}) async {
-    if (context.owner != null) {
-      FocusScope.of(context).requestFocus(FocusNode());
-    }
-
-    isLoading = true;
-    notifyListeners();
-    notifyListeners();
-
-    if (ctx != null) {
-      CustomSnackBar().showMessage(
-        context: ctx,
-        margin: EdgeInsets.only(
-            bottom: MediaQuery.of(context).size.height * 0.85,
-            left: 24,
-            right: 24),
-        content: SizedBox(
-          height: 25,
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
-            Icon(
-              Icons.check_circle,
-              color: Colors.white,
-            ),
-            SizedBox(width: 8),
-            Text('Your Password Successfuly Changed'),
-          ]),
-        ),
-        duration: const Duration(seconds: 3),
-        bgColor: Colors.green,
-        snackBarBehavior: SnackBarBehavior.floating,
-        dismissDirection: DismissDirection.startToEnd,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-      );
-    }
-    return true;
-  }
+   
 }

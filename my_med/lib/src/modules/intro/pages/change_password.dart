@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:my_med/src/components/button.dart';
 import 'package:my_med/src/modules/intro/components/login_input_field.dart';
 import 'package:my_med/src/modules/intro/providers/changepassword_provider.dart';
+import 'package:my_med/src/modules/intro/providers/forgetpassword_provider.dart';
 import 'package:provider/provider.dart';
 
 class ChangePasswordPage extends StatelessWidget {
   const ChangePasswordPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ChangePasswordProvider>(
-      create: (_) => ChangePasswordProvider(),
+    return ChangeNotifierProvider<ForgetpasswordProvider>(
+      create: (_) => ForgetpasswordProvider(_),
       child: _ChangePasswordPage(),
     );
   }
@@ -18,7 +19,7 @@ class ChangePasswordPage extends StatelessWidget {
 class _ChangePasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<ChangePasswordProvider>();
+    final provider = context.watch<ForgetpasswordProvider>();
     return Scaffold(
         body: Form(
       key: provider.changePassPageFormKey,

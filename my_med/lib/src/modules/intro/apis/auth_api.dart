@@ -155,4 +155,46 @@ class AuthAPI {
       return [];
     }
   }
+
+   Future<bool> setNewPassword({
+    required String password,
+    required String confirmPassword,
+    required String email,
+    VoidCallback? onTimeout,
+    VoidCallback? onDisconnect,
+  }) async {
+    try {
+      final response = await http.put(
+        Uri.parse(ConstURLs.login),
+        body: {
+          'new_password1': password,
+          'new_password2': confirmPassword,
+          'email' : email,
+        },
+      ).timeout(
+        const Duration(
+          seconds: ConstProperties.timeoutDuration,
+        ),
+      );
+      final body = jsonDecode(response.body);
+      final int statusCode = response.statusCode;
+      if (statusCode != 200) return false;
+      if (body.containsKey('token') == false) return false;
+      final String? token = body['token'];
+      if (token == null) return false;
+      PreferencesService.setTokens(token: token);
+      return true;
+    } on TimeoutException catch (_) {
+      onTimeout;
+      debugPrint("Timeout connection!");
+      return false;
+    } on SocketException catch (_) {
+      onDisconnect;
+      debugPrint("No Network");
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
 }
