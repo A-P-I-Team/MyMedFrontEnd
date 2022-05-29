@@ -144,7 +144,7 @@ class ProfileProvider extends ChangeNotifier {
         if (isResponseOK) {
           userProfileModel!.firstName = name.split(" ")[0];
           userProfileModel!.lastName = name.split(" ")[1];
-          if (isDisposed) return;
+          if(isDisposed) return;
           notifyListeners();
         }
       });
