@@ -91,4 +91,84 @@ class ProfileAPI {
     }
     return false;
   }
+
+  Future<bool> changeGender({
+    required String gender,
+    required VoidCallback onTimeout,
+    required VoidCallback onDisconnect,
+    required VoidCallback onAPIError,
+  }) async {
+    try {
+      final body = {
+        'gender' : gender,
+      };
+      final response = await _api
+          .patch(
+            Uri.parse(ConstURLs.profile),
+            body: json.encode(body),
+          )
+          .timeout(
+            const Duration(
+              seconds: ConstProperties.timeoutDuration,
+            ),
+          );
+      if (response == null) {
+        throw ApiError(message: APIErrorMessage().serverMessage);
+      }
+
+      if (response.statusCode != 200) {
+        throw ApiError(message: APIErrorMessage().serverMessage);
+      }
+      return true;
+    } on ApiError catch (_) {
+      onAPIError();
+    } on TimeoutException catch (_) {
+      onTimeout();
+    } on SocketException catch (_) {
+      onDisconnect();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return false;
+  }
+
+  Future<bool> changeBirthDate({
+    required String birthday,
+    required VoidCallback onTimeout,
+    required VoidCallback onDisconnect,
+    required VoidCallback onAPIError,
+  }) async {
+    try {
+      final body = {
+        'birthdate' : birthday,
+      };
+      final response = await _api
+          .patch(
+            Uri.parse(ConstURLs.profile),
+            body: json.encode(body),
+          )
+          .timeout(
+            const Duration(
+              seconds: ConstProperties.timeoutDuration,
+            ),
+          );
+      if (response == null) {
+        throw ApiError(message: APIErrorMessage().serverMessage);
+      }
+
+      if (response.statusCode != 200) {
+        throw ApiError(message: APIErrorMessage().serverMessage);
+      }
+      return true;
+    } on ApiError catch (_) {
+      onAPIError();
+    } on TimeoutException catch (_) {
+      onTimeout();
+    } on SocketException catch (_) {
+      onDisconnect();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return false;
+  }
 }

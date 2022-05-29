@@ -144,7 +144,7 @@ class ProfileProvider extends ChangeNotifier {
         if (isResponseOK) {
           userProfileModel!.firstName = name.split(" ")[0];
           userProfileModel!.lastName = name.split(" ")[1];
-          if(isDisposed) return;
+          if (isDisposed) return;
           notifyListeners();
         }
       });
@@ -160,10 +160,19 @@ class ProfileProvider extends ChangeNotifier {
       },
     );
     if (birthDay != null) {
-      //TODO API Call Set patient birthday
-
-      updatePatient();
-      notifyListeners();
+      ProfileAPI()
+          .changeBirthDate(
+              birthday: birthDay,
+              onTimeout: () => APIErrorMessage().onTimeout(context),
+              onDisconnect: () => APIErrorMessage().onDisconnect(context),
+              onAPIError: () => APIErrorMessage().onDisconnect(context))
+          .then((isResponseOk) {
+        if (isResponseOk) {
+          userProfileModel!.birthdate = birthDay;
+          if (isDisposed) return;
+          notifyListeners();
+        }
+      });
     }
   }
 
@@ -177,9 +186,19 @@ class ProfileProvider extends ChangeNotifier {
     );
     if (sexuality != null) {
       String newGender = (sexuality == "مرد") ? "M" : "F";
-      //TODO set patient gender
-      updatePatient();
-      notifyListeners();
+      ProfileAPI()
+          .changeGender(
+              gender: newGender,
+              onTimeout: () => APIErrorMessage().onTimeout(context),
+              onDisconnect: () => APIErrorMessage().onDisconnect(context),
+              onAPIError: () => APIErrorMessage().onDisconnect(context))
+          .then((isResponseOK) {
+        if (isResponseOK) {
+          userProfileModel!.gender = newGender;
+          if (isDisposed) return;
+          notifyListeners();
+        }
+      });
     }
   }
 
