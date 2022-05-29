@@ -33,7 +33,7 @@ class ProfileAPI {
       if (response.statusCode != 200) {
         throw ApiError(message: APIErrorMessage().serverMessage);
       }
-      final userProfileResponse = jsonDecode(response.body);
+      final userProfileResponse = jsonDecode(utf8.decode(response.bodyBytes));
       if (userProfileResponse == null) {
         throw ApiError(message: APIErrorMessage().serverMessage);
       }

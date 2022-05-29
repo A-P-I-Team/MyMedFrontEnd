@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/core/routing/router.dart';
+import 'package:my_med/src/l10n/localization_provider.dart';
 import 'package:my_med/src/modules/profile/apis/profile_apis.dart';
 import 'package:my_med/src/modules/profile/components/edit_birthday_popup.dart';
 import 'package:my_med/src/modules/profile/components/edit_name_pop_up.dart';
@@ -185,7 +186,8 @@ class ProfileProvider extends ChangeNotifier {
       },
     );
     if (sexuality != null) {
-      String newGender = (sexuality == "مرد") ? "M" : "F";
+      debugPrint(sexuality);
+      String newGender = (sexuality == "Man") ? "M" : (sexuality == "Female") ? "F" : "O";
       ProfileAPI()
           .changeGender(
               gender: newGender,

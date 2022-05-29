@@ -11,8 +11,8 @@ class EditSexualityPopUp extends StatefulWidget {
 }
 
 class _EditSexualityPopUpState extends State<EditSexualityPopUp> {
-  String sexuality = 'man';
-  Set<String> sexualitySet = {"man", "female", "other"};
+  String sexuality = 'Man';
+  Set<String> sexualitySet = {"Man", "Female", "Other"};
 
   @override
   Widget build(BuildContext context) {
