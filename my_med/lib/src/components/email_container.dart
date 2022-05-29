@@ -39,7 +39,7 @@ class EmailContainer extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  context.localizations.phoneNumber,
+                  context.localizations.email,
                   style: const TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 12,

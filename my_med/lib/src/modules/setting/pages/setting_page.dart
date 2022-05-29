@@ -36,7 +36,8 @@ class _SettingPage extends StatelessWidget {
           ),
           SettingCard(
             cardText: context.localizations.language,
-            leadingWidget: getLeadingIcon(leadingText: context.localizations.persian),
+            leadingWidget: getLeadingIcon(
+                leadingText: context.localizations.settingPageSelectedLanguage),
             enableShadow: false,
             onTap: provider.onLanguageTap,
           ),
@@ -73,7 +74,8 @@ class _SettingPage extends StatelessWidget {
             cardText: context.localizations.logout,
             actionWidget: SizedBox(
               child: RotatedBox(
-                quarterTurns: (Directionality.of(context) == TextDirection.ltr) ? 2 : 0,
+                quarterTurns:
+                    (Directionality.of(context) == TextDirection.ltr) ? 2 : 0,
                 child: SvgPicture.asset(
                   "assets/combined_shape.svg",
                   fit: BoxFit.fill,
@@ -103,7 +105,8 @@ class _SettingPage extends StatelessWidget {
       elevation: 0,
       title: Text(
         context.localizations.setting,
-        style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
+        style:
+            const TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
       ),
       centerTitle: true,
     );

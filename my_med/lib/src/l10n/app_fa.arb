@@ -6,6 +6,7 @@
     "setting": "تنظیمات",
     "language": "زبان",
     "persian": "فارسی",
+    "settingPageSelectedLanguage": "فارسی",
     "announcement": "اعلانات",
     "termsAndConditions": "قوانین و مقررات",
     "aboutUs": "درباره ما",
@@ -15,6 +16,7 @@
     "woman": "زن",
     "sexuality": "جنسیت",
     "phoneNumber": "شماره موبایل",
+    "email": "آدرس ایمیل",
     "birthday": "تاریخ تولد",
     "drugs": "داروها",
     "home": "خانه",
@@ -29,7 +31,7 @@
     "logoutDoubleCheckQuestion": "آیا میخواهید از حساب کاربری خارج شوید؟",
     "searchDrugText": "جست و جوی داروی مورد نظر",
     "smallEditButton": "ویرایش",
-    "otherGender": "-",
+    "otherGender": "دیگر",
     "allNotifications": "همه اعلانات",
     "activeNotificationsForReceivingUpdatesAndAds": "برای دریافت به روزرسانی ها و تبلیغات، اعلان را فعال کنید.",
     "settingReminders": "یادآور ها",
@@ -40,5 +42,7 @@
     "daily": "روزه",
     "unknown": "نامشخص",
     "doctorProfileButton": "مشخصات",
-    "notStarted": "شروع نشده است"
+    "notStarted": "شروع نشده است",
+    "retry": "تلاش مجدد",
+    "serverMessage": "خطای در برقراری ارتباط با سرور!"
 }

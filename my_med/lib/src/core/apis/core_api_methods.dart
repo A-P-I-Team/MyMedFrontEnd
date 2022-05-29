@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:my_med/src/components/utils/shared_preferences.dart';
@@ -14,6 +15,7 @@ class CoreApi {
         url,
         headers: {
           "Authorization": "Token ${token!}",
+          "Content-Type": "application/json",
         },
       );
     } catch (e) {
@@ -34,6 +36,7 @@ class CoreApi {
         body: body,
         headers: {
           "Authorization": "Token ${token!}",
+          "Content-Type": "application/json",
         },
       );
     } catch (e) {
@@ -54,6 +57,7 @@ class CoreApi {
         body: body,
         headers: {
           "Authorization": "Token ${token!}",
+          "Content-Type": "application/json",
         },
       );
     } catch (e) {

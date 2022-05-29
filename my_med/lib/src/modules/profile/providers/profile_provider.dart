@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/core/routing/router.dart';
-import 'package:my_med/src/models/patient_model.dart';
+import 'package:my_med/src/l10n/localization_provider.dart';
+import 'package:my_med/src/modules/profile/apis/profile_apis.dart';
 import 'package:my_med/src/modules/profile/components/edit_birthday_popup.dart';
 import 'package:my_med/src/modules/profile/components/edit_name_pop_up.dart';
 import 'package:my_med/src/modules/profile/components/edit_sexuality_popup.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:my_med/src/modules/profile/models/profile_model.dart';
 
 enum Sexuality { man, woman, other }
 
 class ProfileProvider extends ChangeNotifier {
   final BuildContext context;
-  Patient? patient = Patient(
-    fullName: 'Iliya Mirzaei',
-    email: 'Iliya.mi78@gmail.com',
-    identification: '0024034032',
-  );
+  UserProfileModel? userProfileModel;
   bool hasError = false;
   String _year = "";
   String _month = "";
   String _day = "";
   bool isCompleteBirthDay = false;
   Sexuality _sexuality = Sexuality.man;
+  bool isloading = true;
+  bool isDisposed = false;
 
   Sexuality get sexuality => _sexuality;
 
@@ -28,8 +29,17 @@ class ProfileProvider extends ChangeNotifier {
     updatePatient();
   }
 
-  void updatePatient() {
-    //TODO API Call for get patient info
+  void updatePatient() async {
+    isloading = true;
+    notifyListeners();
+    userProfileModel = await ProfileAPI().getUserProfile(
+      onTimeout: () => APIErrorMessage().onTimeout(context),
+      onDisconnect: () => APIErrorMessage().onDisconnect(context),
+      onAPIError: () => APIErrorMessage().onDisconnect(context),
+    );
+    isloading = false;
+    if (isDisposed) return;
+    notifyListeners();
   }
 
   void onSexualityChange(Sexuality? sexuality) {
@@ -95,11 +105,19 @@ class ProfileProvider extends ChangeNotifier {
   String? dayValidator(String? value) {
     if (value!.isEmpty || int.parse(value) < 1 || int.parse(value) > 31) {
       return "";
-    } else if (value.isNotEmpty && int.parse(_month) >= 1 && int.parse(_month) <= 6 && int.parse(value) > 31) {
+    } else if (value.isNotEmpty &&
+        int.parse(_month) >= 1 &&
+        int.parse(_month) <= 6 &&
+        int.parse(value) > 31) {
       return "";
-    } else if (value.isNotEmpty && int.parse(_month) > 6 && int.parse(_month) < 12 && int.parse(value) > 30) {
+    } else if (value.isNotEmpty &&
+        int.parse(_month) > 6 &&
+        int.parse(_month) < 12 &&
+        int.parse(value) > 30) {
       return "";
-    } else if (value.isNotEmpty && int.parse(_month) == 12 && int.parse(value) > 29) {
+    } else if (value.isNotEmpty &&
+        int.parse(_month) == 12 &&
+        int.parse(value) > 29) {
       return "";
     } else {
       return null;
@@ -115,10 +133,22 @@ class ProfileProvider extends ChangeNotifier {
       },
     );
     if (name != null) {
-      //TODO API Call Change user name
-
-      updatePatient();
-      notifyListeners();
+      ProfileAPI()
+          .changeName(
+        firstName: name.split(" ")[0],
+        lastName: name.split(" ")[1],
+        onTimeout: () => APIErrorMessage().onTimeout(context),
+        onDisconnect: () => APIErrorMessage().onDisconnect(context),
+        onAPIError: () => APIErrorMessage().onDisconnect(context),
+      )
+          .then((isResponseOK) {
+        if (isResponseOK) {
+          userProfileModel!.firstName = name.split(" ")[0];
+          userProfileModel!.lastName = name.split(" ")[1];
+          if(isDisposed) return;
+          notifyListeners();
+        }
+      });
     }
   }
 
@@ -131,9 +161,19 @@ class ProfileProvider extends ChangeNotifier {
       },
     );
     if (birthDay != null) {
-      //TODO API Call Set patient birthday
-      updatePatient();
-      notifyListeners();
+      ProfileAPI()
+          .changeBirthDate(
+              birthday: birthDay,
+              onTimeout: () => APIErrorMessage().onTimeout(context),
+              onDisconnect: () => APIErrorMessage().onDisconnect(context),
+              onAPIError: () => APIErrorMessage().onDisconnect(context))
+          .then((isResponseOk) {
+        if (isResponseOk) {
+          userProfileModel!.birthdate = birthDay;
+          if (isDisposed) return;
+          notifyListeners();
+        }
+      });
     }
   }
 
@@ -146,10 +186,21 @@ class ProfileProvider extends ChangeNotifier {
       },
     );
     if (sexuality != null) {
-      String newGender = (sexuality == "مرد") ? "M" : "F";
-      //TODO set patient gender
-      updatePatient();
-      notifyListeners();
+      debugPrint(sexuality);
+      String newGender = (sexuality == "Man") ? "M" : (sexuality == "Female") ? "F" : "O";
+      ProfileAPI()
+          .changeGender(
+              gender: newGender,
+              onTimeout: () => APIErrorMessage().onTimeout(context),
+              onDisconnect: () => APIErrorMessage().onDisconnect(context),
+              onAPIError: () => APIErrorMessage().onDisconnect(context))
+          .then((isResponseOK) {
+        if (isResponseOK) {
+          userProfileModel!.gender = newGender;
+          if (isDisposed) return;
+          notifyListeners();
+        }
+      });
     }
   }
 
@@ -159,5 +210,11 @@ class ProfileProvider extends ChangeNotifier {
 
   void onSettingTap() {
     context.router.push(const SettingRoute());
+  }
+
+  @override
+  void dispose() {
+    isDisposed = true;
+    super.dispose();
   }
 }

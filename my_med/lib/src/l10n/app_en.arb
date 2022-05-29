@@ -14,6 +14,11 @@
         "type": "text",
         "description": "modules setting > pages > setting_page.dart > Persian"
     },
+    "settingPageSelectedLanguage": "English",
+    "@settingPageSelectedLanguage": {
+        "type": "text",
+        "description": "modules setting > pages > setting_page.dart > Setting Page Selected Language"
+    },
     "selectLanguage": "Select language",
     "@selectLanguage": {
         "type": "text",
@@ -78,6 +83,11 @@
     "@phoneNumber": {
         "type": "text",
         "description": "modules setting > pages > profile_page.dart > Phone number text"
+    },
+    "email": "Email address",
+    "@email": {
+        "type": "text",
+        "description": "modules setting > pages > profile_page.dart > email text"
     },
     "birthday": "Birthday",
     "@birthday": {
@@ -192,5 +202,13 @@
     "notStarted": "Not started",
     "@notStarted": {
         "description": "modules Drugs > Drug page > consumption started date"
+    },
+    "retry": "Retry",
+    "@retry": {
+        "description": "retry"
+    },
+    "serverMessage": "Problem communicating with server!",
+    "@serverMessage": {
+        "description": "Server error message"
     }
 }
