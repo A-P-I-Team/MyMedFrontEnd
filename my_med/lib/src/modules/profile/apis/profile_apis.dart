@@ -49,4 +49,46 @@ class ProfileAPI {
     }
     return null;
   }
+
+  Future<bool> changeName({
+    required String firstName,
+    required String lastName,
+    required VoidCallback onTimeout,
+    required VoidCallback onDisconnect,
+    required VoidCallback onAPIError,
+  }) async {
+    try {
+      final body = {
+        'first_name' : firstName,
+        'last_name' : lastName,
+      };
+      final response = await _api
+          .patch(
+            Uri.parse(ConstURLs.profile),
+            body: json.encode(body),
+          )
+          .timeout(
+            const Duration(
+              seconds: ConstProperties.timeoutDuration,
+            ),
+          );
+      if (response == null) {
+        throw ApiError(message: APIErrorMessage().serverMessage);
+      }
+
+      if (response.statusCode != 200) {
+        throw ApiError(message: APIErrorMessage().serverMessage);
+      }
+      return true;
+    } on ApiError catch (_) {
+      onAPIError();
+    } on TimeoutException catch (_) {
+      onTimeout();
+    } on SocketException catch (_) {
+      onDisconnect();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return false;
+  }
 }

@@ -11,4 +11,5 @@ class ConstURLs {
   static const String doctor = '$baseDomain/medical/my_doctors';
 
   static const String drug = '$baseDomain/medical/prescription-medicines/';
+
 }
