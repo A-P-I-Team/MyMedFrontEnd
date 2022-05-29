@@ -13,10 +13,10 @@ class UserProfileModel {
   });
 
   final int id;
-  final String firstName;
-  final String lastName;
-  final String? gender;
-  final String birthdate;
+  String firstName;
+  String lastName;
+  String? gender;
+  String birthdate;
   final String ssn;
   final String? citizensSsn;
   final UserCity userCity;

@@ -132,10 +132,22 @@ class ProfileProvider extends ChangeNotifier {
       },
     );
     if (name != null) {
-      //TODO API Call Change user name
-
-      updatePatient();
-      notifyListeners();
+      ProfileAPI()
+          .changeName(
+        firstName: name.split(" ")[0],
+        lastName: name.split(" ")[1],
+        onTimeout: () => APIErrorMessage().onTimeout(context),
+        onDisconnect: () => APIErrorMessage().onDisconnect(context),
+        onAPIError: () => APIErrorMessage().onDisconnect(context),
+      )
+          .then((isResponseOK) {
+        if (isResponseOK) {
+          userProfileModel!.firstName = name.split(" ")[0];
+          userProfileModel!.lastName = name.split(" ")[1];
+          if(isDisposed) return;
+          notifyListeners();
+        }
+      });
     }
   }
 
@@ -149,6 +161,7 @@ class ProfileProvider extends ChangeNotifier {
     );
     if (birthDay != null) {
       //TODO API Call Set patient birthday
+
       updatePatient();
       notifyListeners();
     }
@@ -176,5 +189,11 @@ class ProfileProvider extends ChangeNotifier {
 
   void onSettingTap() {
     context.router.push(const SettingRoute());
+  }
+
+  @override
+  void dispose() {
+    isDisposed = true;
+    super.dispose();
   }
 }
