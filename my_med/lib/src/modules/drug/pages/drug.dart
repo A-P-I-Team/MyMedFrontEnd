@@ -39,7 +39,7 @@ class _DrugPage extends StatelessWidget {
             parent: BouncingScrollPhysics(),
           ),
           itemBuilder: (context, index) {
-            return (provider.drugModel[index].name
+            return (provider.drugModel[index].medicine
                     .toLowerCase()
                     .contains(provider.searchBarController.text))
                 ? DrugBox(

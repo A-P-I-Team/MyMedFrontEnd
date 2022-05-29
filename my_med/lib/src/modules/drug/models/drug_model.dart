@@ -1,31 +1,41 @@
-import 'package:my_med/src/modules/doctor/models/doctor_model.dart';
-
 class DrugModel {
-  final String id;
-  final String name;
-  final double dosage;
-  final DoctorModel doctor;
-  final String consumptionAmount;
-  final String? consumptionStart;
-  final int consumptionTimes;
-  final String consumptionDuration;
-  final String description;
-  final List<dynamic> changeRequests;
-  final bool isActive;
-  final bool isGreen;
-
   DrugModel({
     required this.id,
-    required this.name,
+    required this.prescription,
+    required this.medicine,
     required this.dosage,
-    required this.doctor,
-    required this.consumptionAmount,
+    required this.fraction,
+    required this.days,
     required this.consumptionStart,
-    required this.consumptionTimes,
-    required this.consumptionDuration,
-    required this.description,
-    required this.changeRequests,
     required this.isActive,
-    required this.isGreen,
   });
+
+  final int id;
+  final int prescription;
+  final String medicine;
+  final int dosage;
+  final String fraction;
+  final String? consumptionStart;
+  final bool? isActive;
+  final int days;
+
+  factory DrugModel.fromJson(Map<String, dynamic> json) => DrugModel(
+        id: json["id"],
+        prescription: json["prescription"],
+        medicine: json["medicine"],
+        dosage: json["dosage"],
+        fraction: json["fraction"],
+        days: json["days"],
+        consumptionStart: json["start"],
+        isActive: json["notify"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "prescription": prescription,
+        "medicine": medicine,
+        "dosage": dosage,
+        "fraction": fraction,
+        "days": days,
+      };
 }

@@ -13,7 +13,7 @@ class CoreApi {
       return await _client.get(
         url,
         headers: {
-          "Authorization": "Token " + token!,
+          "Authorization": "Token ${token!}",
         },
       );
     } catch (e) {
@@ -33,7 +33,7 @@ class CoreApi {
         url,
         body: body,
         headers: {
-          "Authorization": "Token " + token!,
+          "Authorization": "Token ${token!}",
         },
       );
     } catch (e) {
@@ -53,7 +53,7 @@ class CoreApi {
         url,
         body: body,
         headers: {
-          "Authorization": "Token " + token!,
+          "Authorization": "Token ${token!}",
         },
       );
     } catch (e) {
