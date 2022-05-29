@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/components/utils/shared_preferences.dart';
 import 'package:my_med/src/constants/properties.dart';
 import 'package:my_med/src/constants/urls.dart';
@@ -50,20 +51,23 @@ class AuthAPI {
     }
   }
 
-  Future<int?> verifyEmailAccountWithOTP({required String email, VoidCallback? onTimeout, VoidCallback? onDisconnect}) async {
+  Future<int?> verifyEmailAccountWithOTP({required String email, VoidCallback? onTimeout, VoidCallback? onDisconnect, bool resetPassword = false,}) async {
     try {
-      final response = await http.post(
-        Uri.parse(ConstURLs.sendRegisterEmail),
-        body: {
+      final body = (resetPassword == false) ? {
           'email': email,
           'name': email,
-        },
+        } : {
+          'email': email,
+        };
+      final response = await http.post(
+        Uri.parse((resetPassword) ? ConstURLs.forgetPasswordEmail : ConstURLs.sendRegisterEmail),
+        body: body,
       );
-      final body = jsonDecode(response.body) as Map<String, dynamic>;
+      final responseBody = jsonDecode(response.body) as Map<String, dynamic>;
       final int statusCode = response.statusCode;
       if (statusCode != 200) return null;
-      if (body.containsKey('code') == false) return null;
-      final int otpCode = body['code'];
+      if (responseBody.containsKey('code') == false) return null;
+      final int otpCode = responseBody['code'];
       return otpCode;
     } on TimeoutException catch (_) {
       onTimeout;
@@ -155,4 +159,51 @@ class AuthAPI {
       return [];
     }
   }
+
+   Future<bool> setNewPassword({
+    required String password,
+    required String confirmPassword,
+    required String email,
+    required VoidCallback onTimeout,
+    required VoidCallback onDisconnect,
+    required void Function(String message) onAPIError,
+  }) async {
+    try {
+      final response = await http.put(
+        Uri.parse(ConstURLs.forgetPassword),
+        body: {
+          'new_password1': password,
+          'new_password2': confirmPassword,
+          'email' : email,
+        },
+      ).timeout(
+        const Duration(
+          seconds: ConstProperties.timeoutDuration,
+        ),
+      );
+      final int statusCode = response.statusCode;
+      final responseBody = json.decode(utf8.decode(response.bodyBytes)) as Map?;
+      if (statusCode == 400  && responseBody != null && responseBody.containsKey("non_field_errors")) {
+        throw ApiError(message: responseBody["non_field_errors"][0]);
+      }
+      if (statusCode != 200) throw ApiError(message: APIErrorMessage().serverMessage);
+      return true;
+    } on TimeoutException catch (_) {
+      onTimeout();
+      return false;
+    } on SocketException catch (_) {
+      onDisconnect();
+      return false;
+    }
+    on ApiError catch (e) {
+      onAPIError(e.message);
+      return false;
+    }
+     catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  
 }

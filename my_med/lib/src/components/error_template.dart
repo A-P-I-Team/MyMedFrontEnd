@@ -30,4 +30,12 @@ class APIErrorMessage {
       bgColor: Theme.of(context).errorColor,
     );
   }
+
+  void onAPIError(BuildContext context, String message,) {
+    CustomSnackBar().showMessage(
+      context: context,
+      content: Text(message),
+      bgColor: Theme.of(context).errorColor,
+    );
+  }
 }

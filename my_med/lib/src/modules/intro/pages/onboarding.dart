@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_med/src/components/button.dart';
 import 'package:my_med/src/components/utils/snack_bar.dart';
 import 'package:my_med/src/core/routing/router.dart';
+import 'package:my_med/src/modules/intro/components/textButtonComponent.dart';
 import 'package:my_med/src/modules/intro/providers/onboarding_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -26,7 +27,9 @@ class _OnboardingPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: SizedBox(
-          width: (MediaQuery.of(context).size.width > 725) ? 725 : MediaQuery.of(context).size.width,
+          width: (MediaQuery.of(context).size.width > 725)
+              ? 725
+              : MediaQuery.of(context).size.width,
           child: Column(
             children: [
               const Expanded(
@@ -42,7 +45,9 @@ class _OnboardingPage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return Container(
                       margin: EdgeInsets.symmetric(
-                        horizontal: (MediaQuery.of(context).size.width > 725) ? 725 * 0.2 : MediaQuery.of(context).size.width * 0.2,
+                        horizontal: (MediaQuery.of(context).size.width > 725)
+                            ? 725 * 0.2
+                            : MediaQuery.of(context).size.width * 0.2,
                       ),
                       child: Column(
                         children: [
@@ -68,7 +73,10 @@ class _OnboardingPage extends StatelessWidget {
                                   "Picture 3",
                                 ][index],
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.headline6!.merge(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline6!
+                                    .merge(
                                       const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -89,7 +97,8 @@ class _OnboardingPage extends StatelessWidget {
                     effect: JumpingDotEffect(
                       spacing: 12,
                       verticalOffset: 16,
-                      activeDotColor: Theme.of(context).buttonTheme.colorScheme!.primary,
+                      activeDotColor:
+                          Theme.of(context).buttonTheme.colorScheme!.primary,
                     ),
                     count: provider.pageCount,
                     controller: provider.controller,
@@ -129,7 +138,7 @@ class _OnboardingPage extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 16,
                               ),
-                            ),
+                            )
                           ],
                         ),
                       ),
@@ -163,7 +172,8 @@ class _OnboardingPage extends StatelessWidget {
           child: DefaultButton(
             color: (color == null) ? null : color,
             onPressed: () {
-              if (ScaffoldMessenger.of(context).mounted) ScaffoldMessenger.of(context).removeCurrentSnackBar();
+              if (ScaffoldMessenger.of(context).mounted)
+                ScaffoldMessenger.of(context).removeCurrentSnackBar();
               context.router.push(route);
             },
             buttonType: buttonType,

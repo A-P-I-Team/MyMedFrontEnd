@@ -41,6 +41,16 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const DashboardPage());
     },
+    ForgetPasswordRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const ForgetPasswordPage());
+    },
+    ChangePasswordRoute.name: (routeData) {
+      final args = routeData.argsAs<ChangePasswordRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: ChangePasswordPage(key: args.key, email: args.email));
+    },
     SettingRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const SettingPage());
@@ -67,6 +77,9 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(LoginRoute.name, path: '/login'),
         RouteConfig(SignUpRoute.name, path: '/signup'),
         RouteConfig(DashboardRoute.name, path: '/dashboard'),
+        RouteConfig(ForgetPasswordRoute.name, path: '/forget_password'),
+        RouteConfig(ChangePasswordRoute.name,
+            path: '/forget_password/change_password'),
         RouteConfig(SettingRoute.name, path: '/setting'),
         RouteConfig(LanguageRoute.name, path: '/language'),
         RouteConfig(AboutUsRoute.name, path: '/aboutUs'),
@@ -120,6 +133,39 @@ class DashboardRoute extends PageRouteInfo<void> {
   const DashboardRoute() : super(DashboardRoute.name, path: '/dashboard');
 
   static const String name = 'DashboardRoute';
+}
+
+/// generated route for
+/// [ForgetPasswordPage]
+class ForgetPasswordRoute extends PageRouteInfo<void> {
+  const ForgetPasswordRoute()
+      : super(ForgetPasswordRoute.name, path: '/forget_password');
+
+  static const String name = 'ForgetPasswordRoute';
+}
+
+/// generated route for
+/// [ChangePasswordPage]
+class ChangePasswordRoute extends PageRouteInfo<ChangePasswordRouteArgs> {
+  ChangePasswordRoute({Key? key, required String email})
+      : super(ChangePasswordRoute.name,
+            path: '/forget_password/change_password',
+            args: ChangePasswordRouteArgs(key: key, email: email));
+
+  static const String name = 'ChangePasswordRoute';
+}
+
+class ChangePasswordRouteArgs {
+  const ChangePasswordRouteArgs({this.key, required this.email});
+
+  final Key? key;
+
+  final String email;
+
+  @override
+  String toString() {
+    return 'ChangePasswordRouteArgs{key: $key, email: $email}';
+  }
 }
 
 /// generated route for
