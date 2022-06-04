@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/button.dart';
+import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/components/text_field.dart';
 
 class StatefulBottomSheet extends StatefulWidget {
@@ -9,7 +10,13 @@ class StatefulBottomSheet extends StatefulWidget {
   final String orginalOTP;
   final void Function(bool newVal) changeOTPStatus;
   final void Function() goToNextPage;
-  final Future<int?> Function({required String email, VoidCallback? onTimeout, VoidCallback? onDisconnect, required void Function(String message) onAPIError, bool resetPassword}) sendOtp;
+  final Future<int?> Function({
+    required String email,
+    VoidCallback? onTimeout,
+    VoidCallback? onDisconnect,
+    required void Function(String message) onAPIError,
+    bool resetPassword,
+  }) sendOtp;
   final void Function(int newOTPCode) setOTPCode;
   final bool resetPassword;
   const StatefulBottomSheet({
@@ -19,7 +26,7 @@ class StatefulBottomSheet extends StatefulWidget {
     required this.changeOTPStatus,
     required this.goToNextPage,
     required this.sendOtp,
-    required this.setOTPCode, 
+    required this.setOTPCode,
     this.resetPassword = false,
   }) : super(key: key);
 
@@ -55,7 +62,9 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: (MediaQuery.of(context).viewInsets.bottom == 0) ? MediaQuery.of(context).size.height * 0.5 : MediaQuery.of(context).size.height * 0.75,
+      height: (MediaQuery.of(context).viewInsets.bottom == 0)
+          ? MediaQuery.of(context).size.height * 0.5
+          : MediaQuery.of(context).size.height * 0.75,
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 25,
@@ -68,7 +77,10 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
               children: [
                 const Text(
                   'Verify your email account',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Color(0xFF60606B)),
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF60606B)),
                 ),
                 Expanded(
                   child: (isLoadingResendOTP)
@@ -90,7 +102,9 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
                               secondCurve: Curves.easeInOut,
                               alignment: Alignment.centerLeft,
                               duration: const Duration(milliseconds: 500),
-                              crossFadeState: isTimerFinished ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                              crossFadeState: isTimerFinished
+                                  ? CrossFadeState.showFirst
+                                  : CrossFadeState.showSecond,
                               firstChild: Text(
                                 timeRemainigText,
                                 style: TextStyle(
@@ -120,7 +134,8 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
               width: double.infinity,
               child: Text(
                 'Enter the 6-digit code we sent to ${widget.emailController.text}',
-                style: const TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF8E8E93)),
+                style: const TextStyle(
+                    fontWeight: FontWeight.w600, color: Color(0xFF8E8E93)),
               ),
             ),
             const SizedBox(height: 8),
@@ -132,8 +147,12 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
                 switchInCurve: Curves.bounceIn,
                 switchOutCurve: Curves.easeOut,
                 child: Icon(
-                  (errorText == null) ? Icons.email_rounded : Icons.error_outline_rounded,
-                  color: (errorText == null) ? Theme.of(context).primaryColor : Theme.of(context).errorColor,
+                  (errorText == null)
+                      ? Icons.email_rounded
+                      : Icons.error_outline_rounded,
+                  color: (errorText == null)
+                      ? Theme.of(context).primaryColor
+                      : Theme.of(context).errorColor,
                 ),
               ),
               maxLength: 6,
@@ -165,7 +184,9 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
             ),
             AnimatedContainer(
               height: 55,
-              width: (isLoading) ? MediaQuery.of(context).size.width * 0.3 : MediaQuery.of(context).size.width,
+              width: (isLoading)
+                  ? MediaQuery.of(context).size.width * 0.3
+                  : MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 color: Theme.of(context).buttonTheme.colorScheme!.primary,
@@ -173,13 +194,6 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
               duration: const Duration(milliseconds: 500),
               child: DefaultButton(
                 isExpanded: true,
-                child: (isLoading)
-                    ? const Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
-                      )
-                    : const Text('Confirm'),
                 onPressed: (isOTPComplete)
                     ? () {
                         FocusScope.of(context).requestFocus(FocusNode());
@@ -188,7 +202,8 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
                         });
                         Future.delayed(const Duration(seconds: 2)).then(
                           (value) {
-                            if (otpVerification == widget.orginalOTP && widget.orginalOTP.length == 6) {
+                            if (otpVerification == widget.orginalOTP &&
+                                widget.orginalOTP.length == 6) {
                               context.router.pop();
                               widget.goToNextPage();
                               widget.changeOTPStatus(true);
@@ -206,6 +221,13 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
                         );
                       }
                     : null,
+                child: (isLoading)
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                      )
+                    : const Text('Confirm'),
               ),
             ),
             const SizedBox(height: 16),
@@ -252,7 +274,11 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
     setState(() {
       isLoadingResendOTP = true;
     });
-    final otpCode = await widget.sendOtp(email: widget.emailController.text, onAPIError: , resetPassword: widget.resetPassword, );
+    final otpCode = await widget.sendOtp(
+      email: widget.emailController.text,
+      onAPIError: onAPIError,
+      resetPassword: widget.resetPassword,
+    );
     if (otpCode != null) {
       widget.setOTPCode(otpCode);
       debugPrint('$otpCode');
@@ -294,5 +320,9 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
     setState(() {
       isLoading = false;
     });
+  }
+
+  void onAPIError(String errorMessage) {
+    APIErrorMessage().onAPIError(context, errorMessage);
   }
 }
