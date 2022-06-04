@@ -9,7 +9,7 @@ class StatefulBottomSheet extends StatefulWidget {
   final String orginalOTP;
   final void Function(bool newVal) changeOTPStatus;
   final void Function() goToNextPage;
-  final Future<int?> Function({required String email, VoidCallback? onTimeout, VoidCallback? onDisconnect, bool resetPassword}) sendOtp;
+  final Future<int?> Function({required String email, VoidCallback? onTimeout, VoidCallback? onDisconnect, required void Function(String message) onAPIError, bool resetPassword}) sendOtp;
   final void Function(int newOTPCode) setOTPCode;
   final bool resetPassword;
   const StatefulBottomSheet({
@@ -252,7 +252,7 @@ class StatefulBottomSheetState extends State<StatefulBottomSheet> {
     setState(() {
       isLoadingResendOTP = true;
     });
-    final otpCode = await widget.sendOtp(email: widget.emailController.text, resetPassword: widget.resetPassword,);
+    final otpCode = await widget.sendOtp(email: widget.emailController.text, onAPIError: , resetPassword: widget.resetPassword, );
     if (otpCode != null) {
       widget.setOTPCode(otpCode);
       debugPrint('$otpCode');
