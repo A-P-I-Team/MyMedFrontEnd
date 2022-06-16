@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/modules/drug/apis/drug_apis.dart';
 import 'package:my_med/src/modules/drug/models/drug_model.dart';
 
@@ -21,7 +23,9 @@ class DrugProvider extends ChangeNotifier {
 
   void onDrugTap(DrugModel drug) {
     //TODO navigate to drug detail page
+    context.router.push(DrugDetailsRoute(drugId: drug.id.toString()));
   }
+
   void onSearchTap() {
     isSearchSelect = !isSearchSelect;
     searchBarController.clear();
