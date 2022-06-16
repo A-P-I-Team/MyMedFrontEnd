@@ -66,6 +66,12 @@ class _$AppRouter extends RootStackRouter {
     NotificationRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const NotificationPage());
+    },
+    DrugDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<DrugDetailsRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: DrugDetailsPage(key: args.key, drugId: args.drugId));
     }
   };
 
@@ -83,7 +89,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(SettingRoute.name, path: '/setting'),
         RouteConfig(LanguageRoute.name, path: '/language'),
         RouteConfig(AboutUsRoute.name, path: '/aboutUs'),
-        RouteConfig(NotificationRoute.name, path: '/notification')
+        RouteConfig(NotificationRoute.name, path: '/notification'),
+        RouteConfig(DrugDetailsRoute.name, path: '/drug_detail')
       ];
 }
 
@@ -199,4 +206,28 @@ class NotificationRoute extends PageRouteInfo<void> {
       : super(NotificationRoute.name, path: '/notification');
 
   static const String name = 'NotificationRoute';
+}
+
+/// generated route for
+/// [DrugDetailsPage]
+class DrugDetailsRoute extends PageRouteInfo<DrugDetailsRouteArgs> {
+  DrugDetailsRoute({Key? key, required String drugId})
+      : super(DrugDetailsRoute.name,
+            path: '/drug_detail',
+            args: DrugDetailsRouteArgs(key: key, drugId: drugId));
+
+  static const String name = 'DrugDetailsRoute';
+}
+
+class DrugDetailsRouteArgs {
+  const DrugDetailsRouteArgs({this.key, required this.drugId});
+
+  final Key? key;
+
+  final String drugId;
+
+  @override
+  String toString() {
+    return 'DrugDetailsRouteArgs{key: $key, drugId: $drugId}';
+  }
 }
