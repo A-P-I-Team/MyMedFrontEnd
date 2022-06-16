@@ -210,5 +210,420 @@
     "serverMessage": "Problem communicating with server!",
     "@serverMessage": {
         "description": "Server error message"
-    }
+    },
+    "drugDetails": "Drug Details",
+    "@drugDetails": {
+    "type": "text",
+    "description": "modules Drug > pages > drug_details_page.dart > drugDetails"
+  },
+  "medicationDosage": "Medication dosage",
+  "@medicationDosage": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "dailyConsumption": "Daily consumption",
+  "@dailyConsumption": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "consumptionDuration": "Consumption duration",
+  "@consumptionDuration": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "startReminders": "Start reminders",
+  "@startReminders": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "reminder": "Reminder",
+  "@reminder": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "fiveMin": "5 min",
+  "@fiveMin": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "tenMin": "10 min",
+  "@tenMin": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "fifteenMin": "15 min",
+  "@fifteenMin": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "twenyMin": "20 min",
+  "@twenyMin": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "doctorDescription": "Doctor descriptions",
+  "@doctorDescription": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "saturday": "Saturday",
+  "@saturday": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "sunday": "Sunday",
+  "@sunday": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "monday": "Monday",
+  "@monday": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "tuesday": "Tuesday",
+  "@tuesday": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "wednesday": "Wednesday",
+  "@wednesday": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "thursday": "Thursday",
+  "@thursday": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "friday": "Friday",
+  "@friday": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "miligram": "mg",
+  "@miligram": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > mg text"
+  },
+  "every": "Every ",
+  "@every": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > Every text"
+  },
+  "hourOnce": "hour once",
+  "@hourOnce": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > hour text"
+  },
+  "allNotification": "all Notification",
+  "@allNotification": {
+    "type": "text",
+    "description": "modules Profile > pages > notification_page.dart > allNotification"
+  },
+  "allNotificationHint": "Enable notifications to receive updates and ads",
+  "@allNotificationHint": {
+    "type": "text",
+    "description": "modules Profile > pages > notification_page.dart > allNotificationHint"
+  },
+  "reminders": "reminders",
+  "@reminders": {
+    "type": "text",
+    "description": "modules Profile > pages > notification_page.dart > allNotification"
+  },
+  "inAppNotifications": "In-app Notifications",
+  "@inAppNotifications": {
+    "type": "text",
+    "description": "modules Profile > pages > notification_page.dart > inAppNotifications"
+  },
+  "ads": "Ads",
+  "@ads": {
+    "type": "text",
+    "description": "modules Profile > pages > notification_page.dart > ads"
+  },
+  "notifications": "Notifications",
+  "@notifications": {
+    "type": "text",
+    "description": "modules Profile > pages > notification_page.dart > notifications"
+  },
+  "edit": "Edit",
+  "@edit": {
+    "type": "text",
+    "description": "Edit"
+  },
+  "searchDrugHint": "Search drug",
+  "@searchDrugHint": {
+    "type": "text",
+    "description": "search drug textFiled hint"
+  },
+  "drugDetails": "Drug Details",
+  "@drugDetails": {
+    "type": "text",
+    "description": "modules Drug > pages > drug_details_page.dart > drugDetails"
+  },
+  "pill": "Pill",
+  "@pill": {
+    "type": "text",
+    "description": "modules Drug > pages > drug_details_page.dart > drugDetails"
+  },
+  "seeDetails": "See Details",
+  "@seeDetails": {
+    "type": "text",
+    "description": "modules Drug > pages > drug_details_page.dart > drugDetails"
+  },
+  "requestToStopMedication": "Request to stop medication",
+  "@requestToStopMedication": {
+    "type": "text",
+    "description": "modules Drug > pages > drug_details_page.dart > drugDetails"
+  },
+  "consumed": "Consumed",
+  "@consumed": {
+    "type": "text",
+    "description": "modules Drug > pages > drug_details_page.dart > drugDetails"
+  },
+  "nextReminderTextIn": "in",
+  "@in": {
+    "type": "text",
+    "description": "modules Drug > pages > drug_details_page.dart > drugDetails"
+  },
+  "hour": "hour(s)",
+  "@hour": {
+    "type": "text",
+    "description": "modules Drug > pages > drug_details_page.dart > drugDetails"
+  },
+  "remaining": "Remaining",
+  "@remaining": {
+    "type": "text",
+    "description": "modules Drug > pages > drug_details_page.dart > drugDetails"
+  },
+  "courseProgress": "Course progress",
+  "@courseProgress": {
+    "type": "text",
+    "description": "modules Drug > pages > drug_details_page.dart > drugDetails"
+  },
+  "nextReminder": "Next reminder",
+  "@nextReminder": {
+    "type": "text",
+    "description": "modules Drug > pages > drug_details_page.dart > drugDetails"
+  },
+  "specifications": "Specifications",
+  "@specifications": {
+    "type": "text",
+    "description": "modules Doctor > pages "
+  },
+  "experience": "Experience",
+  "@experience": {
+    "type": "text",
+    "description": "modules Doctor > pages > doctor_details_page.dart > doctorDetails"
+  },
+  "medicalSystem": "Medical System",
+  "@medicalSystem": {
+    "type": "text",
+    "description": "modules Doctor > pages > doctor_details_page.dart > doctorDetails"
+  },
+  "lastPrescription": "Last prescription",
+  "@lastPrescription": {
+    "type": "text",
+    "description": "modules Doctor > pages > doctor_details_page.dart > doctorDetails"
+  },
+  "prescriptions": "Prescriptions",
+  "@prescriptions": {
+    "type": "text",
+    "description": "modules Doctor > pages > doctor_details_page.dart > doctorDetails"
+  },
+  "hoursOfWork": "Hours of work",
+  "@hoursOfWork": {
+    "type": "text",
+    "description": "modules Doctor > pages > doctor_details_page.dart > doctorDetails"
+  },
+  "clinicInformation": "Clinic information",
+  "@clinicInformation": {
+    "type": "text",
+    "description": "modules Doctor > pages > doctor_details_page.dart > doctorDetails"
+  },
+  "routing": "Routing",
+  "@routing": {
+    "type": "text",
+    "description": "modules Doctor > pages > doctor_details_page.dart > doctorDetails"
+  },
+  "aboutDoctor": "About doctor",
+  "@aboutDoctor": {
+    "type": "text",
+    "description": "modules Doctor > pages > doctor_details_page.dart > doctorDetails"
+  },
+  "logoutMassage": "Are you sure you want to log out?",
+  "@logoutMassage": {
+    "type": "text",
+    "description": "modules Doctor > pages > doctor_details_page.dart > doctorDetails"
+  },
+  "loginRegister": "Login / Register",
+  "@loginRegister": {
+    "type": "text",
+    "description": "modules intro > pages > Login_enter_number_page.dart > loginEnterNumber"
+  },
+  "checkInternetConnection": "Check internet connection",
+  "@checkInternetConnection": {
+    "type": "text",
+    "description": "modules intro > pages > Login_enter_number_page.dart > loginEnterNumber"
+  },
+  "dateOfPrescription": "Date of prescription",
+  "@dateOfPrescription": {
+    "type": "text",
+    "description": "modules intro > pages > Login_enter_number_page.dart > loginEnterNumber"
+  },
+  "numberOfDrugs": "Number of drugs",
+  "@numberOfDrugs": {
+    "type": "text",
+    "description": "modules intro > pages > Login_enter_number_page.dart > loginEnterNumber"
+  },
+  "reasonsStoppingMedicine": "Tell your reasons for stopping the medicine.",
+  "@reasonsStoppingMedicine": {
+    "type": "text",
+    "description": "src> component> stop_medicine_page.dart > stopMedicine"
+  },
+  "explainReasons": "Explain reasons",
+  "@explainReasons": {
+    "type": "text",
+    "description": "src> component> stop_medicine_page.dart > stopMedicine"
+  },
+  "selectDate": "Select date",
+  "@selectDate": {
+    "type": "text",
+    "description": "src> component>calender_popup.dart > calender"
+  },
+  "enterTheTime": "Enter the time",
+  "@enterTheTime": {
+    "type": "text",
+    "description": "modules Home > Provider > active_prescription_details_provider.dart > timePicker"
+  },
+  "invalidTime": "The time entered is incorrect.",
+  "@invalidTime": {
+    "type": "text",
+    "description": "modules Home > Provider > active_prescription_details_provider.dart > timePicker"
+  },
+  "minute": "Minute",
+  "@minute": {
+    "type": "text",
+    "description": "modules Home > Provider > active_prescription_details_provider.dart > timePicker"
+  },
+  "pmTime": "PM",
+  "@pmTime": {
+    "type": "text",
+    "description": "modules Home > Provider > active_prescription_details_provider.dart > timePicker"
+  },
+  "amTime": "AM",
+  "@amTime": {
+    "type": "text",
+    "description": "modules Home > Provider > active_prescription_details_provider.dart > timePicker"
+  },
+  "newAnnouncements": "New announcements",
+  "@newAnnouncements": {
+    "type": "text",
+    "description": "modules Profile > Pages > announcement_page > announcement"
+  },
+  "announcementsRead": "Announcement read",
+  "@announcementsRead": {
+    "type": "text",
+    "description": "modules Profile > Pages > announcement_page > announcement"
+  },
+  "unit": "Unit(s)",
+  "@unit": {
+    "type": "text",
+    "description": "modules Profile > Pages > announcement_page > announcement"
+  },
+  "iDidNotConsumed": "I didn't consumed",
+  "@iDidNotConsumed": {
+    "type": "text",
+    "description": "modules calender > component > reminder_container.dart > announcement"
+  },
+  "iConsumed": "I consumed",
+  "@iConsumed": {
+    "type": "text",
+    "description": "modules calender > component > reminder_container.dart > announcement"
+  },
+  "noActiveReminders": "You have no active reminders.",
+  "@noActiveReminders": {
+    "type": "text",
+    "description": "modules Home > component > empty_container.dart >  empty_container"
+  },
+  "seeDrug": "View medication",
+  "@seeDrug": {
+    "type": "text",
+    "description": "modules Home > component > empty_container.dart >  empty_container"
+  },
+  "today": "today",
+  "@today": {
+    "type": "text",
+    "description": "modules Profile > Pages > announcement_page > announcement"
+  },
+  "stopMeditationContinueText": "continue",
+  "@stopMeditationContinueText": {
+    "type": "text",
+    "description": "components > stop_medicine_popup.dart > stopMedicine"
+  },
+  "expired": "expired",
+  "@expired": {
+    "type": "text",
+    "description": "components > drug_box.dart > drug box"
+  },
+  "ok": "ok",
+  "@ok": {
+    "type": "text",
+    "description": "components > stop_medication.dart > stop medication"
+  },
+  "pleaseSelectYourRequestType": "Please select your request type",
+  "@pleaseSelectYourRequestType": {
+    "type": "text",
+    "description": "components > stop_medication.dart > stop medication"
+  },
+  "substituteMedicine": "Substitute medicine",
+  "@substituteMedicine": {
+    "type": "text",
+    "description": "components > stop_medication.dart > stop medication"
+  },
+  "discontinueMedication": "Discontinue medication",
+  "@discontinueMedication": {
+    "type": "text",
+    "description": "components > stop_medication.dart > stop medication"
+  },
+  "reduceTheDoseOfTheDrug": "Reduce the dose of the drug",
+  "@reduceTheDoseOfTheDrug": {
+    "type": "text",
+    "description": "components > stop_medication.dart > stop medication"
+  },
+  "increaseTheDoseOfTheDrug": "Increase the dose of the drug",
+  "@increaseTheDoseOfTheDrug": {
+    "type": "text",
+    "description": "components > stop_medication.dart > stop medication"
+  },
+  "requestChangeSuccess": "Your request has been sent to the relevant doctor. If your doctor agrees, the dose of the medicine will be increased and the reminders will be updated.",
+  "@requestChangeSuccess": {
+    "type": "text",
+    "description": "components > stop_medication.dart > stop medication"
+  },
+  "reminderAddedSuccess": "Reminder added successfully",
+  "@reminderAddedSuccess": {
+    "type": "text",
+    "description": "modules Home > Provider > active_prescription_details_provider.dart > add reminder"
+  },
+  "timeToTakeMedicine": "It's time to take medicine!",
+  "@timeToTakeMedicine": {
+    "type": "text",
+    "description": "modules Home > Provider > active_prescription_details_provider.dart > add reminder"
+  },
+  "drugAlreadyStarted": "The drug has already been started!",
+  "@drugAlreadyStarted": {
+    "type": "text",
+    "description": "modules Home > Provider > active_prescription_details_provider.dart > add reminder"
+  },
+  "days": " day(s)",
+  "@days": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "addReminder": "Add reminder",
+  "@addReminder": {
+    "type": "text",
+    "description": "modules setting > pages > Home_page.dart > Add reminder text"
+  }
 }
