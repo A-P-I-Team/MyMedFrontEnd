@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/core/test_page.dart';
 import 'package:my_med/src/modules/dashboard/pages/dashboard_page.dart';
+import 'package:my_med/src/modules/doctor/pages/doctor_detail_page.dart';
 import 'package:my_med/src/modules/drug/pages/drug_details_page.dart';
 import 'package:my_med/src/modules/intro/pages/change_password.dart';
 import 'package:my_med/src/modules/intro/pages/login.dart';
@@ -37,6 +38,7 @@ part 'router.gr.dart';
     AutoRoute(page: AboutUsPage, path: '/aboutUs'),
     AutoRoute(page: NotificationPage, path: '/notification'),
     AutoRoute(page: DrugDetailsPage, path: '/drug_detail'),
+    AutoRoute(page: DoctorsDetailsPage, path: '/doctor_detail'),
   ],
 )
 class AppRouter extends _$AppRouter {}

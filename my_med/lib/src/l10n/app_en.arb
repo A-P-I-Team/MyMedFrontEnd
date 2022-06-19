@@ -124,17 +124,17 @@
         "type": "text",
         "description": "modules setting > pages > profile_page.dart > Cancel text"
     },
-    "year": "YYYY",
+    "year": "year",
     "@year": {
         "type": "text",
         "description": "modules setting > pages > profile_page.dart > Year text"
     },
-    "month": "MM",
+    "month": "month",
     "@month": {
         "type": "text",
         "description": "modules setting > pages > profile_page.dart > Month text"
     },
-    "day": "DD",
+    "day": "day",
     "@day": {
         "type": "text",
         "description": "modules setting > pages > profile_page.dart > Day text"

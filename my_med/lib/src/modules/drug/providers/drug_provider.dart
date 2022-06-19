@@ -22,7 +22,6 @@ class DrugProvider extends ChangeNotifier {
   }
 
   void onDrugTap(DrugModel drug) {
-    //TODO navigate to drug detail page
     context.router.push(DrugDetailsRoute(drugId: drug.id.toString()));
   }
 
