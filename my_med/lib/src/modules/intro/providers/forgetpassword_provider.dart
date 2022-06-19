@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/components/utils/regex.dart';
 import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/modules/intro/apis/auth_api.dart';
@@ -90,7 +91,8 @@ class ForgetpasswordProvider extends ChangeNotifier {
     }
     isLoading = true;
     notifyListeners();
-    otpCode = await AuthAPI().verifyEmailAccountWithOTP(email: emailController.text, resetPassword: true,);
+    otpCode = await AuthAPI().verifyEmailAccountWithOTP(email: emailController.text, resetPassword: true,
+    onAPIError: (message) => APIErrorMessage().onAPIError(context, message));
     debugPrint(otpCode.toString());
     isLoading = false;
     notifyListeners();

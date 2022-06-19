@@ -51,7 +51,7 @@ class AuthAPI {
     }
   }
 
-  Future<int?> verifyEmailAccountWithOTP({required String email, VoidCallback? onTimeout, VoidCallback? onDisconnect, bool resetPassword = false,}) async {
+  Future<int?> verifyEmailAccountWithOTP({required String email, VoidCallback? onTimeout, VoidCallback? onDisconnect, required void Function(String message) onAPIError, bool resetPassword = false,}) async {
     try {
       final body = (resetPassword == false) ? {
           'email': email,
@@ -63,8 +63,11 @@ class AuthAPI {
         Uri.parse((resetPassword) ? ConstURLs.forgetPasswordEmail : ConstURLs.sendRegisterEmail),
         body: body,
       );
-      final responseBody = jsonDecode(response.body) as Map<String, dynamic>;
+      final responseBody = json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
       final int statusCode = response.statusCode;
+      if (statusCode == 400 && responseBody.containsKey("non_field_errors")) {
+        throw ApiError(message: responseBody["non_field_errors"][0]);
+      }
       if (statusCode != 200) return null;
       if (responseBody.containsKey('code') == false) return null;
       final int otpCode = responseBody['code'];
@@ -76,6 +79,10 @@ class AuthAPI {
     } on SocketException catch (_) {
       onDisconnect;
       debugPrint("No Network");
+      return null;
+    }
+    on ApiError catch (e) {
+      onAPIError(e.message);
       return null;
     } catch (e) {
       debugPrint('$e');

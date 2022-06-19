@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/components/utils/regex.dart';
 import 'package:my_med/src/components/utils/snack_bar.dart';
 import 'package:my_med/src/core/routing/router.dart';
@@ -292,6 +293,7 @@ class SignupProvider extends ChangeNotifier {
       notifyListeners();
       otpCode = await _authAPI.verifyEmailAccountWithOTP(
         email: emailController.text,
+        onAPIError: (message) => APIErrorMessage().onAPIError(context, message)
       );
       _isLoading = false;
       notifyListeners();
