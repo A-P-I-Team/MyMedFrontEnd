@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/core/routing/router.dart';
-import 'package:my_med/src/l10n/localization_provider.dart';
 import 'package:my_med/src/modules/profile/apis/profile_apis.dart';
 import 'package:my_med/src/modules/profile/components/edit_birthday_popup.dart';
 import 'package:my_med/src/modules/profile/components/edit_name_pop_up.dart';
@@ -24,6 +23,9 @@ class ProfileProvider extends ChangeNotifier {
   bool isDisposed = false;
 
   Sexuality get sexuality => _sexuality;
+  String get year => _year;
+  String get month => _month;
+  String get day => _day;
 
   ProfileProvider(this.context) {
     updatePatient();
@@ -32,11 +34,13 @@ class ProfileProvider extends ChangeNotifier {
   void updatePatient() async {
     isloading = true;
     notifyListeners();
-    userProfileModel = await ProfileAPI().getUserProfile(
-      onTimeout: () => APIErrorMessage().onTimeout(context),
-      onDisconnect: () => APIErrorMessage().onDisconnect(context),
-      onAPIError: () => APIErrorMessage().onDisconnect(context),
-    );
+    if (context.owner != null) {
+      userProfileModel = await ProfileAPI().getUserProfile(
+        onTimeout: () => APIErrorMessage().onTimeout(context),
+        onDisconnect: () => APIErrorMessage().onDisconnect(context),
+        onAPIError: () => APIErrorMessage().onDisconnect(context),
+      );
+    }
     isloading = false;
     if (isDisposed) return;
     notifyListeners();
@@ -103,23 +107,27 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   String? dayValidator(String? value) {
-    if (value!.isEmpty || int.parse(value) < 1 || int.parse(value) > 31) {
-      return "";
-    } else if (value.isNotEmpty &&
-        int.parse(_month) >= 1 &&
-        int.parse(_month) <= 6 &&
-        int.parse(value) > 31) {
-      return "";
-    } else if (value.isNotEmpty &&
-        int.parse(_month) > 6 &&
-        int.parse(_month) < 12 &&
-        int.parse(value) > 30) {
-      return "";
-    } else if (value.isNotEmpty &&
-        int.parse(_month) == 12 &&
-        int.parse(value) > 29) {
-      return "";
-    } else {
+    try {
+      if (value!.isEmpty || int.parse(value) < 1 || int.parse(value) > 31) {
+        return "";
+      } else if (value.isNotEmpty &&
+          int.parse(_month) >= 1 &&
+          int.parse(_month) <= 6 &&
+          int.parse(value) > 31) {
+        return "";
+      } else if (value.isNotEmpty &&
+          int.parse(_month) > 6 &&
+          int.parse(_month) < 12 &&
+          int.parse(value) > 30) {
+        return "";
+      } else if (value.isNotEmpty &&
+          int.parse(_month) == 12 &&
+          int.parse(value) > 29) {
+        return "";
+      } else {
+        return null;
+      }
+    } catch (e) {
       return null;
     }
   }
@@ -145,7 +153,7 @@ class ProfileProvider extends ChangeNotifier {
         if (isResponseOK) {
           userProfileModel!.firstName = name.split(" ")[0];
           userProfileModel!.lastName = name.split(" ")[1];
-          if(isDisposed) return;
+          if (isDisposed) return;
           notifyListeners();
         }
       });
@@ -187,7 +195,11 @@ class ProfileProvider extends ChangeNotifier {
     );
     if (sexuality != null) {
       debugPrint(sexuality);
-      String newGender = (sexuality == "Man") ? "M" : (sexuality == "Female") ? "F" : "O";
+      String newGender = (sexuality == "Man")
+          ? "M"
+          : (sexuality == "Female")
+              ? "F"
+              : "O";
       ProfileAPI()
           .changeGender(
               gender: newGender,
