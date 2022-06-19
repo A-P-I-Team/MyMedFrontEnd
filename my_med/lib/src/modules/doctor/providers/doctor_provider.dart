@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/modules/doctor/apis/doctor_apis.dart';
 import 'package:my_med/src/modules/doctor/models/doctor_model.dart';
 
@@ -25,7 +27,7 @@ class DoctorProvider extends ChangeNotifier {
   }
 
   void onDoctorsDetailsTap(String id) {
-    //TODO Navigate to doctor details page
+    context.router.push(DoctorsDetailsRoute(id: id));
   }
 
   void onSearchTap() {
