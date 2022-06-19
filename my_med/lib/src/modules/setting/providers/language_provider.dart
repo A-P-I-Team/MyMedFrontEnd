@@ -10,6 +10,7 @@ class LanguageProvider extends ChangeNotifier {
   Locale? _language;
 
   LanguageProvider(this.context) {
+    if (context.owner == null) return;
     _language = context.read<LocalizationProvider>().locale;
   }
 
@@ -17,6 +18,7 @@ class LanguageProvider extends ChangeNotifier {
 
   void changeLanguage(Locale? language) {
     _language = language;
+    if (context.owner == null) return;
     context.read<LocalizationProvider>().setLocale(_language);
     notifyListeners();
   }
