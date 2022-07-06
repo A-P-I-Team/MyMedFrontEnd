@@ -7,7 +7,6 @@ import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/components/utils/regex.dart';
 import 'package:my_med/src/components/utils/snack_bar.dart';
 import 'package:my_med/src/core/routing/router.dart';
-import 'package:my_med/src/models/date.dart';
 import 'package:my_med/src/modules/intro/apis/auth_api.dart';
 import 'package:my_med/src/modules/intro/models/city_model.dart';
 import 'package:my_med/src/modules/intro/models/register_controller.dart';
@@ -36,9 +35,11 @@ class SignupProvider extends ChangeNotifier {
   ///*** Credentials ***/
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   final GlobalKey<FormState> emailPageformKey = GlobalKey<FormState>();
-  final GlobalKey<StatefulBottomSheetState> bottomSheetKey = GlobalKey<StatefulBottomSheetState>();
+  final GlobalKey<StatefulBottomSheetState> bottomSheetKey =
+      GlobalKey<StatefulBottomSheetState>();
   bool enableButtonForEmailPage = false;
 
   bool isOTPRight = false;
@@ -52,7 +53,10 @@ class SignupProvider extends ChangeNotifier {
   ///*** Credentials  - End ***/
 
   ///*** Question FORM ***/
-  String gender = 'Female', relationship = 'Single', vaccinated = 'Yes', city = '';
+  String gender = 'Female',
+      relationship = 'Single',
+      vaccinated = 'Yes',
+      city = '';
   String? cityErrorText;
   bool isQuestionsFormValid = true;
   List<CityModel> cityList = [];
@@ -239,7 +243,10 @@ class SignupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setupPhoto({required File profilePhotoFile, required final String? path, final Uint8List? photo}) {
+  void setupPhoto(
+      {required File profilePhotoFile,
+      required final String? path,
+      final Uint8List? photo}) {
     registerController.profilePhotoFile = profilePhotoFile;
     registerController.photo = photo;
     registerController.photoPath = path;
@@ -278,11 +285,6 @@ class SignupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onBirthDateChanged(final Date newDate) {
-    registerController.birthDate = newDate;
-    notifyListeners();
-  }
-
   Future<bool> onConfirmPressed({BuildContext? ctx}) async {
     if (context.owner != null) {
       FocusScope.of(context).requestFocus(FocusNode());
@@ -292,9 +294,9 @@ class SignupProvider extends ChangeNotifier {
       _isLoading = true;
       notifyListeners();
       otpCode = await _authAPI.verifyEmailAccountWithOTP(
-        email: emailController.text,
-        onAPIError: (message) => APIErrorMessage().onAPIError(context, message)
-      );
+          email: emailController.text,
+          onAPIError: (message) =>
+              APIErrorMessage().onAPIError(context, message));
       _isLoading = false;
       notifyListeners();
       debugPrint('$otpCode');
@@ -320,7 +322,10 @@ class SignupProvider extends ChangeNotifier {
         profilePicFile: registerController.profilePhotoFile!,
         isVaccinated: vaccinated,
         relationshipStatus: relationship,
-        userCityID: cityList.firstWhere((element) => element.cityName == city).id.toString(),
+        userCityID: cityList
+            .firstWhere((element) => element.cityName == city)
+            .id
+            .toString(),
       );
       _isLoading = false;
       notifyListeners();
@@ -328,17 +333,22 @@ class SignupProvider extends ChangeNotifier {
       if (ctx != null) {
         CustomSnackBar().showMessage(
           context: ctx,
-          margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.85, left: 24, right: 24),
+          margin: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.85,
+              left: 24,
+              right: 24),
           content: SizedBox(
             height: 25,
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
-              Icon(
-                Icons.check_circle,
-                color: Colors.white,
-              ),
-              SizedBox(width: 8),
-              Text('You Have Successfuly Signed Up'),
-            ]),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(
+                    Icons.check_circle,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 8),
+                  Text('You Have Successfuly Signed Up'),
+                ]),
           ),
           duration: const Duration(seconds: 3),
           bgColor: Colors.green,
@@ -359,7 +369,12 @@ class SignupProvider extends ChangeNotifier {
   }
 
   void isPersonalInformationValid() {
-    if (firstNameController.text.isNotEmpty && firstNameController.text.length <= 50 && lastNameController.text.isNotEmpty && lastNameController.text.length <= 50 && birthdateController.text.isNotEmpty && ssnController.text.length == 10) {
+    if (firstNameController.text.isNotEmpty &&
+        firstNameController.text.length <= 50 &&
+        lastNameController.text.isNotEmpty &&
+        lastNameController.text.length <= 50 &&
+        birthdateController.text.isNotEmpty &&
+        ssnController.text.length == 10) {
       enableButtonForPersonalInformationPage = true;
     } else {
       enableButtonForPersonalInformationPage = false;
