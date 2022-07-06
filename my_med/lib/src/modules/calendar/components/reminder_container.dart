@@ -1,8 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:my_med/src/components/custom_shadow.dart';
 import 'package:my_med/src/core/routing/router.dart';
-// import 'package:my_med/src/components/doctora_shadow.dart';
-import 'package:my_med/src/core/routing/router.gr.dart';
+import 'package:my_med/src/modules/home/models/active_prescription_model.dart';
 import 'package:my_med/src/l10n/localization_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -154,7 +153,7 @@ class ReminderContainer extends StatelessWidget {
                     IconButton(
                       onPressed: () {
                         context.router.push(
-                          DrugDetailsRoute(
+                          DrugDetailsRoute(drugId: ''
                             
                           ),
                         );
