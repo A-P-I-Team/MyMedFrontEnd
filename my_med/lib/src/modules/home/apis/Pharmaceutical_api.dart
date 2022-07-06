@@ -11,7 +11,21 @@ class Pharmaceutical {
   final _api = CoreApi();
 
   Future<List<ActivePrescriptionModel>> getActivePrescription() async {
-    try {} catch (e) {
+    try {
+      return [
+        ActivePrescriptionModel(
+          id: '123',
+          name: 'Astominophen',
+          dosage: 500,
+          createdAt: DateTime.now(),
+          consumptionMethod: '',
+          consumptionAmount: 'consumptionAmount',
+          reminders: [],
+          consumptionTimes: 12,
+          consumptionDuration: '12:00:00',
+        ),
+      ];
+    } catch (e) {
       if (kDebugMode) {
         print(e);
       }

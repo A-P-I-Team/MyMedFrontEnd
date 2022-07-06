@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/modules/home/apis/Pharmaceutical_api.dart';
 import 'package:my_med/src/modules/home/models/active_prescription_model.dart';
 
@@ -33,13 +34,13 @@ class ActivePrescriptionProvider extends ChangeNotifier {
     );
   }
 
-  Future<void> onReminderAcceptTap() async {
+  void onReminderAcceptTap() {
     if (activePrescriptionList.isEmpty) return;
     if (selectedId != null) {
       final activePrescriptionModel = activePrescriptionList
           .firstWhere((element) => element.id == selectedId);
-      //TODO navigation to detail page
-      // context.router.push();
+      context.router.push(ActivePrescriptionDetailsRoute(
+          activePrescriptionModel: activePrescriptionModel));
     }
   }
 

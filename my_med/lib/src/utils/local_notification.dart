@@ -41,7 +41,7 @@ class LocalNotificationAPI {
       );
 
   Future initi({bool initScheduled = false}) async {
-    const android = AndroidInitializationSettings('@mipmap/launcher_icon');
+    const android = AndroidInitializationSettings('@mipmap/ic_launcher');
     const iOS = IOSInitializationSettings();
     const setting = InitializationSettings(
       android: android,
