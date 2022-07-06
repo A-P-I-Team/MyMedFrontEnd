@@ -127,5 +127,11 @@
   "timeToTakeMedicine": "زمان مصرف دارو رسیده!",
   "drugAlreadyStarted": "دارو قبلا شروع شده است!",
   "days": " روزه",
-  "addReminder": "افزودن یادآور"
+  "addReminder": "افزودن یادآور",
+  "currentMedicationList": "لیست داروهای جاری",
+  "searchDrug": "جستجوی دارو...",
+  "noMatter": "مهم نیست",
+  "registerButtonText": "ثبت",
+  "youHaveTakenNFromMMedicines": "شما {consumedCount} از {totalCount} داروی امروز را مصرف کردی.",
+  "helloFullName": "سلام {fullName}!"
 }
