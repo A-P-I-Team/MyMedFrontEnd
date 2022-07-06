@@ -32,7 +32,13 @@ void main() {
   test(
     'Language Page [popScreen] Test',
     () {
-      expect(true, true);
+      try {
+        final obj = LanguageProvider(context);
+        obj.dispose();
+        expect(true, true);
+      } catch (error) {
+        expect(false, true);
+      }
     },
   );
 }
