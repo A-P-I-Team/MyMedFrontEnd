@@ -625,5 +625,53 @@
   "@addReminder": {
     "type": "text",
     "description": "modules setting > pages > Home_page.dart > Add reminder text"
+  },
+  "currentMedicationList": "Current medication list",
+  "@currentMedicationList": {
+    "type": "text",
+    "description": "modules setting > pages > Home_page.dart > Current medication list text"
+  },
+  "searchDrug": "Search drugs...",
+  "@searchDrug": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > Search drugs text field"
+  },
+  "noMatter": "No matter",
+  "@noMatter": {
+    "type": "text",
+    "description": "modules Home > pages > prescription_page.dart > days text"
+  },
+  "registerButtonText": "Register",
+  "@registerButtonText": {
+    "description": "Register text in button in personal information page"
+  },
+  "youHaveTakenNFromMMedicines": "You have taken {consumedCount} of {totalCount} medicines.",
+  "@youHaveTakenNFromMMedicines": {
+    "type": "text",
+    "description": "modules setting > pages > Home_page.dart > you consumed n from m medication text",
+    "placeholders": {
+      "consumedCount": {
+        "type": "int",
+        "example": "1",
+        "description": "counsumed count number means the number of medication that you consumed"
+      },
+      "totalCount": {
+        "type": "int",
+        "example": "4",
+        "description": "total count number means the total number of mdication that you should consumed"
+      }
+    }
+  },
+  "helloFullName": "Hello {fullName}!",
+  "@helloFullName": {
+    "type": "text",
+    "description": "modules setting > pages > Home_page.dart > Hello text",
+    "placeholders": {
+      "fullName": {
+        "type": "String",
+        "example": "Arman Laalfam",
+        "description": "The name of person that you want say hello"
+      }
+    }
   }
 }

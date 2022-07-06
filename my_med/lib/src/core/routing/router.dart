@@ -5,6 +5,9 @@ import 'package:my_med/src/core/test_page.dart';
 import 'package:my_med/src/modules/dashboard/pages/dashboard_page.dart';
 import 'package:my_med/src/modules/doctor/pages/doctor_detail_page.dart';
 import 'package:my_med/src/modules/drug/pages/drug_details_page.dart';
+import 'package:my_med/src/modules/home/models/active_prescription_model.dart';
+import 'package:my_med/src/modules/home/pages/active_prescription_details_page.dart';
+import 'package:my_med/src/modules/home/pages/active_prescription_page.dart';
 import 'package:my_med/src/modules/intro/pages/change_password.dart';
 import 'package:my_med/src/modules/intro/pages/login.dart';
 import 'package:my_med/src/modules/intro/pages/onboarding.dart';
@@ -39,6 +42,10 @@ part 'router.gr.dart';
     AutoRoute(page: NotificationPage, path: '/notification'),
     AutoRoute(page: DrugDetailsPage, path: '/drug_detail'),
     AutoRoute(page: DoctorsDetailsPage, path: '/doctor_detail'),
+    AutoRoute(page: ActivePrescriptionPage, path: '/active_prescription'),
+    AutoRoute(
+        page: ActivePrescriptionDetailsPage,
+        path: '/active_prescription_detail'),
   ],
 )
 class AppRouter extends _$AppRouter {}
