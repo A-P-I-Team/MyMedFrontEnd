@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/widgets.dart';
-import 'package:my_med/src/models/date.dart';
+import 'package:shamsi_date/shamsi_date.dart';
 
 class RegisterController {
   final nameController = TextEditingController();
