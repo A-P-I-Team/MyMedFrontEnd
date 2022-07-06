@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ReminderContainer extends StatelessWidget {
+  
   final ReminderModel reminderModel;
   final int index;
   final void Function(DismissDirection, int)? onDismissed;
