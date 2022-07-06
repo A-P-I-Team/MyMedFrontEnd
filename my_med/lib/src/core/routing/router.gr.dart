@@ -78,6 +78,18 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child: DoctorsDetailsPage(key: args.key, id: args.id));
+    },
+    ActivePrescriptionRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const ActivePrescriptionPage());
+    },
+    ActivePrescriptionDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<ActivePrescriptionDetailsRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: ActivePrescriptionDetailsPage(
+              key: args.key,
+              activePrescriptionModel: args.activePrescriptionModel));
     }
   };
 
@@ -97,7 +109,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(AboutUsRoute.name, path: '/aboutUs'),
         RouteConfig(NotificationRoute.name, path: '/notification'),
         RouteConfig(DrugDetailsRoute.name, path: '/drug_detail'),
-        RouteConfig(DoctorsDetailsRoute.name, path: '/doctor_detail')
+        RouteConfig(DoctorsDetailsRoute.name, path: '/doctor_detail'),
+        RouteConfig(ActivePrescriptionRoute.name, path: '/active_prescription'),
+        RouteConfig(ActivePrescriptionDetailsRoute.name,
+            path: '/active_prescription_detail')
       ];
 }
 
@@ -260,5 +275,42 @@ class DoctorsDetailsRouteArgs {
   @override
   String toString() {
     return 'DoctorsDetailsRouteArgs{key: $key, id: $id}';
+  }
+}
+
+/// generated route for
+/// [ActivePrescriptionPage]
+class ActivePrescriptionRoute extends PageRouteInfo<void> {
+  const ActivePrescriptionRoute()
+      : super(ActivePrescriptionRoute.name, path: '/active_prescription');
+
+  static const String name = 'ActivePrescriptionRoute';
+}
+
+/// generated route for
+/// [ActivePrescriptionDetailsPage]
+class ActivePrescriptionDetailsRoute
+    extends PageRouteInfo<ActivePrescriptionDetailsRouteArgs> {
+  ActivePrescriptionDetailsRoute(
+      {Key? key, required ActivePrescriptionModel activePrescriptionModel})
+      : super(ActivePrescriptionDetailsRoute.name,
+            path: '/active_prescription_detail',
+            args: ActivePrescriptionDetailsRouteArgs(
+                key: key, activePrescriptionModel: activePrescriptionModel));
+
+  static const String name = 'ActivePrescriptionDetailsRoute';
+}
+
+class ActivePrescriptionDetailsRouteArgs {
+  const ActivePrescriptionDetailsRouteArgs(
+      {this.key, required this.activePrescriptionModel});
+
+  final Key? key;
+
+  final ActivePrescriptionModel activePrescriptionModel;
+
+  @override
+  String toString() {
+    return 'ActivePrescriptionDetailsRouteArgs{key: $key, activePrescriptionModel: $activePrescriptionModel}';
   }
 }
