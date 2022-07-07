@@ -57,6 +57,15 @@ class _OnboardingPage extends StatelessWidget {
                               height: MediaQuery.of(context).size.height * 0.35,
                               width: MediaQuery.of(context).size.width * 0.7,
                               decoration: BoxDecoration(
+                                image:  DecorationImage(
+                                  image: [
+                                    ExactAssetImage("assets/onboarding0.png"),
+                                    ExactAssetImage("assets/onboarding1.png"),
+                                    ExactAssetImage("assets/onboarding2.png"),
+                                  ]
+                                  [index],
+                                  fit: BoxFit.none,
+                                ),
                                 color: Theme.of(context).primaryColor,
                                 borderRadius: BorderRadius.circular(16),
                               ),
@@ -68,9 +77,9 @@ class _OnboardingPage extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 8.0),
                               child: Text(
                                 [
-                                  "Picture 1",
-                                  "Picture 2",
-                                  "Picture 3",
+                                  "ُStay healthy!",
+                                  "Take your medicine on time",
+                                  "Easy access to the doctor",
                                 ][index],
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context)
@@ -78,7 +87,7 @@ class _OnboardingPage extends StatelessWidget {
                                     .headline6!
                                     .merge(
                                       const TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
