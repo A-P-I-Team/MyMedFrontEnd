@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:my_med/src/components/build_button_style.dart';
 import 'package:my_med/src/l10n/localization_provider.dart';
 import 'package:my_med/src/modules/home/components/alarm_timming.dart';
-import 'package:my_med/src/modules/home/components/consumption_method_container.dart';
 import 'package:my_med/src/modules/home/components/custom_button.dart';
 import 'package:my_med/src/modules/home/components/drug_details.dart';
 import 'package:my_med/src/modules/home/components/drug_place_holder.dart';
@@ -215,84 +214,33 @@ class _ActivePrescriptionDetailsPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Expanded(
-                          flex: 2,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: ConsumptionMethodContainer(
-                                  text: context.localizations.noMatter,
-                                  consumptionMethods: consumptionMethods[
-                                      ConsumptionMethod.doesNotMatter],
-                                  activePrescriptionModel:
-                                      provider.activePrescriptionModel,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: ConsumptionMethodContainer(
-                                  text: 'BEFORE FOOD',
-                                  consumptionMethods: consumptionMethods[
-                                      ConsumptionMethod.beforeFood],
-                                  activePrescriptionModel:
-                                      provider.activePrescriptionModel,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: ConsumptionMethodContainer(
-                                  text: 'With FOod',
-                                  consumptionMethods: consumptionMethods[
-                                      ConsumptionMethod.withFood],
-                                  activePrescriptionModel:
-                                      provider.activePrescriptionModel,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: ConsumptionMethodContainer(
-                                  text: 'After FOods',
-                                  consumptionMethods: consumptionMethods[
-                                      ConsumptionMethod.afterFood],
-                                  activePrescriptionModel:
-                                      provider.activePrescriptionModel,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Row(
-                            children: const [
-                              Expanded(
-                                flex: 1,
-                                child: DrugPlaceHolder(
-                                  imageAddress: "assets/pill.png",
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: DrugPlaceHolder(
-                                  imageAddress: "assets/caps.png",
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: DrugPlaceHolder(
-                                  imageAddress: "assets/ing.png",
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: DrugPlaceHolder(
-                                  imageAddress: "assets/amp.png",
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Expanded(
+                        //   flex: 2,
+                        //   child: Row(
+                        //     children: const [
+                        //       Expanded(
+                        //         child: DrugPlaceHolder(
+                        //           imageAddress: "assets/pill.png",
+                        //         ),
+                        //       ),
+                        //       Expanded(
+                        //         child: DrugPlaceHolder(
+                        //           imageAddress: "assets/caps.png",
+                        //         ),
+                        //       ),
+                        //       Expanded(
+                        //         child: DrugPlaceHolder(
+                        //           imageAddress: "assets/ing.png",
+                        //         ),
+                        //       ),
+                        //       Expanded(
+                        //         child: DrugPlaceHolder(
+                        //           imageAddress: "assets/amp.png",
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                         Expanded(
                           flex: 1,
                           child: Row(
@@ -309,6 +257,7 @@ class _ActivePrescriptionDetailsPage extends StatelessWidget {
                                       color: const Color(0xFFD7D9DA),
                                     ),
                                   ),
+                                  const SizedBox(width: 8),
                                   Text(
                                     context.localizations.reminder,
                                     style: const TextStyle(

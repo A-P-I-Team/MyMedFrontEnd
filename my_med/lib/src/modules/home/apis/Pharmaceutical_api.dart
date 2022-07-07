@@ -15,14 +15,17 @@ class Pharmaceutical {
       return [
         ActivePrescriptionModel(
           id: '123',
-          name: 'Astominophen',
+          medicine: 'Astominophen',
           dosage: 500,
-          createdAt: DateTime.now(),
-          consumptionMethod: '',
-          consumptionAmount: 'consumptionAmount',
+          start: DateTime.now(),
+          fraction: 'consumptionAmount',
           reminders: [],
-          consumptionTimes: 12,
+          takenno: 12,
           consumptionDuration: '12:00:00',
+          days: 15,
+          notify: true,
+          period: 14,
+          prescription: 1,
         ),
       ];
     } catch (e) {
@@ -36,7 +39,28 @@ class Pharmaceutical {
 
   Future<PrescriptionModel?> getActivePrescriptionDetail(
       String activePrescriptionID) async {
-    try {} catch (e) {
+    try {
+      return PrescriptionModel(
+        id: '',
+        name: 'Astominophen',
+        dosage: 500,
+        doctor: Doctor(
+            id: '',
+            name: 'Mina',
+            profession: 'Physician',
+            avatar: Avatar(file: '')),
+        consumptionAmount: '1/2',
+        consumptionStart: DateTime.now(),
+        consumptionTimes: 14,
+        consumptionDuration: 'Every 12 hours',
+        consumptionMethod: 'consumptionMethod',
+        description: 'This a drug.',
+        changeRequests: [],
+        isActive: true,
+        isGreen: true,
+        isReminderOn: true,
+      );
+    } catch (e) {
       if (kDebugMode) {
         print(e);
       }

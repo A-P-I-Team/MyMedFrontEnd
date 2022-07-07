@@ -46,9 +46,9 @@ class HomeProvider extends ChangeNotifier {
     remindersList.clear();
     for (final item in activePrescriptionList) {
       for (final rem in item.reminders) {
-        if (rem.timeToTake.year == date.year &&
-            rem.timeToTake.month == date.month &&
-            rem.timeToTake.day == date.day) remindersList.add(rem);
+        if (rem.dateTime.year == date.year &&
+            rem.dateTime.month == date.month &&
+            rem.dateTime.day == date.day) remindersList.add(rem);
       }
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -71,11 +71,11 @@ class HomeProvider extends ChangeNotifier {
     final choosedReminder = remindersList[index];
 
     if (direction == DismissDirection.endToStart) {
-      remindersList[index].taken = false;
+      remindersList[index].status = false;
       callUseDrug(choosedReminder, false, index);
     } else {
       callUseDrug(choosedReminder, true, index);
-      remindersList[index].taken = true;
+      remindersList[index].status = true;
     }
     final modifiedReminder = remindersList[index];
     remindersList.removeAt(index);

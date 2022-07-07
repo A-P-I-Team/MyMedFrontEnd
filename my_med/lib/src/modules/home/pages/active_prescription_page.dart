@@ -50,19 +50,22 @@ class _ActivePrescriptionPage extends StatelessWidget {
               itemCount: provider.activePrescriptionList.length,
               itemBuilder: (BuildContext context, int index) {
                 final item = provider.activePrescriptionList[index];
-                return (provider.activePrescriptionList[index].name
+                return (provider.activePrescriptionList[index].medicine
                         .contains(provider.searchBarController.text))
                     ? ActivePrescriptionComponent(
                         activePrescription: ActivePrescriptionModel(
                           id: item.id,
-                          name: item.name,
+                          medicine: item.medicine,
                           dosage: item.dosage,
-                          createdAt: item.createdAt,
-                          consumptionMethod: item.consumptionMethod,
-                          consumptionAmount: item.consumptionAmount,
+                          start: item.start,
                           reminders: item.reminders,
+                          notify: item.notify,
+                          days: item.days,
                           consumptionDuration: item.consumptionDuration,
-                          consumptionTimes: item.consumptionTimes,
+                          fraction: item.fraction,
+                          period: item.period,
+                          prescription: item.prescription,
+                          takenno: item.takenno,
                         ),
                         totalDayUse: provider.getTotalDayUse(item),
                         isSelectedId: provider.isSelectedId,

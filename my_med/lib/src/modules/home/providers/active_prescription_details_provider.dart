@@ -69,7 +69,8 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
   ActivePrescriptionDetailsProvider(
       {required this.context, required this.activePrescriptionModel}) {
     var activePrescriptionDetailFromDB = PrescriptionDB.instance
-        .getActivePrescriptionDetailModel(activePrescriptionModel.id);
+        .getActivePrescriptionDetailModel(
+            activePrescriptionModel.id.toString());
     if (activePrescriptionDetailFromDB != null) {
       isReminderOn = activePrescriptionDetailFromDB.isReminderOn;
     }
@@ -79,20 +80,7 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
   }
 
   int getTotalDayUse(ActivePrescriptionModel model) {
-    var consumptionDue = model.consumptionDuration;
-    int hourDuration = 0;
-    if (consumptionDue.contains(' ')) {
-      hourDuration = int.parse(consumptionDue.split(' ')[0]) * 24;
-      consumptionDue = consumptionDue.split(' ')[1];
-    }
-    hourDuration += int.parse(consumptionDue.split(':')[0]);
-    final minDuration = int.parse(consumptionDue.split(':')[1]);
-    final secDuration = int.parse(consumptionDue.split(':')[2]);
-    final totalSecDuration =
-        hourDuration * 3600 + minDuration * 60 + secDuration;
-    final totalDayUse =
-        (model.consumptionTimes * totalSecDuration / 86400).ceil();
-    return totalDayUse;
+    return model.takenno;
   }
 
   void getActivePrescriptionDetail() async {
@@ -102,11 +90,13 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
         .getActivePrescriptionDetail(activePrescriptionModel.id);
     if (activePrescriptionDetailModel == null) {
       context.router.pop();
+      return;
     }
     totalDayUse = getTotalDayUse(activePrescriptionModel);
     //TODO Reminder toggleSwitch value for synchronization with server - Has not been decided
     var activePrescriptionDetailFromDB = PrescriptionDB.instance
-        .getActivePrescriptionDetailModel(activePrescriptionModel.id);
+        .getActivePrescriptionDetailModel(
+            activePrescriptionModel.id.toString());
     if (activePrescriptionDetailFromDB != null) {
       bool? isReminderOnFromDB = activePrescriptionDetailFromDB.isReminderOn;
       isReminderOn = isReminderOnFromDB;
@@ -259,12 +249,12 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
         if (isReminderOn) {
           for (final rem in activePrescriptionModel.reminders) {
             final reminderDate = DateTime(
-              rem.timeToTake.year,
-              rem.timeToTake.month,
-              rem.timeToTake.day,
-              rem.timeToTake.hour,
-              rem.timeToTake.minute,
-              rem.timeToTake.second,
+              rem.dateTime.year,
+              rem.dateTime.month,
+              rem.dateTime.day,
+              rem.dateTime.hour,
+              rem.dateTime.minute,
+              rem.dateTime.second,
             );
             if (reminderDate.isAfter(DateTime.now())) {
               await LocalNotificationAPI().showScheduledNotification(
@@ -272,7 +262,7 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
                 dateTime: reminderDate,
                 title: rem.name,
                 body: context.localizations.timeToTakeMedicine,
-                payload: 'Saramad - ${rem.timeToTake}',
+                payload: 'Saramad - ${rem.dateTime}',
               );
             }
           }
@@ -284,7 +274,7 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
       } else {
         final isAPIDoneSuccessfully =
             await Pharmaceutical().setReminderNotificationStatus(
-          activePrescriptionModel.id,
+          activePrescriptionModel.id.toString(),
           isReminderOn,
         );
         if (isAPIDoneSuccessfully) {
@@ -326,12 +316,12 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
   Future<void> createLocalNotification() async {
     for (final rem in activePrescriptionModel.reminders) {
       final reminderDate = DateTime(
-        rem.timeToTake.year,
-        rem.timeToTake.month,
-        rem.timeToTake.day,
-        rem.timeToTake.hour,
-        rem.timeToTake.minute,
-        rem.timeToTake.second,
+        rem.dateTime.year,
+        rem.dateTime.month,
+        rem.dateTime.day,
+        rem.dateTime.hour,
+        rem.dateTime.minute,
+        rem.dateTime.second,
       );
       if (reminderDate.isAfter(DateTime.now())) {
         await LocalNotificationAPI().showScheduledNotification(
@@ -339,7 +329,7 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
           dateTime: reminderDate,
           title: rem.name,
           body: context.localizations.timeToTakeMedicine,
-          payload: 'Saramad - ${rem.timeToTake}',
+          payload: 'Saramad - ${rem.dateTime}',
         );
       }
     }

@@ -45,20 +45,7 @@ class ActivePrescriptionProvider extends ChangeNotifier {
   }
 
   int getTotalDayUse(ActivePrescriptionModel model) {
-    var consumptionDue = model.consumptionDuration;
-    int hourDuration = 0;
-    if (consumptionDue.contains(' ')) {
-      hourDuration = int.parse(consumptionDue.split(' ')[0]) * 24;
-      consumptionDue = consumptionDue.split(' ')[1];
-    }
-    hourDuration += int.parse(consumptionDue.split(':')[0]);
-    final minDuration = int.parse(consumptionDue.split(':')[1]);
-    final secDuration = int.parse(consumptionDue.split(':')[2]);
-    final totalSecDuration =
-        hourDuration * 3600 + minDuration * 60 + secDuration;
-    final totalDayUse =
-        (model.consumptionTimes * totalSecDuration / 86400).ceil();
-    return totalDayUse;
+    return model.takenno;
   }
 
   void checkId(String id) {

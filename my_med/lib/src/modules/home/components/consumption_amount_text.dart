@@ -14,7 +14,7 @@ class ConsumptionAmountText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text.rich(
       TextSpan(
-        text: medication.consumptionAmount,
+        text: "Amountttt",
         style: const TextStyle(
           fontWeight: FontWeight.w700,
           fontSize: 12,
