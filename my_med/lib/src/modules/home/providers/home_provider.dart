@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/core/routing/router.dart';
+import 'package:my_med/src/modules/home/apis/Pharmaceutical_api.dart';
 import 'package:my_med/src/modules/home/models/active_prescription_model.dart';
 import 'package:my_med/src/modules/profile/apis/profile_apis.dart';
 import 'package:my_med/src/modules/profile/models/profile_model.dart';
@@ -34,11 +35,29 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getActivePrescription() {
-    //TODO API call
-    isLoading = false;
-    if (isDisposed) return;
+  Future<void> getActivePrescription() async {
+    isLoading = true;
     notifyListeners();
+    Pharmaceutical()
+        .getActivePrescription(
+      onTimeout: () => APIErrorMessage().onTimeout(context),
+      onDisconnect: () => APIErrorMessage().onDisconnect(context),
+      onAPIError: () => APIErrorMessage().onDisconnect(context),
+    )
+        .then(
+      (value) {
+        if (isDisposed) return;
+        if (value.isEmpty) {
+          activePrescriptionList = [];
+        } else {
+          activePrescriptionList =
+              value.where((element) => element.reminders.isNotEmpty).toList();
+          addReminders();
+        }
+        isLoading = false;
+        notifyListeners();
+      },
+    );
   }
 
   void addReminders() {

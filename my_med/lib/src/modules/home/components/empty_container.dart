@@ -1,6 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:my_med/src/l10n/localization_provider.dart';
+import 'package:my_med/src/modules/drug/pages/drug.dart';
 import 'package:my_med/src/modules/home/components/home_button.dart';
 
 class EmptyContainer extends StatelessWidget {
@@ -28,6 +29,11 @@ class EmptyContainer extends StatelessWidget {
             ),
             Flexible(
               child: HomeButton(
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const DrugPage(),
+                  ),
+                ),
                 text: context.localizations.seeDrug,
                 hasIcon: false,
                 height: 60,
