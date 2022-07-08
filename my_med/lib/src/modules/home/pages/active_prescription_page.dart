@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:my_med/src/components/build_Input_decoration.dart';
+import 'package:my_med/src/components/build_input_decoration.dart';
 import 'package:my_med/src/l10n/localization_provider.dart';
 import 'package:my_med/src/modules/home/components/active_prescription_component.dart';
 import 'package:my_med/src/modules/home/models/active_prescription_model.dart';
