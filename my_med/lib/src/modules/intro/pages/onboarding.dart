@@ -1,9 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/button.dart';
-import 'package:my_med/src/components/utils/snack_bar.dart';
 import 'package:my_med/src/core/routing/router.dart';
-import 'package:my_med/src/modules/intro/components/textButtonComponent.dart';
 import 'package:my_med/src/modules/intro/providers/onboarding_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -57,6 +55,12 @@ class _OnboardingPage extends StatelessWidget {
                               height: MediaQuery.of(context).size.height * 0.35,
                               width: MediaQuery.of(context).size.width * 0.7,
                               decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image:
+                                      Image.asset("assets/onboarding$index.png")
+                                          .image,
+                                  fit: BoxFit.none,
+                                ),
                                 color: Theme.of(context).primaryColor,
                                 borderRadius: BorderRadius.circular(16),
                               ),
@@ -68,9 +72,9 @@ class _OnboardingPage extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 8.0),
                               child: Text(
                                 [
-                                  "Picture 1",
-                                  "Picture 2",
-                                  "Picture 3",
+                                  "ُStay healthy!",
+                                  "Take your medicine on time",
+                                  "Easy access to the doctor",
                                 ][index],
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context)
@@ -78,7 +82,7 @@ class _OnboardingPage extends StatelessWidget {
                                     .headline6!
                                     .merge(
                                       const TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
