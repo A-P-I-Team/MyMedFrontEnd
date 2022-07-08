@@ -1,5 +1,6 @@
 class ConstURLs {
-  static const String baseDomain = 'http://mymed.pythonanywhere.com';
+  static const String baseDomain = 'http://37.32.29.13';
+  static const String pythonAnyWhereDomain = 'http://mymed.pythonanywhere.com';
   static const String login = '$baseDomain/user/login/';
   static const String forgetPasswordEmail =
       '$baseDomain/user/send_reset_password_email/';
@@ -15,4 +16,6 @@ class ConstURLs {
   static const String doctorDetail = '$baseDomain/medical/doctors/';
 
   static const String drug = '$baseDomain/medical/prescription-medicines/';
+  static const String activePrescription =
+      '$baseDomain/medical/active-prescription-medicines/';
 }

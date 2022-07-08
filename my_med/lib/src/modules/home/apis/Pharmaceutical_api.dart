@@ -1,69 +1,108 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:my_med/src/components/error_template.dart';
+import 'package:my_med/src/constants/properties.dart';
+import 'package:my_med/src/constants/urls.dart';
 import 'package:my_med/src/core/apis/core_api_methods.dart';
+import 'package:my_med/src/modules/home/models/active_prescription_detail_model.dart';
 import 'package:my_med/src/modules/home/models/active_prescription_model.dart';
-import 'package:my_med/src/modules/home/models/prescription_detail_model.dart';
 
 class Pharmaceutical {
   final _api = CoreApi();
 
-  Future<List<ActivePrescriptionModel>> getActivePrescription() async {
+  Future<List<ActivePrescriptionModel>> getActivePrescription({
+    required VoidCallback onTimeout,
+    required VoidCallback onDisconnect,
+    required VoidCallback onAPIError,
+  }) async {
     try {
-      return [
-        ActivePrescriptionModel(
-          id: '123',
-          medicine: 'Astominophen',
-          dosage: 500,
-          start: DateTime.now(),
-          fraction: 'consumptionAmount',
-          reminders: [],
-          takenno: 12,
-          consumptionDuration: '12:00:00',
-          days: 15,
-          notify: true,
-          period: 14,
-          prescription: 1,
-        ),
-      ];
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
+      final response = await _api
+          .get(
+            Uri.parse(ConstURLs.activePrescription),
+          )
+          .timeout(
+            const Duration(
+              seconds: ConstProperties.timeoutDuration,
+            ),
+          );
+
+      if (response == null || response.body.isEmpty) {
+        throw ApiError(message: APIErrorMessage().serverMessage);
       }
+      final decodedJson = jsonDecode(utf8.decode(response.bodyBytes));
+      if (response.statusCode != 200) {
+        throw ApiError(message: APIErrorMessage().serverMessage);
+      }
+      if (decodedJson is! List) {
+        throw ApiError(message: APIErrorMessage().serverMessage);
+      }
+
+      final dataList = decodedJson;
+      var prescriptionList = <ActivePrescriptionModel>[];
+      for (var prescription in dataList) {
+        prescriptionList.add(ActivePrescriptionModel.fromJson(
+            prescription as Map<String, dynamic>));
+      }
+      return prescriptionList;
+    } on ApiError catch (_) {
+      onAPIError();
+    } on TimeoutException catch (_) {
+      onTimeout();
+    } on SocketException catch (_) {
+      onDisconnect();
+    } catch (e) {
+      debugPrint(e.toString());
     }
 
     return [];
   }
 
-  Future<PrescriptionModel?> getActivePrescriptionDetail(
-      String activePrescriptionID) async {
+  Future<ActivePrescriptionDetailModel?> getActivePrescriptionDetail({
+    required VoidCallback onTimeout,
+    required VoidCallback onDisconnect,
+    required VoidCallback onAPIError,
+    required String activePrescriptionID,
+  }) async {
     try {
-      return PrescriptionModel(
-        id: '',
-        name: 'Astominophen',
-        dosage: 500,
-        doctor: Doctor(
-            id: '',
-            name: 'Mina',
-            profession: 'Physician',
-            avatar: Avatar(file: '')),
-        consumptionAmount: '1/2',
-        consumptionStart: DateTime.now(),
-        consumptionTimes: 14,
-        consumptionDuration: 'Every 12 hours',
-        consumptionMethod: 'consumptionMethod',
-        description: 'This a drug.',
-        changeRequests: [],
-        isActive: true,
-        isGreen: true,
-        isReminderOn: true,
-      );
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
+      final response = await _api
+          .get(
+            Uri.parse('${ConstURLs.drug}$activePrescriptionID/'),
+          )
+          .timeout(
+            const Duration(
+              seconds: ConstProperties.timeoutDuration,
+            ),
+          );
+
+      if (response == null || response.body.isEmpty) {
+        throw ApiError(message: APIErrorMessage().serverMessage);
       }
+      final decodedJson = jsonDecode(utf8.decode(response.bodyBytes));
+      if (response.statusCode != 200) {
+        throw ApiError(message: APIErrorMessage().serverMessage);
+      }
+      // if (decodedJson! is Map<String, dynamic>) {
+      //   throw ApiError(message: APIErrorMessage().serverMessage);
+      // }
+
+      var activePrescDetail = ActivePrescriptionDetailModel.fromJson(
+        decodedJson,
+        activePrescriptionID,
+      );
+
+      return activePrescDetail;
+    } on ApiError catch (_) {
+      onAPIError();
+    } on TimeoutException catch (_) {
+      onTimeout();
+    } on SocketException catch (_) {
+      onDisconnect();
+    } catch (e) {
+      debugPrint(e.toString());
     }
 
     return null;
