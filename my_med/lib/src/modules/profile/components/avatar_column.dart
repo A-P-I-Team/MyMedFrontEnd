@@ -1,14 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class AvatarColumn extends StatelessWidget {
   final String fullName;
   final String identification;
+  final String? profileImage;
 
   const AvatarColumn({
     Key? key,
     required this.fullName,
     required this.identification,
+    this.profileImage,
   }) : super(key: key);
 
   @override
@@ -19,10 +21,21 @@ class AvatarColumn extends StatelessWidget {
           CircleAvatar(
             radius: 40,
             backgroundColor: Theme.of(context).primaryColorLight,
-            child: const Icon(
-              Icons.person,
-              size: 45,
-            ),
+            child: (profileImage != null)
+                ? CachedNetworkImage(
+                    imageUrl: profileImage!,
+                    placeholder: (_, url) =>
+                        const Center(child: CircularProgressIndicator()),
+                    errorWidget: (_, url, __) => const Icon(
+                      Icons.person,
+                      size: 45,
+                    ),
+                    fit: BoxFit.cover,
+                  )
+                : const Icon(
+                    Icons.person,
+                    size: 45,
+                  ),
           ),
           const SizedBox(height: 8),
           Text(
