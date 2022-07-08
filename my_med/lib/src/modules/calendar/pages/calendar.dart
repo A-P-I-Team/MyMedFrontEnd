@@ -27,11 +27,11 @@ class _CalendarPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: CustomAppbar().buildSearchBar(
-        provider.onSearchTap,
-        provider.isSearchSelect,
-        provider.searchBarController,
-        provider.onSearchChanged, 
-        context),
+          provider.onSearchTap,
+          provider.isSearchSelect,
+          provider.searchBarController,
+          provider.onSearchChanged,
+          context),
       body: (provider.isLoading)
           ? const Center(
               child: CircularProgressIndicator(),
@@ -45,22 +45,27 @@ class _CalendarPage extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: provider.remindersList.length,
-                    physics: const AlwaysScrollableScrollPhysics(
-                      parent: BouncingScrollPhysics(),
-                    ),
-                    itemBuilder: (context, index) {
-                      return (provider.remindersList[index].name
-                              .contains(provider.searchBarController.text))
-                          ? ReminderContainer(
-                              reminderModel: provider.remindersList[index],
-                              index: index,
-                              onDismissed: provider.onDismissed,
-                            )
-                          : const SizedBox();
-                    },
-                  ),
+                  child: (provider.remindersList.isEmpty)
+                      ? const Center(
+                          child: Text('No reminders for todoay!'),
+                        )
+                      : ListView.builder(
+                          itemCount: provider.remindersList.length,
+                          physics: const AlwaysScrollableScrollPhysics(
+                            parent: BouncingScrollPhysics(),
+                          ),
+                          itemBuilder: (context, index) {
+                            return (provider.remindersList[index].name.contains(
+                                    provider.searchBarController.text))
+                                ? ReminderContainer(
+                                    reminderModel:
+                                        provider.remindersList[index],
+                                    index: index,
+                                    onDismissed: provider.onDismissed,
+                                  )
+                                : const SizedBox();
+                          },
+                        ),
                 ),
               ],
             ),

@@ -20,7 +20,7 @@ class UserProfileModel {
   final String ssn;
   final String? citizensSsn;
   final UserCity userCity;
-  final String profilePic;
+  final String? profilePic;
   final String? email;
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) =>

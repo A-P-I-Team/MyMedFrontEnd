@@ -3,10 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:my_med/src/components/build_button_style.dart';
 import 'package:my_med/src/l10n/localization_provider.dart';
 import 'package:my_med/src/modules/home/components/alarm_timming.dart';
-import 'package:my_med/src/modules/home/components/consumption_method_container.dart';
 import 'package:my_med/src/modules/home/components/custom_button.dart';
 import 'package:my_med/src/modules/home/components/drug_details.dart';
-import 'package:my_med/src/modules/home/components/drug_place_holder.dart';
 import 'package:my_med/src/modules/home/components/enter_button.dart';
 import 'package:my_med/src/modules/home/models/active_prescription_model.dart';
 import 'package:my_med/src/modules/home/providers/active_prescription_details_provider.dart';
@@ -14,14 +12,14 @@ import 'package:provider/provider.dart';
 
 enum DrugActions { dosage, consumptionAmount, consumptionDuration }
 
-enum ConsumptionMethod { afterFood, doesNotMatter, beforeFood, withFood }
+// enum ConsumptionMethod { afterFood, doesNotMatter, beforeFood, withFood }
 
-Map<ConsumptionMethod, String> consumptionMethods = {
-  ConsumptionMethod.doesNotMatter: "does not matter",
-  ConsumptionMethod.beforeFood: "before food",
-  ConsumptionMethod.withFood: "with food",
-  ConsumptionMethod.afterFood: "after food",
-};
+// Map<ConsumptionMethod, String> consumptionMethods = {
+//   ConsumptionMethod.doesNotMatter: "does not matter",
+//   ConsumptionMethod.beforeFood: "before food",
+//   ConsumptionMethod.withFood: "with food",
+//   ConsumptionMethod.afterFood: "after food",
+// };
 
 class ActivePrescriptionDetailsPage extends StatelessWidget {
   final ActivePrescriptionModel activePrescriptionModel;
@@ -78,7 +76,8 @@ class _ActivePrescriptionDetailsPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                provider.activePrescriptionDetailModel!.name,
+                                provider
+                                    .activePrescriptionDetailModel!.medicine,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 14,
@@ -94,10 +93,8 @@ class _ActivePrescriptionDetailsPage extends StatelessWidget {
                                       color: Color(0xFF474747)),
                                   children: [
                                     TextSpan(
-                                      text: provider
-                                          .getTotalDayUse(
-                                              provider.activePrescriptionModel)
-                                          .toString(),
+                                      text:
+                                          ' ${provider.getTotalDayUse(provider.activePrescriptionModel)}',
                                       style: const TextStyle(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 16,
@@ -152,7 +149,10 @@ class _ActivePrescriptionDetailsPage extends StatelessWidget {
                               const SizedBox(width: 8),
                               Row(
                                 children: [
-                                  SvgPicture.asset("assets/bag.svg"),
+                                  SvgPicture.asset(
+                                    "assets/bag.svg",
+                                    color: const Color(0xFF76BBBB),
+                                  ),
                                   const SizedBox(width: 8),
                                   Text(
                                     context.localizations.startReminders,
@@ -215,84 +215,33 @@ class _ActivePrescriptionDetailsPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Expanded(
-                          flex: 2,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: ConsumptionMethodContainer(
-                                  text: context.localizations.noMatter,
-                                  consumptionMethods: consumptionMethods[
-                                      ConsumptionMethod.doesNotMatter],
-                                  activePrescriptionModel:
-                                      provider.activePrescriptionModel,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: ConsumptionMethodContainer(
-                                  text: 'BEFORE FOOD',
-                                  consumptionMethods: consumptionMethods[
-                                      ConsumptionMethod.beforeFood],
-                                  activePrescriptionModel:
-                                      provider.activePrescriptionModel,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: ConsumptionMethodContainer(
-                                  text: 'With FOod',
-                                  consumptionMethods: consumptionMethods[
-                                      ConsumptionMethod.withFood],
-                                  activePrescriptionModel:
-                                      provider.activePrescriptionModel,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: ConsumptionMethodContainer(
-                                  text: 'After FOods',
-                                  consumptionMethods: consumptionMethods[
-                                      ConsumptionMethod.afterFood],
-                                  activePrescriptionModel:
-                                      provider.activePrescriptionModel,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Row(
-                            children: const [
-                              Expanded(
-                                flex: 1,
-                                child: DrugPlaceHolder(
-                                  imageAddress: "assets/pill.png",
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: DrugPlaceHolder(
-                                  imageAddress: "assets/caps.png",
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: DrugPlaceHolder(
-                                  imageAddress: "assets/ing.png",
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: DrugPlaceHolder(
-                                  imageAddress: "assets/amp.png",
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Expanded(
+                        //   flex: 2,
+                        //   child: Row(
+                        //     children: const [
+                        //       Expanded(
+                        //         child: DrugPlaceHolder(
+                        //           imageAddress: "assets/pill.png",
+                        //         ),
+                        //       ),
+                        //       Expanded(
+                        //         child: DrugPlaceHolder(
+                        //           imageAddress: "assets/caps.png",
+                        //         ),
+                        //       ),
+                        //       Expanded(
+                        //         child: DrugPlaceHolder(
+                        //           imageAddress: "assets/ing.png",
+                        //         ),
+                        //       ),
+                        //       Expanded(
+                        //         child: DrugPlaceHolder(
+                        //           imageAddress: "assets/amp.png",
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                         Expanded(
                           flex: 1,
                           child: Row(
@@ -306,9 +255,10 @@ class _ActivePrescriptionDetailsPage extends StatelessWidget {
                                     height: 20,
                                     child: SvgPicture.asset(
                                       "assets/bell.svg",
-                                      color: const Color(0xFFD7D9DA),
+                                      color: const Color(0xFF76BBBB),
                                     ),
                                   ),
+                                  const SizedBox(width: 8),
                                   Text(
                                     context.localizations.reminder,
                                     style: const TextStyle(
@@ -329,49 +279,7 @@ class _ActivePrescriptionDetailsPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: AlarmTimming(
-                                  value: 0,
-                                  text: context.localizations.fiveMin,
-                                  indexAlarm: provider.indexAlarm,
-                                  onAlarmTimmingTap: provider.onAlarmTimmingTap,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: AlarmTimming(
-                                  value: 1,
-                                  text: context.localizations.tenMin,
-                                  indexAlarm: provider.indexAlarm,
-                                  onAlarmTimmingTap: provider.onAlarmTimmingTap,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: AlarmTimming(
-                                  value: 2,
-                                  text: context.localizations.fifteenMin,
-                                  indexAlarm: provider.indexAlarm,
-                                  onAlarmTimmingTap: provider.onAlarmTimmingTap,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: AlarmTimming(
-                                  value: 3,
-                                  text: context.localizations.twenyMin,
-                                  indexAlarm: provider.indexAlarm,
-                                  onAlarmTimmingTap: provider.onAlarmTimmingTap,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // getAlarmTiming(context, provider),
                         Expanded(
                           flex: 1,
                           child: Padding(
@@ -400,25 +308,28 @@ class _ActivePrescriptionDetailsPage extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 40.0),
-                                  child: Container(
-                                    child: Text(
-                                      provider.activePrescriptionDetailModel!
-                                          .description,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12,
-                                        color: Color(0xFF737373),
-                                      ),
-                                      textAlign: TextAlign.justify,
-                                      overflow: TextOverflow.clip,
+                                  child: Text(
+                                    (provider.activePrescriptionDetailModel!
+                                                .description ==
+                                            '')
+                                        ? context.localizations.noDescription
+                                        : provider
+                                            .activePrescriptionDetailModel!
+                                            .description,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
+                                      color: Color(0xFF737373),
                                     ),
+                                    textAlign: TextAlign.justify,
+                                    overflow: TextOverflow.clip,
                                   ),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                        Expanded(
+                        Flexible(
                           flex: 1,
                           child: EnterButton(
                             onEnterTap: () => provider.onEnterTap(),
@@ -431,6 +342,49 @@ class _ActivePrescriptionDetailsPage extends StatelessWidget {
                 ),
               ],
             ),
+    );
+  }
+
+  Expanded getAlarmTiming(
+      BuildContext context, ActivePrescriptionDetailsProvider provider) {
+    return Expanded(
+      flex: 1,
+      child: Row(
+        children: [
+          Expanded(
+            child: AlarmTimming(
+              value: 0,
+              text: context.localizations.fiveMin,
+              indexAlarm: provider.indexAlarm,
+              onAlarmTimmingTap: provider.onAlarmTimmingTap,
+            ),
+          ),
+          Expanded(
+            child: AlarmTimming(
+              value: 1,
+              text: context.localizations.tenMin,
+              indexAlarm: provider.indexAlarm,
+              onAlarmTimmingTap: provider.onAlarmTimmingTap,
+            ),
+          ),
+          Expanded(
+            child: AlarmTimming(
+              value: 2,
+              text: context.localizations.fifteenMin,
+              indexAlarm: provider.indexAlarm,
+              onAlarmTimmingTap: provider.onAlarmTimmingTap,
+            ),
+          ),
+          Expanded(
+            child: AlarmTimming(
+              value: 3,
+              text: context.localizations.twenyMin,
+              indexAlarm: provider.indexAlarm,
+              onAlarmTimmingTap: provider.onAlarmTimmingTap,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

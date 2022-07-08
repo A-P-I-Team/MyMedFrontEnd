@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/core/routing/router.dart';
+import 'package:my_med/src/modules/home/apis/Pharmaceutical_api.dart';
 import 'package:my_med/src/modules/home/models/active_prescription_model.dart';
 import 'package:my_med/src/modules/profile/apis/profile_apis.dart';
 import 'package:my_med/src/modules/profile/models/profile_model.dart';
@@ -34,11 +35,38 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getActivePrescription() {
-    //TODO API call
-    isLoading = false;
-    if (isDisposed) return;
+  Future<void> getActivePrescription() async {
+    isLoading = true;
     notifyListeners();
+    Pharmaceutical()
+        .getActivePrescription(
+      onTimeout: () => APIErrorMessage().onTimeout(context),
+      onDisconnect: () => APIErrorMessage().onDisconnect(context),
+      onAPIError: () => APIErrorMessage().onDisconnect(context),
+    )
+        .then(
+      (value) {
+        if (isDisposed) return;
+        if (value.isEmpty) {
+          activePrescriptionList = [];
+        } else {
+          activePrescriptionList =
+              value.where((element) => element.reminders.isNotEmpty).toList();
+          addReminders();
+          setTakenMedicines();
+        }
+        isLoading = false;
+        notifyListeners();
+      },
+    );
+  }
+
+  void setTakenMedicines() {
+    totalCount = remindersList
+        .where((element) => element.status != true)
+        .toList()
+        .length;
+    consumedCount = remindersList.length - totalCount;
   }
 
   void addReminders() {
@@ -46,9 +74,9 @@ class HomeProvider extends ChangeNotifier {
     remindersList.clear();
     for (final item in activePrescriptionList) {
       for (final rem in item.reminders) {
-        if (rem.timeToTake.year == date.year &&
-            rem.timeToTake.month == date.month &&
-            rem.timeToTake.day == date.day) remindersList.add(rem);
+        if (rem.dateTime.year == date.year &&
+            rem.dateTime.month == date.month &&
+            rem.dateTime.day == date.day) remindersList.add(rem);
       }
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -71,11 +99,11 @@ class HomeProvider extends ChangeNotifier {
     final choosedReminder = remindersList[index];
 
     if (direction == DismissDirection.endToStart) {
-      remindersList[index].taken = false;
+      remindersList[index].status = false;
       callUseDrug(choosedReminder, false, index);
     } else {
       callUseDrug(choosedReminder, true, index);
-      remindersList[index].taken = true;
+      remindersList[index].status = true;
     }
     final modifiedReminder = remindersList[index];
     remindersList.removeAt(index);

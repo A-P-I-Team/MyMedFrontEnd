@@ -27,7 +27,7 @@ class DrugDetails extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.w300,
               fontSize: 12,
               color: Color(0xFF474747),
@@ -38,7 +38,7 @@ class DrugDetails extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Container(
                 height: 1,
-                color: Color(0x35737373),
+                color: const Color(0x35737373),
               ),
             ),
           ),

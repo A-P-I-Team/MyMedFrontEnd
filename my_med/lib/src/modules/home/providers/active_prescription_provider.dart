@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/modules/home/apis/Pharmaceutical_api.dart';
 import 'package:my_med/src/modules/home/models/active_prescription_model.dart';
@@ -20,7 +21,13 @@ class ActivePrescriptionProvider extends ChangeNotifier {
   }
 
   Future<void> getActivePrescriptionList() async {
-    await Pharmaceutical().getActivePrescription().then(
+    await Pharmaceutical()
+        .getActivePrescription(
+      onTimeout: () => APIErrorMessage().onTimeout(context),
+      onDisconnect: () => APIErrorMessage().onDisconnect(context),
+      onAPIError: () => APIErrorMessage().onDisconnect(context),
+    )
+        .then(
       (value) {
         if (isDisposed) return;
         if (value.isEmpty) {
@@ -45,20 +52,7 @@ class ActivePrescriptionProvider extends ChangeNotifier {
   }
 
   int getTotalDayUse(ActivePrescriptionModel model) {
-    var consumptionDue = model.consumptionDuration;
-    int hourDuration = 0;
-    if (consumptionDue.contains(' ')) {
-      hourDuration = int.parse(consumptionDue.split(' ')[0]) * 24;
-      consumptionDue = consumptionDue.split(' ')[1];
-    }
-    hourDuration += int.parse(consumptionDue.split(':')[0]);
-    final minDuration = int.parse(consumptionDue.split(':')[1]);
-    final secDuration = int.parse(consumptionDue.split(':')[2]);
-    final totalSecDuration =
-        hourDuration * 3600 + minDuration * 60 + secDuration;
-    final totalDayUse =
-        (model.consumptionTimes * totalSecDuration / 86400).ceil();
-    return totalDayUse;
+    return model.days;
   }
 
   void checkId(String id) {
