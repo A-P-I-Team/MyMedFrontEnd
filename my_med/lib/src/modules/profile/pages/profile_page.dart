@@ -61,6 +61,7 @@ class _ProfilePage extends StatelessWidget {
                           fullName:
                               '${provider.userProfileModel!.firstName} ${provider.userProfileModel!.lastName}',
                           identification: provider.userProfileModel!.ssn,
+                          profileImage: provider.userProfileModel!.profilePic,
                         ),
                       ),
                       Expanded(
