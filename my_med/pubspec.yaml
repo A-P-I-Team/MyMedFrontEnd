@@ -70,9 +70,6 @@ flutter:
 
   assets:
     - assets/
-    - assets/onboarding0.png
-    - assets/onboarding1.png
-    - assets/onboarding2.png
 
 
   # To add custom fonts to your application, add a fonts section here,
