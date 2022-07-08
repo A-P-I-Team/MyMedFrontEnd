@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/modules/home/models/active_prescription_model.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/modules/home/apis/Pharmaceutical_api.dart';
@@ -39,7 +40,13 @@ class CalendarProvider extends ChangeNotifier {
   Future<void> getAllActivePrescriptionsList() async {
     isLoading = true;
 
-    Pharmaceutical().getActivePrescription().then(
+    Pharmaceutical()
+        .getActivePrescription(
+      onTimeout: () => APIErrorMessage().onTimeout(context),
+      onDisconnect: () => APIErrorMessage().onDisconnect(context),
+      onAPIError: () => APIErrorMessage().onDisconnect(context),
+    )
+        .then(
       (value) {
         if (isDisposed) return;
 
@@ -50,7 +57,7 @@ class CalendarProvider extends ChangeNotifier {
               value.where((element) => element.reminders.isNotEmpty).toList();
         }
         isLoading = false;
-
+        if (isDisposed) return;
         notifyListeners();
       },
     );
