@@ -37,8 +37,16 @@ class ActivePrescriptionModel {
         days: json["days"],
         start: DateTime.parse(json["start"]),
         period: json["period"],
-        reminders: List<ReminderModel>.from(json["reminders"]
-            .map((x) => ReminderModel.fromJson(x, json["medicine"]))),
+        reminders: List<ReminderModel>.from(
+          json["reminders"].map(
+            (x) => ReminderModel.fromJson(
+              json: x,
+              name: json["medicine"],
+              amount: json["fraction"],
+              prescriptionID: json["id"].toString(),
+            ),
+          ),
+        ),
         takenno: json["takenno"],
         notify: json["notify"],
         consumptionDuration: json["description"],
@@ -51,21 +59,29 @@ class ReminderModel {
     required this.dateTime,
     required this.status,
     required this.name,
+    required this.amount,
+    required this.prescriptionID,
   });
 
   final String id;
   final DateTime dateTime;
   bool? status;
   final String name;
+  final String amount;
+  final String prescriptionID;
 
-  factory ReminderModel.fromJson(
-    Map<String, dynamic> json,
-    String name,
-  ) =>
+  factory ReminderModel.fromJson({
+    required Map<String, dynamic> json,
+    required String name,
+    required String amount,
+    required String prescriptionID,
+  }) =>
       ReminderModel(
         id: json["id"].toString(),
         dateTime: DateTime.parse(json["date_time"]),
         status: json["status"],
         name: name,
+        amount: amount,
+        prescriptionID: prescriptionID,
       );
 }

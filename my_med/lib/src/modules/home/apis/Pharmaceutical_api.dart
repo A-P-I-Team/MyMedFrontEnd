@@ -122,21 +122,56 @@ class Pharmaceutical {
     required String dateTime,
     required BuildContext context,
     required ActivePrescriptionModel activePrescriptionModel,
+    required VoidCallback onTimeout,
+    required VoidCallback onDisconnect,
+    required VoidCallback onAPIError,
   }) async {
-    try {} catch (e) {
+    try {
+      final Map<String, dynamic> body = {
+        'start': dateTime,
+        'notify': activePrescriptionModel.notify,
+      };
+      final response = await _api
+          .patch(
+            Uri.parse('${ConstURLs.drug}${activePrescriptionModel.id}/'),
+            body: json.encode(body),
+          )
+          .timeout(const Duration(seconds: ConstProperties.timeoutDuration));
+
+      if (response == null || response.body.isEmpty) {
+        throw ApiError(message: APIErrorMessage().serverMessage);
+      }
+      final decodedJson = jsonDecode(utf8.decode(response.bodyBytes));
+      if (response.statusCode != 200 || decodedJson == null) {
+        throw ApiError(message: APIErrorMessage().serverMessage);
+      }
+      var reminders = decodedJson['reminders'] as List?;
+      if (reminders == null) {
+        throw ApiError(message: APIErrorMessage().serverMessage);
+      }
+      final remindersList = (List.generate(
+        reminders.length,
+        (index) => ReminderModel.fromJson(
+          json: reminders[index],
+          name: activePrescriptionModel.medicine,
+          amount: activePrescriptionModel.fraction,
+          prescriptionID: activePrescriptionModel.id,
+        ),
+      ));
+      return (remindersList.isEmpty)
+          ? throw ApiError(message: APIErrorMessage().serverMessage)
+          : remindersList;
+    } on ApiError catch (_) {
+      onAPIError();
+    } on TimeoutException catch (_) {
+      onTimeout();
+    } on SocketException catch (_) {
+      onDisconnect();
+    } catch (e) {
+      onAPIError();
       debugPrint(e.toString());
     }
 
     return [];
-  }
-
-  Future<bool> setReminderNotificationStatus(
-      String activePrescriptionID, bool isReminderActive) async {
-    try {
-      return true;
-    } catch (e) {
-      debugPrint(e.toString());
-      return false;
-    }
   }
 }
