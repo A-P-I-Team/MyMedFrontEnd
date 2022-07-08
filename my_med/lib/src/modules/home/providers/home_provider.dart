@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/modules/home/apis/Pharmaceutical_api.dart';
@@ -76,14 +77,26 @@ class HomeProvider extends ChangeNotifier {
       for (final rem in item.reminders) {
         if (rem.dateTime.year == date.year &&
             rem.dateTime.month == date.month &&
-            rem.dateTime.day == date.day) remindersList.add(rem);
+            rem.dateTime.day == date.day) {
+          if (rem.dateTime.hour < DateTime.now().hour ||
+              (rem.dateTime.hour == DateTime.now().hour &&
+                  rem.dateTime.minute < DateTime.now().minute)) {
+            rem.status = false;
+          }
+          remindersList.add(rem);
+        }
       }
     }
+    sortReminders();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (isDisposed) return;
       notifyListeners();
     });
   }
+
+  void sortReminders() => remindersList.sort((reminder1, reminder2) =>
+      reminder1.dateTime.compareTo(reminder2.dateTime));
 
   void onSearchTap() {
     isSearchSelect = !isSearchSelect;
@@ -95,14 +108,14 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onDismissed(DismissDirection direction, int index) async {
-    final choosedReminder = remindersList[index];
+  void onDismissed(DismissDirection direction, int index) {
+    final chosenReminder = remindersList[index];
 
     if (direction == DismissDirection.endToStart) {
       remindersList[index].status = false;
-      callUseDrug(choosedReminder, false, index);
+      callUseDrug(chosenReminder, false, index);
     } else {
-      callUseDrug(choosedReminder, true, index);
+      callUseDrug(chosenReminder, true, index);
       remindersList[index].status = true;
     }
     final modifiedReminder = remindersList[index];
@@ -111,12 +124,41 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> callUseDrug(
-    ReminderModel choosedReminder,
+  void callUseDrug(
+    ReminderModel chosenReminder,
     bool isUsed,
     int index,
-  ) async {
-    //TODO API call
+  ) {
+    final oldReminderStatusState = chosenReminder.status;
+    Pharmaceutical()
+        .useDrug(
+      reminderID: chosenReminder.id,
+      isUsed: isUsed,
+      context: context,
+      onTimeout: () => APIErrorMessage().onTimeout(context),
+      onDisconnect: () => APIErrorMessage().onDisconnect(context),
+      onAPIError: (message) => APIErrorMessage().onAPIError(context, message),
+    )
+        .then(
+      (ok) {
+        if (isDisposed) return;
+        if (!ok) {
+          remindersList = remindersList.map<ReminderModel>(
+            (e) {
+              if (e.id == chosenReminder.id) {
+                e.status = oldReminderStatusState;
+              }
+              return e;
+            },
+          ).toList();
+          sortReminders();
+        } else {
+          consumedCount++;
+        }
+        if (isDisposed) return;
+        notifyListeners();
+      },
+    );
   }
 
   void onAddReminderTap() {

@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/constants/properties.dart';
@@ -85,9 +85,6 @@ class Pharmaceutical {
       if (response.statusCode != 200) {
         throw ApiError(message: APIErrorMessage().serverMessage);
       }
-      // if (decodedJson! is Map<String, dynamic>) {
-      //   throw ApiError(message: APIErrorMessage().serverMessage);
-      // }
 
       var activePrescDetail = ActivePrescriptionDetailModel.fromJson(
         decodedJson,
@@ -108,14 +105,58 @@ class Pharmaceutical {
     return null;
   }
 
-  Future<bool> useDrug(
-      String reminderID, bool isUsed, BuildContext context) async {
+  Future<bool> useDrug({
+    required String reminderID,
+    required bool isUsed,
+    required BuildContext context,
+    required VoidCallback onTimeout,
+    required VoidCallback onDisconnect,
+    required void Function(String message) onAPIError,
+  }) async {
     try {
-      return false;
+      final Map<String, dynamic> body = {
+        'status': isUsed,
+      };
+      final response = await _api
+          .patch(
+            Uri.parse('${ConstURLs.reminder}$reminderID/'),
+            body: json.encode(body),
+          )
+          .timeout(
+            const Duration(
+              seconds: ConstProperties.timeoutDuration,
+            ),
+          );
+
+      if (response == null || response.body.isEmpty) {
+        throw ApiError(message: APIErrorMessage().serverMessage);
+      }
+
+      final decodedJson = jsonDecode(utf8.decode(response.bodyBytes));
+
+      if (decodedJson == null) {
+        throw ApiError(message: APIErrorMessage().serverMessage);
+      }
+
+      if (response.statusCode != 200) {
+        throw ApiError(
+          message: decodedJson.containsKey('message')
+              ? decodedJson['message'] as String
+              : APIErrorMessage().serverMessage,
+        );
+      }
+      return true;
+    } on ApiError catch (error) {
+      onAPIError(error.message);
+    } on TimeoutException catch (_) {
+      onTimeout();
+    } on SocketException catch (_) {
+      onDisconnect();
     } catch (e) {
       debugPrint(e.toString());
-      return false;
     }
+
+    return false;
   }
 
   Future<List<ReminderModel>> startPrescription({
