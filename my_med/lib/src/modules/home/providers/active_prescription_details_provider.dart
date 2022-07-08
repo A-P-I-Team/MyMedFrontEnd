@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
@@ -99,7 +101,6 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
       return;
     }
     totalDayUse = getTotalDayUse(activePrescriptionModel);
-    //TODO Reminder toggleSwitch value for synchronization with server - Has not been decided
     var activePrescriptionDetailFromDB = PrescriptionDB.instance
         .getActivePrescriptionDetailModel(
             activePrescriptionModel.id.toString());
@@ -186,7 +187,6 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
 
   void onReminderChange(bool value) {
     isReminderOn = value;
-
     notifyListeners();
 
     activePrescriptionDetailModel!.notify = value;
@@ -214,7 +214,6 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
   void onEnterTap() async {
     if (isLoadingButton == true) return;
 
-    //TODO isReminder should be send for server for synchronization
     isLoadingButton = true;
     notifyListeners();
 
@@ -233,6 +232,9 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
       ).toGregorian().toDateTime().toString().substring(0, 19);
       activePrescriptionModel.reminders =
           await Pharmaceutical().startPrescription(
+        onTimeout: () => APIErrorMessage().onTimeout(context),
+        onDisconnect: () => APIErrorMessage().onDisconnect(context),
+        onAPIError: () => APIErrorMessage().onDisconnect(context),
         activePrescriptionModel: activePrescriptionModel,
         dateTime: convertedDateTime,
         context: context,
@@ -240,17 +242,7 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
 
       if (activePrescriptionModel.reminders.isNotEmpty) {
         if (isDisposed == false) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            CustomSnackBar().customShowMessage(
-              message: context.localizations.reminderAddedSuccess,
-              isAndroid: Platform.isAndroid,
-              color: Colors.green,
-              icon: const Icon(
-                Icons.check,
-                color: Colors.white,
-              ),
-            ),
-          );
+          getReminderAddedsuccessfullySnackBar();
         }
         if (isReminderOn) {
           for (final rem in activePrescriptionModel.reminders) {
@@ -268,38 +260,32 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
                 dateTime: reminderDate,
                 title: rem.name,
                 body: context.localizations.timeToTakeMedicine,
-                payload: 'Saramad - ${rem.dateTime}',
+                payload: 'My Med - ${rem.dateTime}',
               );
             }
-          }
-        }
-      }
-    } else {
-      if (isReminderONOldState == isReminderOn) {
-        showRestartMedicineError();
-      } else {
-        final isAPIDoneSuccessfully =
-            await Pharmaceutical().setReminderNotificationStatus(
-          activePrescriptionModel.id.toString(),
-          isReminderOn,
-        );
-        if (isAPIDoneSuccessfully) {
-          //TODO sync hive with response when back get the damnnnnnn is_reminder_on
-          isReminderONOldState = isReminderOn;
-          if (isReminderOn) {
-            await createLocalNotification();
-          } else {
-            removeLocalNotification();
           }
         }
       }
     }
 
     isLoadingButton = false;
-
     if (isDisposed) return;
-
     context.router.pop();
+  }
+
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
+      getReminderAddedsuccessfullySnackBar() {
+    return ScaffoldMessenger.of(context).showSnackBar(
+      CustomSnackBar().customShowMessage(
+        message: context.localizations.reminderAddedSuccess,
+        isAndroid: Platform.isAndroid,
+        color: Colors.green,
+        icon: const Icon(
+          Icons.check,
+          color: Colors.white,
+        ),
+      ),
+    );
   }
 
   void showRestartMedicineError() {
