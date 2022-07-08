@@ -33,7 +33,7 @@ class LocalNotificationAPI {
       const NotificationDetails(
         android: AndroidNotificationDetails(
           '#0',
-          'Doctora',
+          'MyMed',
           channelDescription: 'Local Notifications for Doctora app',
           importance: Importance.max,
         ),
@@ -49,7 +49,7 @@ class LocalNotificationAPI {
     );
     await _notification.initialize(
       setting,
-      onSelectNotification: ((payload) => null),
+      onSelectNotification: ((payload) => {}),
     );
 
     if (initScheduled) {
