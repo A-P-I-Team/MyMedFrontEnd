@@ -131,7 +131,8 @@
   "currentMedicationList": "لیست داروهای جاری",
   "searchDrug": "جستجوی دارو...",
   "noMatter": "مهم نیست",
-  "registerButtonText": "ثبت",
+  "registerButtonText": "شروع",
   "youHaveTakenNFromMMedicines": "شما {consumedCount} از {totalCount} داروی امروز را مصرف کردی.",
-  "helloFullName": "سلام {fullName}!"
+  "helloFullName": "سلام {fullName}!",
+  "noDescription": "توضیحاتی داده نشده است!"
 }

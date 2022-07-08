@@ -641,7 +641,7 @@
     "type": "text",
     "description": "modules Home > pages > prescription_page.dart > days text"
   },
-  "registerButtonText": "Register",
+  "registerButtonText": "Start",
   "@registerButtonText": {
     "description": "Register text in button in personal information page"
   },
@@ -673,5 +673,9 @@
         "description": "The name of person that you want say hello"
       }
     }
+  },
+  "noDescription": "No description!",
+  "@noDescription": {
+    "description": "Active prescription detail page doctor description"
   }
 }
