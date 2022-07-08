@@ -135,7 +135,7 @@ class ReminderContainer extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${convertToIsoTime(reminderModel.dateTime.hour.toString())} : ${convertToIsoTime(reminderModel.dateTime.toString())}',
+                      '${convertToIsoTime(reminderModel.dateTime.hour.toString())} : ${convertToIsoTime(reminderModel.dateTime.minute.toString())}',
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 14,
