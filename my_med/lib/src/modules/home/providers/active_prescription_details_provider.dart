@@ -8,6 +8,7 @@ import 'package:my_med/src/components/calendar_popup.dart';
 import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/components/utils/snack_bar.dart';
 import 'package:my_med/src/l10n/localization_provider.dart';
+import 'package:my_med/src/models/date.dart';
 import 'package:my_med/src/modules/home/apis/Pharmaceutical_api.dart';
 import 'package:my_med/src/modules/home/dbs/prescriptions_db.dart';
 import 'package:my_med/src/modules/home/models/active_prescription_detail_model.dart';
@@ -52,6 +53,8 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
   ];
 
   List<String> monthListMiladi = [
+    'Jan',
+    'Feb',
     'Mar',
     'Apr',
     'May',
@@ -62,8 +65,6 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
     'Oct',
     'Nov',
     'Dec',
-    'Jan',
-    'Feb'
   ];
 
   String _selectedTimeLocalized = '';
@@ -71,6 +72,16 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
 
   ActivePrescriptionDetailsProvider(
       {required this.context, required this.activePrescriptionModel}) {
+    daySelectedNew = (context.localizations.localeName == 'en')
+        ? DateTime.now().day
+        : daySelectedNew;
+    monthSelectedNew = (context.localizations.localeName == 'en')
+        ? DateTime.now().month
+        : monthSelectedNew;
+    yearSelectedNew = (context.localizations.localeName == 'en')
+        ? DateTime.now().year
+        : yearSelectedNew;
+    notifyListeners();
     var activePrescriptionDetailFromDB = PrescriptionDB.instance
         .getActivePrescriptionDetailModel(
             activePrescriptionModel.id.toString());
@@ -160,7 +171,7 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
   }
 
   Future<void> showCalendarDialog() async {
-    final date = await showDialog<Date>(
+    final date = await showDialog<MyDate>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
@@ -217,52 +228,50 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
     isLoadingButton = true;
     notifyListeners();
 
-    if (activePrescriptionModel.reminders.isEmpty) {
-      String convertedTime =
-          convertTimeToISOFormat(selectedTimeNonLocalized.split(' ')[0]);
-      String hours = convertedTime.split(':')[0];
-      String minutes = convertedTime.split(':')[1];
-      String convertedDateTime = Jalali(
-        yearSelectedNew,
-        monthSelectedNew,
-        daySelectedNew,
-        int.parse(hours),
-        int.parse(minutes),
-        0,
-      ).toGregorian().toDateTime().toString().substring(0, 19);
-      activePrescriptionModel.reminders =
-          await Pharmaceutical().startPrescription(
-        onTimeout: () => APIErrorMessage().onTimeout(context),
-        onDisconnect: () => APIErrorMessage().onDisconnect(context),
-        onAPIError: () => APIErrorMessage().onDisconnect(context),
-        activePrescriptionModel: activePrescriptionModel,
-        dateTime: convertedDateTime,
-        context: context,
-      );
+    String convertedTime =
+        convertTimeToISOFormat(selectedTimeNonLocalized.split(' ')[0]);
+    String hours = convertedTime.split(':')[0];
+    String minutes = convertedTime.split(':')[1];
+    String convertedDateTime = Jalali(
+      yearSelectedNew,
+      monthSelectedNew,
+      daySelectedNew,
+      int.parse(hours),
+      int.parse(minutes),
+      0,
+    ).toGregorian().toDateTime().toString().substring(0, 19);
+    activePrescriptionModel.reminders =
+        await Pharmaceutical().startPrescription(
+      onTimeout: () => APIErrorMessage().onTimeout(context),
+      onDisconnect: () => APIErrorMessage().onDisconnect(context),
+      onAPIError: () => APIErrorMessage().onDisconnect(context),
+      activePrescriptionModel: activePrescriptionModel,
+      dateTime: convertedDateTime,
+      context: context,
+    );
 
-      if (activePrescriptionModel.reminders.isNotEmpty) {
-        if (isDisposed == false) {
-          getReminderAddedsuccessfullySnackBar();
-        }
-        if (isReminderOn) {
-          for (final rem in activePrescriptionModel.reminders) {
-            final reminderDate = DateTime(
-              rem.dateTime.year,
-              rem.dateTime.month,
-              rem.dateTime.day,
-              rem.dateTime.hour,
-              rem.dateTime.minute,
-              rem.dateTime.second,
+    if (activePrescriptionModel.reminders.isNotEmpty) {
+      if (isDisposed == false) {
+        getReminderAddedsuccessfullySnackBar();
+      }
+      if (isReminderOn) {
+        for (final rem in activePrescriptionModel.reminders) {
+          final reminderDate = DateTime(
+            rem.dateTime.year,
+            rem.dateTime.month,
+            rem.dateTime.day,
+            rem.dateTime.hour,
+            rem.dateTime.minute,
+            rem.dateTime.second,
+          );
+          if (reminderDate.isAfter(DateTime.now())) {
+            await LocalNotificationAPI().showScheduledNotification(
+              id: rem.id.hashCode,
+              dateTime: reminderDate,
+              title: rem.name,
+              body: context.localizations.timeToTakeMedicine,
+              payload: 'My Med - ${rem.dateTime}',
             );
-            if (reminderDate.isAfter(DateTime.now())) {
-              await LocalNotificationAPI().showScheduledNotification(
-                id: rem.id.hashCode,
-                dateTime: reminderDate,
-                title: rem.name,
-                body: context.localizations.timeToTakeMedicine,
-                payload: 'My Med - ${rem.dateTime}',
-              );
-            }
           }
         }
       }

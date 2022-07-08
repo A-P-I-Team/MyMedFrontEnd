@@ -185,7 +185,7 @@ class _ActivePrescriptionDetailsPage extends StatelessWidget {
                                                     .localizations.localeName ==
                                                 "fa")
                                             ? "${provider.daySelectedNew} ${provider.monthList[provider.monthSelectedNew - 1]}"
-                                            : "${DateTime.now().day} ${provider.monthListMiladi[DateTime.now().month - 1]}",
+                                            : "${provider.daySelectedNew} ${provider.monthListMiladi[provider.monthSelectedNew - 1]}",
                                         decisionPopup: "Calendar",
                                         onCustomButtonTap:
                                             provider.onCustomButtonTap,
