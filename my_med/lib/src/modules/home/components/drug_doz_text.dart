@@ -14,7 +14,7 @@ class DrugDozText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text.rich(
       TextSpan(
-        text: medication.dosage.toString(),
+        text: '${medication.dosage} ',
         style: const TextStyle(
           fontWeight: FontWeight.w700,
           fontSize: 12,

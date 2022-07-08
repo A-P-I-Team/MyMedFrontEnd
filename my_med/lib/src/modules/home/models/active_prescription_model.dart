@@ -1,83 +1,71 @@
 class ActivePrescriptionModel {
   ActivePrescriptionModel({
     required this.id,
-    required this.name,
+    required this.prescription,
+    required this.medicine,
     required this.dosage,
-    required this.createdAt,
-    required this.consumptionMethod,
-    required this.consumptionAmount,
+    required this.fraction,
+    required this.days,
+    required this.start,
+    required this.period,
     required this.reminders,
-    required this.consumptionTimes,
+    required this.takenno,
+    required this.notify,
     required this.consumptionDuration,
   });
 
   final String id;
-  final String name;
-  final double dosage;
-  final DateTime createdAt;
-  final String consumptionMethod;
-  final String consumptionAmount;
+  final int prescription;
+  final String medicine;
+  final int dosage;
+  final String fraction;
+  final int days;
+  final DateTime start;
+  final int period;
   List<ReminderModel> reminders;
-  final int consumptionTimes;
+  final int takenno;
+  final bool notify;
   final String consumptionDuration;
 
   factory ActivePrescriptionModel.fromJson(Map<String, dynamic> json) =>
       ActivePrescriptionModel(
-        id: json["id"] as String,
-        name: json["name"] as String,
-        dosage: json["dosage"] as double,
-        createdAt: DateTime.parse(json["created_at"]),
-        consumptionMethod: json["consumption_method"] as String,
-        consumptionAmount: json["consumption_amount"] as String,
-        reminders: List<ReminderModel>.from(
-          json["reminders"].map(
-            (x) => ReminderModel.fromJson(
-              json: x,
-              name: json["name"] as String,
-              amount: json["consumption_amount"] as String,
-              method: json["consumption_method"] as String,
-              prescriptionId: json["id"] as String,
-            ),
-          ),
-        ),
-        consumptionTimes: json["consumption_times"] as int,
-        consumptionDuration: json["consumption_duration"] as String,
+        id: json["id"].toString(),
+        prescription: json["prescription"],
+        medicine: json["medicine"],
+        dosage: json["dosage"],
+        fraction: json["fraction"],
+        days: json["days"],
+        start: DateTime.parse(json["start"]),
+        period: json["period"],
+        reminders: List<ReminderModel>.from(json["reminders"]
+            .map((x) => ReminderModel.fromJson(x, json["medicine"]))),
+        takenno: json["takenno"],
+        notify: json["notify"],
+        consumptionDuration: json["description"],
       );
 }
 
 class ReminderModel {
   ReminderModel({
     required this.id,
-    required this.prescriptionId,
-    required this.timeToTake,
-    required this.taken,
+    required this.dateTime,
+    required this.status,
     required this.name,
-    required this.consumptionMethod,
-    required this.consumptionAmount,
   });
 
   final String id;
-  final String prescriptionId;
+  final DateTime dateTime;
+  bool? status;
   final String name;
-  final String consumptionMethod;
-  final String consumptionAmount;
-  final DateTime timeToTake;
-  bool? taken;
 
-  factory ReminderModel.fromJson({
-    required Map<String, dynamic> json,
-    name,
-    amount,
-    method,
-    prescriptionId,
-  }) =>
+  factory ReminderModel.fromJson(
+    Map<String, dynamic> json,
+    String name,
+  ) =>
       ReminderModel(
-        id: json["id"],
-        prescriptionId: prescriptionId,
-        timeToTake: DateTime.parse(json["time_to_take"]),
-        taken: json["taken"],
+        id: json["id"].toString(),
+        dateTime: DateTime.parse(json["date_time"]),
+        status: json["status"],
         name: name,
-        consumptionMethod: method,
-        consumptionAmount: amount,
       );
 }

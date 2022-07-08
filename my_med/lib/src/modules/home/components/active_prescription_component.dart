@@ -50,7 +50,7 @@ class ActivePrescriptionComponent extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          activePrescription.name,
+                          activePrescription.medicine,
                           style: const TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 14,
@@ -102,7 +102,7 @@ class ActivePrescriptionComponent extends StatelessWidget {
               ),
             ),
             Text(
-              activePrescription.createdAt.toString().split(' ')[0],
+              activePrescription.start.toString().split(' ')[0],
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 12,

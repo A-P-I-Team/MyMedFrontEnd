@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/modules/home/models/active_prescription_model.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/modules/home/apis/Pharmaceutical_api.dart';
@@ -26,9 +27,9 @@ class CalendarProvider extends ChangeNotifier {
 
     for (final item in activePrescriptionList) {
       for (final rem in item.reminders) {
-        if (rem.timeToTake.year == date.year &&
-            rem.timeToTake.month == date.month &&
-            rem.timeToTake.day == date.day) remindersList.add(rem);
+        if (rem.dateTime.year == date.year &&
+            rem.dateTime.month == date.month &&
+            rem.dateTime.day == date.day) remindersList.add(rem);
       }
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -39,7 +40,13 @@ class CalendarProvider extends ChangeNotifier {
   Future<void> getAllActivePrescriptionsList() async {
     isLoading = true;
 
-    Pharmaceutical().getActivePrescription().then(
+    Pharmaceutical()
+        .getActivePrescription(
+      onTimeout: () => APIErrorMessage().onTimeout(context),
+      onDisconnect: () => APIErrorMessage().onDisconnect(context),
+      onAPIError: () => APIErrorMessage().onDisconnect(context),
+    )
+        .then(
       (value) {
         if (isDisposed) return;
 
@@ -50,7 +57,7 @@ class CalendarProvider extends ChangeNotifier {
               value.where((element) => element.reminders.isNotEmpty).toList();
         }
         isLoading = false;
-
+        if (isDisposed) return;
         notifyListeners();
       },
     );
@@ -60,11 +67,11 @@ class CalendarProvider extends ChangeNotifier {
     final choosedReminder = remindersList[index];
 
     if (direction == DismissDirection.endToStart) {
-      remindersList[index].taken = false;
+      remindersList[index].status = false;
       callUseDrug(choosedReminder, false, index);
     } else {
       callUseDrug(choosedReminder, true, index);
-      remindersList[index].taken = true;
+      remindersList[index].status = true;
     }
     final modifiedReminder = remindersList[index];
     remindersList.removeAt(index);
@@ -81,7 +88,7 @@ class CalendarProvider extends ChangeNotifier {
           remindersList = remindersList.map<ReminderModel>(
             (e) {
               if (e.id == choosedReminder.id) {
-                e.taken = choosedReminder.taken;
+                e.status = choosedReminder.status;
               }
               return e;
             },
@@ -107,4 +114,3 @@ class CalendarProvider extends ChangeNotifier {
     super.dispose();
   }
 }
-

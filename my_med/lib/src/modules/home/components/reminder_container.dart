@@ -85,9 +85,9 @@ class ReminderContainer extends StatelessWidget {
             Container(
               width: 10,
               decoration: BoxDecoration(
-                color: (reminderModel.taken == null)
+                color: (reminderModel.status == null)
                     ? Colors.white
-                    : (reminderModel.taken == true)
+                    : (reminderModel.status == true)
                         ? const Color(0xFF3EDAA2)
                         : const Color(0xFFF07171),
               ),
@@ -100,8 +100,7 @@ class ReminderContainer extends StatelessWidget {
                     const SizedBox(
                       width: 50,
                       height: 50,
-                      child: const Image(
-                          image: AssetImage('assets/drug_image.png')),
+                      child: Image(image: AssetImage('assets/drug_image.png')),
                     ),
                     Expanded(
                       child: Padding(
@@ -118,35 +117,31 @@ class ReminderContainer extends StatelessWidget {
                                 color: Color(0xFF474747),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Text(
-                                reminderModel.consumptionAmount +
-                                    ' ' +
-                                    reminderModel.consumptionMethod,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 10,
-                                  color: Color(0xFF474747),
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(right: 8.0),
+                            //   child: Text(
+                            //     reminderModel.consumptionAmount +
+                            //         ' ' +
+                            //         reminderModel.consumptionMethod,
+                            //     style: const TextStyle(
+                            //       fontWeight: FontWeight.w400,
+                            //       fontSize: 10,
+                            //       color: Color(0xFF474747),
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
                     ),
                     Text(
-                      convertToIsoTime(
-                              reminderModel.timeToTake.hour.toString()) +
-                          ':' +
-                          convertToIsoTime(
-                              reminderModel.timeToTake.minute.toString()),
+                      '${convertToIsoTime(reminderModel.dateTime.hour.toString())} : ${convertToIsoTime(reminderModel.dateTime.toString())}',
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 14,
-                        color: (reminderModel.taken == true)
+                        color: (reminderModel.status == true)
                             ? const Color(0xFF3EDAA2)
-                            : (reminderModel.taken == null)
+                            : (reminderModel.status == null)
                                 ? const Color(0xFF5EAFC0)
                                 : const Color(0xFFF07171),
                       ),
