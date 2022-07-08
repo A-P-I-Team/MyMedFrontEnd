@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/modules/home/apis/Pharmaceutical_api.dart';
 import 'package:my_med/src/modules/home/models/active_prescription_model.dart';
@@ -20,7 +21,13 @@ class ActivePrescriptionProvider extends ChangeNotifier {
   }
 
   Future<void> getActivePrescriptionList() async {
-    await Pharmaceutical().getActivePrescription().then(
+    await Pharmaceutical()
+        .getActivePrescription(
+      onTimeout: () => APIErrorMessage().onTimeout(context),
+      onDisconnect: () => APIErrorMessage().onDisconnect(context),
+      onAPIError: () => APIErrorMessage().onDisconnect(context),
+    )
+        .then(
       (value) {
         if (isDisposed) return;
         if (value.isEmpty) {
@@ -45,7 +52,7 @@ class ActivePrescriptionProvider extends ChangeNotifier {
   }
 
   int getTotalDayUse(ActivePrescriptionModel model) {
-    return model.takenno;
+    return model.days;
   }
 
   void checkId(String id) {

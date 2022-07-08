@@ -3,12 +3,13 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/calendar_popup.dart';
+import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/components/utils/snack_bar.dart';
 import 'package:my_med/src/l10n/localization_provider.dart';
 import 'package:my_med/src/modules/home/apis/Pharmaceutical_api.dart';
 import 'package:my_med/src/modules/home/dbs/prescriptions_db.dart';
+import 'package:my_med/src/modules/home/models/active_prescription_detail_model.dart';
 import 'package:my_med/src/modules/home/models/active_prescription_model.dart';
-import 'package:my_med/src/modules/home/models/prescription_detail_model.dart';
 import 'package:my_med/src/modules/home/models/reminder_model.dart';
 import 'package:my_med/src/utils/local_notification.dart';
 import 'package:shamsi_date/shamsi_date.dart';
@@ -16,7 +17,7 @@ import 'package:shamsi_date/shamsi_date.dart';
 class ActivePrescriptionDetailsProvider extends ChangeNotifier {
   final BuildContext context;
   final ActivePrescriptionModel activePrescriptionModel;
-  PrescriptionModel? activePrescriptionDetailModel;
+  ActivePrescriptionDetailModel? activePrescriptionDetailModel;
   List<ActivePrescriptionReminderModel> remindersList = [];
   int indexAlarm = 0;
   int indexDay = 1;
@@ -72,7 +73,7 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
         .getActivePrescriptionDetailModel(
             activePrescriptionModel.id.toString());
     if (activePrescriptionDetailFromDB != null) {
-      isReminderOn = activePrescriptionDetailFromDB.isReminderOn;
+      isReminderOn = activePrescriptionDetailFromDB.notify;
     }
 
     getActivePrescriptionDetail();
@@ -80,14 +81,19 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
   }
 
   int getTotalDayUse(ActivePrescriptionModel model) {
-    return model.takenno;
+    return model.days;
   }
 
   void getActivePrescriptionDetail() async {
     isLoading = true;
     notifyListeners();
-    activePrescriptionDetailModel = await Pharmaceutical()
-        .getActivePrescriptionDetail(activePrescriptionModel.id);
+    activePrescriptionDetailModel =
+        await Pharmaceutical().getActivePrescriptionDetail(
+      onTimeout: () => APIErrorMessage().onTimeout(context),
+      onDisconnect: () => APIErrorMessage().onDisconnect(context),
+      onAPIError: () => APIErrorMessage().onDisconnect(context),
+      activePrescriptionID: activePrescriptionModel.id,
+    );
     if (activePrescriptionDetailModel == null) {
       context.router.pop();
       return;
@@ -98,9 +104,9 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
         .getActivePrescriptionDetailModel(
             activePrescriptionModel.id.toString());
     if (activePrescriptionDetailFromDB != null) {
-      bool? isReminderOnFromDB = activePrescriptionDetailFromDB.isReminderOn;
+      bool? isReminderOnFromDB = activePrescriptionDetailFromDB.notify;
       isReminderOn = isReminderOnFromDB;
-      activePrescriptionDetailModel!.isReminderOn = isReminderOn;
+      activePrescriptionDetailModel!.notify = isReminderOn;
     }
     PrescriptionDB.instance
         .addActivePrescriptionsDetails(activePrescriptionDetailModel!);
@@ -183,7 +189,7 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
 
     notifyListeners();
 
-    activePrescriptionDetailModel!.isReminderOn = value;
+    activePrescriptionDetailModel!.notify = value;
     PrescriptionDB.instance
         .addActivePrescriptionsDetails(activePrescriptionDetailModel!);
   }
