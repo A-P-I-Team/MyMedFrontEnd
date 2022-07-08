@@ -232,14 +232,19 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
         convertTimeToISOFormat(selectedTimeNonLocalized.split(' ')[0]);
     String hours = convertedTime.split(':')[0];
     String minutes = convertedTime.split(':')[1];
-    String convertedDateTime = Jalali(
-      yearSelectedNew,
-      monthSelectedNew,
-      daySelectedNew,
-      int.parse(hours),
-      int.parse(minutes),
-      0,
-    ).toGregorian().toDateTime().toString().substring(0, 19);
+    String convertedDateTime = '';
+    if (context.localizations.localeName == 'fa') {
+      convertedDateTime = Jalali(
+        yearSelectedNew,
+        monthSelectedNew,
+        daySelectedNew,
+        int.parse(hours),
+        int.parse(minutes),
+        0,
+      ).toGregorian().toDateTime().toString().substring(0, 19);
+    } else {
+      convertedDateTime = DateTime.now().toString();
+    }
     activePrescriptionModel.reminders =
         await Pharmaceutical().startPrescription(
       onTimeout: () => APIErrorMessage().onTimeout(context),
