@@ -110,10 +110,12 @@ class _HomePage extends StatelessWidget {
                       top: 50,
                       right: 160,
                       child: Text(
-                        context.localizations.youHaveTakenNFromMMedicines(
-                          context.watch<HomeProvider>().consumedCount,
-                          context.watch<HomeProvider>().totalCount,
-                        ),
+                        (provider.remindersList.isEmpty)
+                            ? context.localizations.noDrugForUse
+                            : context.localizations.youHaveTakenNFromMMedicines(
+                                context.watch<HomeProvider>().consumedCount,
+                                context.watch<HomeProvider>().totalCount,
+                              ),
                         style: const TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 10,

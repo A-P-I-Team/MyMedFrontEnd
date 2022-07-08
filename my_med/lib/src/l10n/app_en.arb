@@ -677,5 +677,9 @@
   "noDescription": "No description!",
   "@noDescription": {
     "description": "Active prescription detail page doctor description"
+  },
+  "noDrugForUse": "You have no medicines to take :)",
+  "@noDrugForUse": {
+    "description": "Home page medicine consumption status."
   }
 }

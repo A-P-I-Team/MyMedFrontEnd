@@ -53,11 +53,20 @@ class HomeProvider extends ChangeNotifier {
           activePrescriptionList =
               value.where((element) => element.reminders.isNotEmpty).toList();
           addReminders();
+          setTakenMedicines();
         }
         isLoading = false;
         notifyListeners();
       },
     );
+  }
+
+  void setTakenMedicines() {
+    totalCount = remindersList
+        .where((element) => element.status != true)
+        .toList()
+        .length;
+    consumedCount = remindersList.length - totalCount;
   }
 
   void addReminders() {

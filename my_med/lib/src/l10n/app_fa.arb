@@ -134,5 +134,6 @@
   "registerButtonText": "شروع",
   "youHaveTakenNFromMMedicines": "شما {consumedCount} از {totalCount} داروی امروز را مصرف کردی.",
   "helloFullName": "سلام {fullName}!",
-  "noDescription": "توضیحاتی داده نشده است!"
+  "noDescription": "توضیحاتی داده نشده است!",
+  "noDrugForUse": "دارویی برای مصرف ندارید :)"
 }
