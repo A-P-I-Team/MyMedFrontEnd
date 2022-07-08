@@ -49,22 +49,22 @@ class _OnboardingPage extends StatelessWidget {
                       ),
                       child: Column(
                         children: [
-                          AspectRatio(
-                            aspectRatio: 1,
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.35,
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image:
-                                      Image.asset("assets/onboarding$index.png")
-                                          .image,
-                                  fit: BoxFit.none,
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.2,
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: Image.asset(
+                                            "assets/onboarding$index.png")
+                                        .image,
+                                    fit: BoxFit.none,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
                                 ),
-                                color: Theme.of(context).primaryColor,
-                                borderRadius: BorderRadius.circular(16),
+                                alignment: Alignment.center,
                               ),
-                              alignment: Alignment.center,
                             ),
                           ),
                           Center(
@@ -89,25 +89,26 @@ class _OnboardingPage extends StatelessWidget {
                               ),
                             ),
                           ),
+                          const SizedBox(height: 16),
+                          Flexible(
+                            child: SmoothPageIndicator(
+                              effect: JumpingDotEffect(
+                                spacing: 12,
+                                verticalOffset: 16,
+                                activeDotColor: Theme.of(context)
+                                    .buttonTheme
+                                    .colorScheme!
+                                    .primary,
+                              ),
+                              count: provider.pageCount,
+                              controller: provider.controller,
+                              onDotClicked: provider.onDotClicked,
+                            ),
+                          ),
                         ],
                       ),
                     );
                   },
-                ),
-              ),
-              Expanded(
-                child: Center(
-                  child: SmoothPageIndicator(
-                    effect: JumpingDotEffect(
-                      spacing: 12,
-                      verticalOffset: 16,
-                      activeDotColor:
-                          Theme.of(context).buttonTheme.colorScheme!.primary,
-                    ),
-                    count: provider.pageCount,
-                    controller: provider.controller,
-                    onDotClicked: provider.onDotClicked,
-                  ),
                 ),
               ),
               Expanded(

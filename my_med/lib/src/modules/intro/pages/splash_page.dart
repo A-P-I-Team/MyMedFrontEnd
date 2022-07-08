@@ -15,11 +15,11 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     final bool ok = PreferencesService.hasToken();
     if (ok == false) {
-      Future.delayed(const Duration(seconds: 2)).then((_) {
+      Future.delayed(const Duration(seconds: 1)).then((_) {
         context.router.replaceAll(const [OnboardingRoute()]);
       });
     } else {
-      Future.delayed(const Duration(seconds: 2)).then((_) {
+      Future.delayed(const Duration(seconds: 1)).then((_) {
         context.router.replaceAll(const [DashboardRoute()]);
       });
     }
@@ -31,14 +31,49 @@ class _SplashPageState extends State<SplashPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: const [
-          Padding(
-            padding: EdgeInsets.all(24.0),
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          const Expanded(child: SizedBox()),
+          Expanded(
+            child: Column(
+              children: [
+                Container(
+                  height: 180,
+                  width: 180,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Image(
+                    image: Image.asset(
+                      'assets/launcher_icon_blue_red.png',
+                      fit: BoxFit.cover,
+                    ).image,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'My Med',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Expanded(
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: CircularProgressIndicator(
-                color: Colors.white,
+              child: Padding(
+                padding: EdgeInsets.all(24.0),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
           )
