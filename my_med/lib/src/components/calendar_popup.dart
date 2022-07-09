@@ -16,9 +16,9 @@ class CalendarPopUp extends StatefulWidget {
 }
 
 class _CalendarPopUpState extends State<CalendarPopUp> {
-  int daySelected = Jalali.now().day;
-  int monthSelected = Jalali.now().month;
-  int yearSelected = Jalali.now().year;
+  int daySelected = DateTime.now().day;
+  int monthSelected = DateTime.now().month;
+  int yearSelected = DateTime.now().year;
   final List<String> _monthList = [
     'فروردین',
     'اردیبهشت',
@@ -35,6 +35,8 @@ class _CalendarPopUpState extends State<CalendarPopUp> {
   ];
 
   final List<String> _monthListMiladi = [
+    'Jan',
+    'Feb',
     'Mar',
     'Apr',
     'May',
@@ -45,8 +47,6 @@ class _CalendarPopUpState extends State<CalendarPopUp> {
     'Oct',
     'Nov',
     'Dec',
-    'Jan',
-    'Feb'
   ];
 
   @override
