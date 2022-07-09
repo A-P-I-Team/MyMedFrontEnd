@@ -232,7 +232,13 @@ class SignupProvider extends ChangeNotifier {
     if (value.length < 10) {
       ssnErrorText = 'The SSN should be a 10 digit number!';
       notifyListeners();
-    } else {
+    }
+    else if(int.tryParse(value) == null)
+    {
+      ssnErrorText = 'The SSN should contain digits only!';
+      notifyListeners();
+    }
+    else {
       ssnErrorText = null;
       notifyListeners();
     }
