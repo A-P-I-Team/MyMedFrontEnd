@@ -29,9 +29,17 @@ class CalendarProvider extends ChangeNotifier {
       for (final rem in item.reminders) {
         if (rem.dateTime.year == date.year &&
             rem.dateTime.month == date.month &&
-            rem.dateTime.day == date.day) remindersList.add(rem);
+            rem.dateTime.day == date.day) {
+          if (rem.dateTime.hour < DateTime.now().hour ||
+              (rem.dateTime.hour == DateTime.now().hour &&
+                  rem.dateTime.minute < DateTime.now().minute)) {
+            rem.status = false;
+          }
+          remindersList.add(rem);
+        }
       }
     }
+    sortReminders();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       notifyListeners();
     });
@@ -80,23 +88,41 @@ class CalendarProvider extends ChangeNotifier {
   }
 
   Future<void> callUseDrug(
-      ReminderModel choosedReminder, bool isUsed, int index) {
-    return Pharmaceutical().useDrug(choosedReminder.id, isUsed, context).then(
+    ReminderModel chosenReminder,
+    bool isUsed,
+    int index,
+  ) {
+    final oldReminderStatusState = chosenReminder.status;
+    return Pharmaceutical()
+        .useDrug(
+      reminderID: chosenReminder.id,
+      isUsed: isUsed,
+      context: context,
+      onTimeout: () => APIErrorMessage().onTimeout(context),
+      onDisconnect: () => APIErrorMessage().onDisconnect(context),
+      onAPIError: (message) => APIErrorMessage().onAPIError(context, message),
+    )
+        .then(
       (ok) {
         if (isDisposed) return;
         if (!ok) {
           remindersList = remindersList.map<ReminderModel>(
             (e) {
-              if (e.id == choosedReminder.id) {
-                e.status = choosedReminder.status;
+              if (e.id == chosenReminder.id) {
+                e.status = oldReminderStatusState;
               }
               return e;
             },
           ).toList();
+          sortReminders();
+          notifyListeners();
         }
       },
     );
   }
+
+  void sortReminders() => remindersList.sort((reminder1, reminder2) =>
+      reminder1.dateTime.compareTo(reminder2.dateTime));
 
   void onSearchTap() {
     isSearchSelect = !isSearchSelect;

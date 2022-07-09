@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/utils/snack_bar.dart';
 
-class ApiError {
+class ApiError implements Exception {
   final String message;
   final int code;
 
@@ -31,7 +31,10 @@ class APIErrorMessage {
     );
   }
 
-  void onAPIError(BuildContext context, String message,) {
+  void onAPIError(
+    BuildContext context,
+    String message,
+  ) {
     CustomSnackBar().showMessage(
       context: context,
       content: Text(message),

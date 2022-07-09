@@ -18,4 +18,5 @@ class ConstURLs {
   static const String drug = '$baseDomain/medical/prescription-medicines/';
   static const String activePrescription =
       '$baseDomain/medical/active-prescription-medicines/';
+  static const String reminder = '$baseDomain/medical/reminders/';
 }

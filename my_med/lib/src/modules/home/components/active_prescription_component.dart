@@ -54,7 +54,7 @@ class ActivePrescriptionComponent extends StatelessWidget {
                           style: const TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 14,
-                              color: const Color(0xFF474747),
+                              color: Color(0xFF474747),
                               overflow: TextOverflow.clip),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -102,7 +102,7 @@ class ActivePrescriptionComponent extends StatelessWidget {
               ),
             ),
             Text(
-              activePrescription.start.toString().split(' ')[0],
+              activePrescription.doctorStart.toString().split(' ')[0],
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 12,
