@@ -18,9 +18,14 @@ class AvatarColumn extends StatelessWidget {
     return FittedBox(
       child: Column(
         children: [
-          CircleAvatar(
-            radius: 40,
-            backgroundColor: Theme.of(context).primaryColorLight,
+          Container(
+            height: 80,
+            width: 80,
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Theme.of(context).primaryColorLight,
+            ),
             child: (profileImage != null)
                 ? CachedNetworkImage(
                     imageUrl: profileImage!,
