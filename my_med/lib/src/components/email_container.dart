@@ -17,7 +17,6 @@ class EmailContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: 8),
           Image.asset(
@@ -25,29 +24,32 @@ class EmailContainer extends StatelessWidget {
             width: 70,
           ),
           Expanded(
-            child: Column(
-              children: [
-                const SizedBox(height: 68),
-                Text(
-                  email,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
-                    color: Color(0xFF474747),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Column(
+                children: [
+                  const SizedBox(height: 24),
+                  Text(
+                    email,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      color: Color(0xFF474747),
+                    ),
+                    textDirection: TextDirection.rtl,
                   ),
-                  textDirection: TextDirection.rtl,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  context.localizations.email,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12,
-                    color: Color(0xFF474747),
+                  const SizedBox(height: 4),
+                  Text(
+                    context.localizations.email,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                      color: Color(0xFF474747),
+                    ),
+                    textDirection: TextDirection.rtl,
                   ),
-                  textDirection: TextDirection.rtl,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
