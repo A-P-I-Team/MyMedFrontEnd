@@ -7,6 +7,7 @@ class ActivePrescriptionModel {
     required this.fraction,
     required this.days,
     required this.start,
+    required this.doctorStart,
     required this.period,
     required this.reminders,
     required this.takenno,
@@ -21,6 +22,7 @@ class ActivePrescriptionModel {
   final String fraction;
   final int days;
   final DateTime start;
+  final DateTime doctorStart;
   final int period;
   List<ReminderModel> reminders;
   final int takenno;
@@ -50,6 +52,7 @@ class ActivePrescriptionModel {
         takenno: json["takenno"],
         notify: json["notify"],
         consumptionDuration: json["description"],
+        doctorStart: DateTime.parse(json["datetime"]),
       );
 }
 

@@ -58,6 +58,7 @@ class _ActivePrescriptionPage extends StatelessWidget {
                           medicine: item.medicine,
                           dosage: item.dosage,
                           start: item.start,
+                          doctorStart: item.doctorStart,
                           reminders: item.reminders,
                           notify: item.notify,
                           days: item.days,
