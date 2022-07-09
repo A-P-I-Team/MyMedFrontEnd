@@ -179,10 +179,17 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
       },
     );
     if (date != null) {
-      savedCalendarDialogData = true;
-      daySelectedNew = date.day;
-      monthSelectedNew = date.month;
-      yearSelectedNew = date.year;
+      if (DateTime(date.year, date.month, date.day)
+          .isBefore(activePrescriptionModel.doctorStart)) {
+        errorHandler(
+            'You can not start your medicine before doctor release date (${activePrescriptionModel.doctorStart.toString().substring(0, 19)})');
+      } else {
+        savedCalendarDialogData = true;
+        daySelectedNew = date.day;
+        monthSelectedNew = date.month;
+        yearSelectedNew = date.year;
+      }
+
       notifyListeners();
     }
   }
@@ -243,7 +250,14 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
         0,
       ).toGregorian().toDateTime().toString().substring(0, 19);
     } else {
-      convertedDateTime = DateTime.now().toString();
+      convertedDateTime = DateTime(
+        yearSelectedNew,
+        monthSelectedNew,
+        daySelectedNew,
+        int.parse(hours),
+        int.parse(minutes),
+        0,
+      ).toString();
     }
     activePrescriptionModel.reminders =
         await Pharmaceutical().startPrescription(
@@ -298,6 +312,17 @@ class ActivePrescriptionDetailsProvider extends ChangeNotifier {
           Icons.check,
           color: Colors.white,
         ),
+      ),
+    );
+  }
+
+  void errorHandler(String errorMessage) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      CustomSnackBar().customShowMessage(
+        message: errorMessage,
+        isAndroid: Platform.isAndroid,
+        color: Colors.red,
       ),
     );
   }
