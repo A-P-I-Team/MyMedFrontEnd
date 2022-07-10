@@ -78,11 +78,6 @@ class HomeProvider extends ChangeNotifier {
         if (rem.dateTime.year == date.year &&
             rem.dateTime.month == date.month &&
             rem.dateTime.day == date.day) {
-          if (rem.dateTime.hour < DateTime.now().hour ||
-              (rem.dateTime.hour == DateTime.now().hour &&
-                  rem.dateTime.minute < DateTime.now().minute)) {
-            rem.status = false;
-          }
           remindersList.add(rem);
         }
       }
@@ -95,8 +90,21 @@ class HomeProvider extends ChangeNotifier {
     });
   }
 
-  void sortReminders() => remindersList.sort((reminder1, reminder2) =>
-      reminder1.dateTime.compareTo(reminder2.dateTime));
+  void sortReminders() {
+    remindersList.sort((reminder1, reminder2) =>
+        reminder1.dateTime.compareTo(reminder2.dateTime));
+
+    int index = 0;
+    for (var i = 0; i < remindersList.length; i++) {
+      final item = remindersList[index];
+      if (item.status != null) {
+        remindersList.remove(item);
+        remindersList.add(item);
+      } else {
+        index++;
+      }
+    }
+  }
 
   void onSearchTap() {
     isSearchSelect = !isSearchSelect;
