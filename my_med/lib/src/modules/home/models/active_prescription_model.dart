@@ -37,7 +37,7 @@ class ActivePrescriptionModel {
         dosage: json["dosage"],
         fraction: json["fraction"],
         days: json["days"],
-        start: DateTime.parse(json["start"]),
+        start: DateTime.parse(json["start"]).toLocal(),
         period: json["period"],
         reminders: List<ReminderModel>.from(
           json["reminders"].map(
@@ -52,7 +52,7 @@ class ActivePrescriptionModel {
         takenno: json["takenno"],
         notify: json["notify"],
         consumptionDuration: json["description"],
-        doctorStart: DateTime.parse(json["datetime"]),
+        doctorStart: DateTime.parse(json["datetime"]).toLocal(),
       );
 }
 
@@ -81,7 +81,7 @@ class ReminderModel {
   }) =>
       ReminderModel(
         id: json["id"].toString(),
-        dateTime: DateTime.parse(json["date_time"]),
+        dateTime: DateTime.parse(json["date_time"]).toLocal(),
         status: json["status"],
         name: name,
         amount: amount,
