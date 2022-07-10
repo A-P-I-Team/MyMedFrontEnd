@@ -47,7 +47,7 @@ class DrugsHeader extends StatelessWidget {
                       color: Color(0xFF474747)),
                   children: [
                     TextSpan(
-                      text: totalDayUse.toString(),
+                      text: ' $totalDayUse',
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 16,

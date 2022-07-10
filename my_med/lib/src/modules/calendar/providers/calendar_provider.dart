@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
+
 import 'package:my_med/src/components/error_template.dart';
+import 'package:my_med/src/components/utils/snack_bar.dart';
 import 'package:my_med/src/modules/home/models/active_prescription_model.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/modules/home/apis/Pharmaceutical_api.dart';
-import 'package:shamsi_date/shamsi_date.dart';
 
 class CalendarProvider extends ChangeNotifier {
   BuildContext context;
@@ -22,7 +23,7 @@ class CalendarProvider extends ChangeNotifier {
   }
 
   void findReminders(DateTime date) {
-    date = Jalali(date.year, date.month, date.day).toDateTime();
+    date = DateTime(date.year, date.month, date.day);
     remindersList.clear();
 
     for (final item in activePrescriptionList) {
@@ -30,11 +31,6 @@ class CalendarProvider extends ChangeNotifier {
         if (rem.dateTime.year == date.year &&
             rem.dateTime.month == date.month &&
             rem.dateTime.day == date.day) {
-          if (rem.dateTime.hour < DateTime.now().hour ||
-              (rem.dateTime.hour == DateTime.now().hour &&
-                  rem.dateTime.minute < DateTime.now().minute)) {
-            rem.status = false;
-          }
           remindersList.add(rem);
         }
       }
@@ -71,14 +67,20 @@ class CalendarProvider extends ChangeNotifier {
     );
   }
 
-  void onDismissed(DismissDirection direction, int index) async {
-    final choosedReminder = remindersList[index];
+  void onDismissed(DismissDirection direction, int index) {
+    final chosenReminder = remindersList[index];
+    if (chosenReminder.dateTime
+        .isAfter(DateTime.now().add(const Duration(minutes: 31)))) {
+      errorHandler('Time not reached!');
+      notifyListeners();
+      return;
+    }
 
     if (direction == DismissDirection.endToStart) {
       remindersList[index].status = false;
-      callUseDrug(choosedReminder, false, index);
+      callUseDrug(chosenReminder, false, index);
     } else {
-      callUseDrug(choosedReminder, true, index);
+      callUseDrug(chosenReminder, true, index);
       remindersList[index].status = true;
     }
     final modifiedReminder = remindersList[index];
@@ -121,8 +123,32 @@ class CalendarProvider extends ChangeNotifier {
     );
   }
 
-  void sortReminders() => remindersList.sort((reminder1, reminder2) =>
-      reminder1.dateTime.compareTo(reminder2.dateTime));
+  void errorHandler(String errorMessage) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      CustomSnackBar().customShowMessage(
+        message: errorMessage,
+        isAndroid: Platform.isAndroid,
+        color: Colors.red,
+      ),
+    );
+  }
+
+  void sortReminders() {
+    remindersList.sort((reminder1, reminder2) =>
+        reminder1.dateTime.compareTo(reminder2.dateTime));
+
+    int index = 0;
+    for (var i = 0; i < remindersList.length; i++) {
+      final item = remindersList[index];
+      if (item.status != null) {
+        remindersList.remove(item);
+        remindersList.add(item);
+      } else {
+        index++;
+      }
+    }
+  }
 
   void onSearchTap() {
     isSearchSelect = !isSearchSelect;

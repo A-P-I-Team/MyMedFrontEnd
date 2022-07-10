@@ -22,14 +22,6 @@ class ConsumptionDurationText extends StatelessWidget {
         ),
         children: [
           TextSpan(
-            text: '${medication.consumptionDuration} ',
-            style: const TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 12,
-              color: Color(0xFF5EAFC0),
-            ),
-          ),
-          TextSpan(
             text: context.localizations.hourOnce,
           ),
         ],

@@ -4,7 +4,7 @@ import 'package:my_med/src/components/primary_icon_button.dart';
 import 'package:my_med/src/l10n/localization_provider.dart';
 import 'package:my_med/src/modules/drug/components/doctor_details_container.dart';
 import 'package:my_med/src/modules/drug/components/progress_drug_container.dart';
-import 'package:my_med/src/modules/drug/components/stop_medication_request_button.dart';
+// import 'package:my_med/src/modules/drug/components/stop_medication_request_button.dart';
 import 'package:my_med/src/modules/drug/models/drug_detail_model.dart';
 
 class DrugsBody extends StatelessWidget {
@@ -82,7 +82,6 @@ class DrugsBody extends StatelessWidget {
                     child: (isStartedDrug)
                         ? ProgressDrugContainer(
                             prescriptionModel: prescriptionModel,
-                            totalDayUse: totalDayUse,
                           )
                         : const SizedBox()),
               ],
@@ -101,9 +100,9 @@ class DrugsBody extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-              StopMedicationRequestButton(
-                onStopPrescription: onStopPrescription,
-              ),
+              // StopMedicationRequestButton(
+              //   onStopPrescription: onStopPrescription,
+              // ),
             ],
           ),
         ],

@@ -43,9 +43,9 @@ class NextReminderText extends StatelessWidget {
                 color: Color(0xFF737373),
               ),
               children: [
-                const TextSpan(
-                  text: " 3 ",
-                  style: TextStyle(
+                TextSpan(
+                  text: ' ${drugDetailModel.nextReminder} ',
+                  style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 12,
                     color: Color(0xFF5EAFC0),

@@ -44,7 +44,7 @@ class DrugBox extends StatelessWidget {
             Text(
               (drug.consumptionStart == null)
                   ? context.localizations.notStarted
-                  : drug.consumptionStart!.split(' ')[0],
+                  : drug.consumptionStart!.split('T')[0],
               textDirection: TextDirection.rtl,
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
