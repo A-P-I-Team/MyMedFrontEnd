@@ -21,7 +21,7 @@ class DrugUsagePeriod extends StatelessWidget {
         ),
         children: [
           TextSpan(
-            text: '${drugDetailModel.days} ',
+            text: '${drugDetailModel.period} ',
             style: const TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 12,

@@ -9,6 +9,8 @@ class DrugDetailModel {
     required this.progress,
     required this.description,
     required this.doctor,
+    required this.period,
+    required this.nextReminder,
   });
 
   final String medicine;
@@ -20,6 +22,8 @@ class DrugDetailModel {
   final double progress;
   final String description;
   final Doctor doctor;
+  final int period;
+  final int? nextReminder;
 
   factory DrugDetailModel.fromJson(Map<String, dynamic> json) =>
       DrugDetailModel(
@@ -31,20 +35,10 @@ class DrugDetailModel {
         remaining: json["remaining"],
         progress: json["progress"],
         description: json["description"],
+        period: json["period"],
         doctor: Doctor.fromJson(json["doctor"]),
+        nextReminder: json['next_reminder'],
       );
-
-  Map<String, dynamic> toJson() => {
-        "medicine": medicine,
-        "dosage": dosage,
-        "fraction": fraction,
-        "days": days,
-        "elapsed": elapsed,
-        "remaining": remaining,
-        "progress": progress,
-        "description": description,
-        "doctor": doctor.toJson(),
-      };
 }
 
 class Doctor {

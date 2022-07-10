@@ -68,25 +68,6 @@ class _DrugDetailsPage extends StatelessWidget {
     return AppBar(
       elevation: 0,
       backgroundColor: const Color(0xFFEDF5FD),
-      actions: [
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: const Color(0xFFEDF5FD),
-            // minimumSize: Size(88, 50),
-            elevation: 0,
-            padding: const EdgeInsets.all(0),
-          ),
-          onPressed: () {},
-          child: SizedBox(
-            width: 20,
-            height: 20,
-            child: SvgPicture.asset(
-              "assets/accept_icon.svg",
-              color: const Color(0xFF909090),
-            ),
-          ),
-        )
-      ],
       title: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Center(

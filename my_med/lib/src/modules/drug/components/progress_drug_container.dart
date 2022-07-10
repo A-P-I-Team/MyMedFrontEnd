@@ -8,12 +8,10 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class ProgressDrugContainer extends StatelessWidget {
   final DrugDetailModel prescriptionModel;
-  final int totalDayUse;
 
   const ProgressDrugContainer({
     Key? key,
     required this.prescriptionModel,
-    required this.totalDayUse,
   }) : super(key: key);
 
   @override
@@ -34,12 +32,12 @@ class ProgressDrugContainer extends StatelessWidget {
             animationDuration: 1000,
             radius: 50,
             lineWidth: 10,
-            percent: 0.75,
+            percent: prescriptionModel.progress / 100,
             progressColor: const Color(0xFF5EAFC0),
             backgroundColor: const Color(0xFFEDF5FD),
-            center: const Text(
-              "75%",
-              style: TextStyle(
+            center: Text(
+              '${prescriptionModel.progress ~/ 1}%',
+              style: const TextStyle(
                 color: Color(0xFF50C2A0),
                 fontWeight: FontWeight.w700,
                 fontSize: 18,
@@ -68,7 +66,7 @@ class ProgressDrugContainer extends StatelessWidget {
                           vertical: 0, horizontal: 0),
                       title: context.localizations.consumed,
                       drugDetailModel: prescriptionModel,
-                      totalDayUse: totalDayUse,
+                      totalDayUse: prescriptionModel.elapsed,
                     ),
                   ),
                   Expanded(
@@ -77,17 +75,19 @@ class ProgressDrugContainer extends StatelessWidget {
                           vertical: 0, horizontal: 0),
                       title: context.localizations.remaining,
                       drugDetailModel: prescriptionModel,
-                      totalDayUse: totalDayUse,
+                      totalDayUse: prescriptionModel.remaining,
                     ),
                   ),
-                  Expanded(
-                    child: NextReminderText(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 0, horizontal: 0),
-                      title: context.localizations.nextReminder,
-                      drugDetailModel: prescriptionModel,
-                    ),
-                  ),
+                  (prescriptionModel.nextReminder == null)
+                      ? const SizedBox()
+                      : Expanded(
+                          child: NextReminderText(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 0),
+                            title: context.localizations.nextReminder,
+                            drugDetailModel: prescriptionModel,
+                          ),
+                        ),
                 ],
               ),
             ),
