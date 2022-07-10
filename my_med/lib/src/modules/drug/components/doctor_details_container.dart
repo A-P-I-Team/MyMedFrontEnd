@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/custom_shadow.dart';
+import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/l10n/localization_provider.dart';
 import 'package:my_med/src/modules/drug/models/drug_detail_model.dart';
+import 'package:auto_route/auto_route.dart';
 
 class BuildDoctorDetailsContainer extends StatelessWidget {
   final DrugDetailModel prescriptionModel;
@@ -26,13 +28,9 @@ class BuildDoctorDetailsContainer extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
-            IconButton(
-              onPressed: () {
-                //TODO: Navigate to doctor detail page
-              },
-              color: const Color(0xFFBABBBC),
-              icon: const Icon(Icons.arrow_back_ios),
-            ),
+            getDoctorAvatar(),
+            const SizedBox(width: 8),
+            getDoctorName(doctor),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: FittedBox(
@@ -46,73 +44,88 @@ class BuildDoctorDetailsContainer extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 16.0),
-                child: FittedBox(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        '${doctor.firstName} ${doctor.lastName}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          color: Color(0xFF474747),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Text(
-                          doctor.field,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 10,
-                            color: Color(0xFF474747),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+            IconButton(
+              onPressed: () => context.router.push(
+                DoctorsDetailsRoute(
+                  id: doctor.id.toString(),
                 ),
               ),
+              color: const Color(0xFFBABBBC),
+              icon: const Icon(Icons.arrow_forward_ios),
             ),
-            (prescriptionModel.doctor.profilePic == null)
-                ? Container(
-                    width: 64,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: Image.asset(
-                          "assets/doctor.png",
-                        ).image,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  )
-                : CachedNetworkImage(
-                    imageUrl: prescriptionModel.doctor.profilePic!,
-                    placeholder: (context, url) =>
-                        const Center(child: CircularProgressIndicator()),
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    width: 64,
-                    height: 64,
-                    errorWidget: (context, url, error) =>
-                        Image.asset("assets/rectangle_15.png"),
-                  ),
           ],
         ),
       ),
     );
+  }
+
+  Expanded getDoctorName(Doctor doctor) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.only(right: 16.0),
+        child: FittedBox(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '${doctor.firstName} ${doctor.lastName}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                  color: Color(0xFF474747),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Text(
+                  doctor.field,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 10,
+                    color: Color(0xFF474747),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  StatelessWidget getDoctorAvatar() {
+    return (prescriptionModel.doctor.profilePic == null)
+        ? Container(
+            width: 64,
+            height: 64,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: Image.asset(
+                  "assets/doctor.png",
+                ).image,
+                fit: BoxFit.cover,
+              ),
+            ),
+          )
+        : CachedNetworkImage(
+            imageUrl: prescriptionModel.doctor.profilePic!,
+            placeholder: (context, url) =>
+                const Center(child: CircularProgressIndicator()),
+            imageBuilder: (context, imageProvider) => Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            width: 64,
+            height: 64,
+            errorWidget: (context, url, error) =>
+                Image.asset("assets/rectangle_15.png"),
+          );
   }
 }

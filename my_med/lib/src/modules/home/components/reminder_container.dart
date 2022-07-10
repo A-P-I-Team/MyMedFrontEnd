@@ -150,7 +150,7 @@ class ReminderContainer extends StatelessWidget {
                       onPressed: () {
                         context.router.push(
                           DrugDetailsRoute(
-                            drugId: reminderModel.id,
+                            drugId: reminderModel.prescriptionID,
                           ),
                         );
                       },
@@ -168,7 +168,7 @@ class ReminderContainer extends StatelessWidget {
   }
 
   String convertToIsoTime(String time) {
-    if (time.length == 1) return '0' + time;
+    if (time.length == 1) return '0$time';
     return time;
   }
 }
