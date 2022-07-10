@@ -7,20 +7,20 @@ import 'package:shamsi_date/shamsi_date.dart';
 class Calendar extends StatefulWidget {
   final Function(DateTime date) getReminders;
 
-  Calendar({Key? key, required this.getReminders}) : super(key: key);
+  const Calendar({Key? key, required this.getReminders}) : super(key: key);
 
   @override
   State<Calendar> createState() => _CalendarState();
 }
 
 class _CalendarState extends State<Calendar> {
-  int daySelected = Jalali.now().day;
-  int monthSelected = Jalali.now().month;
-  int yearSelected = Jalali.now().year;
+  int daySelected = DateTime.now().day;
+  int monthSelected = DateTime.now().month;
+  int yearSelected = DateTime.now().year;
 
-  int daySelectedNew = Jalali.now().day;
-  int monthSelectedNew = Jalali.now().month;
-  int yearSelectedNew = Jalali.now().year;
+  int daySelectedNew = DateTime.now().day;
+  int monthSelectedNew = DateTime.now().month;
+  int yearSelectedNew = DateTime.now().year;
 
   List<String> monthListJalali = [
     'فروردین',
@@ -38,6 +38,8 @@ class _CalendarState extends State<Calendar> {
   ];
 
   List<String> monthListMiladi = [
+    'Jan',
+    'Feb',
     'Mar',
     'Apr',
     'May',
@@ -48,8 +50,6 @@ class _CalendarState extends State<Calendar> {
     'Oct',
     'Nov',
     'Dec',
-    'Jan',
-    'Feb'
   ];
 
   @override
@@ -82,57 +82,56 @@ class _CalendarState extends State<Calendar> {
       width: MediaQuery.of(context).size.width,
       height: 360,
       child: GridView.count(
-          crossAxisCount: 7,
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5,
-          children: List.generate(
-            daysNumberPerMonth(monthSelected) + startDay,
-            (index) => (index < startDay)
-                ? SizedBox(
-                    width: 20,
-                    height: 20,
-                  )
-                : GestureDetector(
-                    onTap: () {
-                      setState(
-                        () {
-                          daySelected = index - startDay + 1;
-                        },
+        crossAxisCount: 7,
+        crossAxisSpacing: 5,
+        mainAxisSpacing: 5,
+        children: List.generate(
+          daysNumberPerMonth(monthSelected) + startDay,
+          (index) => (index < startDay)
+              ? const SizedBox(
+                  width: 20,
+                  height: 20,
+                )
+              : GestureDetector(
+                  onTap: () {
+                    setState(
+                      () {
+                        daySelected = index - startDay + 1;
+                      },
+                    );
+                    if (mounted) {
+                      widget.getReminders(
+                        DateTime(
+                          yearSelected,
+                          monthSelected,
+                          daySelected,
+                        ),
                       );
-                      if (mounted) {
-                        widget.getReminders(
-                          DateTime(
-                            yearSelected,
-                            monthSelected,
-                            daySelected,
-                          ),
-                        );
-                      }
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: (daySelected == (index - startDay + 1))
-                            ? BuildGradient().buildLinearGradient()
-                            : null,
-                      ),
-                      child: Center(
-                        child: new Text(
-                          (index - startDay + 1).toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            color: (daySelected == (index - startDay + 1))
-                                ? Colors.white
-                                : Color(0xFF474747),
-                          ),
+                    }
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: (daySelected == (index - startDay + 1))
+                          ? BuildGradient().buildLinearGradient()
+                          : null,
+                    ),
+                    child: Center(
+                      child: Text(
+                        (index - startDay + 1).toString(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          color: (daySelected == (index - startDay + 1))
+                              ? Colors.white
+                              : const Color(0xFF474747),
                         ),
                       ),
                     ),
                   ),
-          ),
+                ),
         ),
-
+      ),
     );
   }
 
@@ -146,7 +145,7 @@ class _CalendarState extends State<Calendar> {
               fit: BoxFit.scaleDown,
               child: Text(
                 context.localizations.saturday,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 10,
                   color: Color(0xFFBABBBC),
@@ -159,7 +158,7 @@ class _CalendarState extends State<Calendar> {
               fit: BoxFit.scaleDown,
               child: Text(
                 context.localizations.sunday,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 10,
                   color: Color(0xFFBABBBC),
@@ -172,7 +171,7 @@ class _CalendarState extends State<Calendar> {
               fit: BoxFit.scaleDown,
               child: Text(
                 context.localizations.monday,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 10,
                   color: Color(0xFFBABBBC),
@@ -185,7 +184,7 @@ class _CalendarState extends State<Calendar> {
               fit: BoxFit.scaleDown,
               child: Text(
                 context.localizations.tuesday,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 10,
                   color: Color(0xFFBABBBC),
@@ -198,7 +197,7 @@ class _CalendarState extends State<Calendar> {
               fit: BoxFit.scaleDown,
               child: Text(
                 context.localizations.wednesday,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 10,
                   color: Color(0xFFBABBBC),
@@ -211,7 +210,7 @@ class _CalendarState extends State<Calendar> {
               fit: BoxFit.scaleDown,
               child: Text(
                 context.localizations.thursday,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 10,
                   color: Color(0xFFBABBBC),
@@ -224,7 +223,7 @@ class _CalendarState extends State<Calendar> {
               fit: BoxFit.scaleDown,
               child: Text(
                 context.localizations.friday,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 10,
                   color: Color(0xFFBABBBC),
@@ -256,15 +255,15 @@ class _CalendarState extends State<Calendar> {
               );
             }
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Color(0xFFBABBBC),
           ),
         ),
-        (context.watch<LocalizationProvider>().locale == Locale('en'))
+        (context.watch<LocalizationProvider>().locale == const Locale('en'))
             ? Text(
                 "$yearSelected " + monthListMiladi[monthSelected - 1],
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 14,
                   color: Color(0xFF474747),
@@ -272,7 +271,7 @@ class _CalendarState extends State<Calendar> {
               )
             : Text(
                 "$yearSelected " + monthListJalali[monthSelected - 1],
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 14,
                   color: Color(0xFF474747),
@@ -293,7 +292,7 @@ class _CalendarState extends State<Calendar> {
               );
             }
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_forward_ios,
             color: Color(0xFFBABBBC),
           ),
