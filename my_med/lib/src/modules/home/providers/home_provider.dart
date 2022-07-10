@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/error_template.dart';
 import 'package:my_med/src/components/utils/snack_bar.dart';

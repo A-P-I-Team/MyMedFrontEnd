@@ -21,7 +21,7 @@ class ActivePrescriptionModel {
   final int dosage;
   final String fraction;
   final int days;
-  final DateTime start;
+  final DateTime? start;
   final DateTime doctorStart;
   final int period;
   List<ReminderModel> reminders;
@@ -37,7 +37,9 @@ class ActivePrescriptionModel {
         dosage: json["dosage"],
         fraction: json["fraction"],
         days: json["days"],
-        start: DateTime.parse(json["start"]).toLocal(),
+        start: (json["start"] == null)
+            ? null
+            : DateTime.parse(json["start"]).toLocal(),
         period: json["period"],
         reminders: List<ReminderModel>.from(
           json["reminders"].map(
