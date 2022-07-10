@@ -14,7 +14,7 @@ class ConsumptionDurationText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text.rich(
       TextSpan(
-        text: '${medication.consumptionDuration} ',
+        text: '${medication.period} ',
         style: const TextStyle(
           fontWeight: FontWeight.w700,
           fontSize: 12,
