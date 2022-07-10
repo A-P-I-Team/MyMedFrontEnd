@@ -22,7 +22,7 @@ class CalendarProvider extends ChangeNotifier {
   }
 
   void findReminders(DateTime date) {
-    date = Jalali(date.year, date.month, date.day).toDateTime();
+    date = DateTime(date.year, date.month, date.day);
     remindersList.clear();
 
     for (final item in activePrescriptionList) {

@@ -15,7 +15,7 @@ class CalendarContainer extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: Colors.white,
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Color(0x25000000),
             offset: Offset(0, 0),
