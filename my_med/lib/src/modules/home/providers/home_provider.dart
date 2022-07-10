@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/components/error_template.dart';
+import 'package:my_med/src/components/utils/snack_bar.dart';
 import 'package:my_med/src/core/routing/router.dart';
 import 'package:my_med/src/modules/home/apis/Pharmaceutical_api.dart';
 import 'package:my_med/src/modules/home/models/active_prescription_model.dart';
@@ -118,6 +121,12 @@ class HomeProvider extends ChangeNotifier {
 
   void onDismissed(DismissDirection direction, int index) {
     final chosenReminder = remindersList[index];
+    if (chosenReminder.dateTime
+        .isAfter(DateTime.now().add(const Duration(minutes: 31)))) {
+      errorHandler('Time not reached!');
+      notifyListeners();
+      return;
+    }
 
     if (direction == DismissDirection.endToStart) {
       remindersList[index].status = false;
@@ -161,11 +170,26 @@ class HomeProvider extends ChangeNotifier {
           ).toList();
           sortReminders();
         } else {
-          consumedCount++;
+          if (isUsed) {
+            consumedCount++;
+          } else {
+            consumedCount--;
+          }
         }
         if (isDisposed) return;
         notifyListeners();
       },
+    );
+  }
+
+  void errorHandler(String errorMessage) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      CustomSnackBar().customShowMessage(
+        message: errorMessage,
+        isAndroid: Platform.isAndroid,
+        color: Colors.red,
+      ),
     );
   }
 

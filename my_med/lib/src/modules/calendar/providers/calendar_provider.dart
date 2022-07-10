@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
+
 import 'package:my_med/src/components/error_template.dart';
+import 'package:my_med/src/components/utils/snack_bar.dart';
 import 'package:my_med/src/modules/home/models/active_prescription_model.dart';
 import 'package:flutter/material.dart';
 import 'package:my_med/src/modules/home/apis/Pharmaceutical_api.dart';
-import 'package:shamsi_date/shamsi_date.dart';
 
 class CalendarProvider extends ChangeNotifier {
   BuildContext context;
@@ -66,14 +67,20 @@ class CalendarProvider extends ChangeNotifier {
     );
   }
 
-  void onDismissed(DismissDirection direction, int index) async {
-    final choosedReminder = remindersList[index];
+  void onDismissed(DismissDirection direction, int index) {
+    final chosenReminder = remindersList[index];
+    if (chosenReminder.dateTime
+        .isAfter(DateTime.now().add(const Duration(minutes: 31)))) {
+      errorHandler('Time not reached!');
+      notifyListeners();
+      return;
+    }
 
     if (direction == DismissDirection.endToStart) {
       remindersList[index].status = false;
-      callUseDrug(choosedReminder, false, index);
+      callUseDrug(chosenReminder, false, index);
     } else {
-      callUseDrug(choosedReminder, true, index);
+      callUseDrug(chosenReminder, true, index);
       remindersList[index].status = true;
     }
     final modifiedReminder = remindersList[index];
@@ -113,6 +120,17 @@ class CalendarProvider extends ChangeNotifier {
           notifyListeners();
         }
       },
+    );
+  }
+
+  void errorHandler(String errorMessage) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      CustomSnackBar().customShowMessage(
+        message: errorMessage,
+        isAndroid: Platform.isAndroid,
+        color: Colors.red,
+      ),
     );
   }
 
